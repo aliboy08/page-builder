@@ -50,3 +50,18 @@ export function is_intersecting(box1, box2){
     if( box1.top > box2.bottom ) return false;
     return true;
 }
+
+export function get_pos(element) {
+
+    if (!element.getClientRects().length) {
+        return { top: 0, left: 0 };
+    }
+
+    const rect = element.getBoundingClientRect();
+    const win = element.ownerDocument.defaultView;
+
+    return ({
+        top: rect.top + win.pageYOffset,
+        left: rect.left + win.pageXOffset
+    });   
+}

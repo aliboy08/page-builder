@@ -46,7 +46,6 @@ export default class Builder {
             const drop_zone = create_div('drop_zone', con)
             destination[method](con)
 
-            drop_zone.rect = drop_zone.getBoundingClientRect();
             this.drop_zones.push(drop_zone)
         }
 
@@ -64,6 +63,11 @@ export default class Builder {
         this.available_drop_zones = this.drop_zones.filter(drop_zone=>{
             if( drop_zone.parentElement.previousElementSibling === current_item.el ) return false;
             if( drop_zone.parentElement.nextElementSibling === current_item.el ) return false;
+
+            const rect = drop_zone.getBoundingClientRect();
+            drop_zone.top = rect.top + pageYOffset;
+            drop_zone.bottom = rect.bottom + pageYOffset;
+
             return true;
         })
 
@@ -74,6 +78,7 @@ export default class Builder {
         this.container.dataset.state = 'drag_end';
 
         if( this.drop_zone ) {
+
             this.drop_zone.dataset.state = '';
         }
         
@@ -97,7 +102,7 @@ export default class Builder {
         }
 
         if( this.drop_zone ) {
-            const intersecting = is_intersecting(drag_box, this.drop_zone.rect);
+            const intersecting = is_intersecting(drag_box, this.drop_zone);
             this.drop_zone.dataset.state = intersecting ? 'drop_target' : '';
 
             if( !intersecting ) {
@@ -111,11 +116,11 @@ export default class Builder {
         
         for( const drop_zone of this.available_drop_zones ) {
 
-            if( is_intersecting(drag_box, drop_zone.rect) ) {
+            if( is_intersecting(drag_box, drop_zone) ) {
                 return drop_zone;
             }
             
-            if( is_intersecting(drag_box, drop_zone.rect) ) {
+            if( is_intersecting(drag_box, drop_zone) ) {
                 return drop_zone;
             }
 
