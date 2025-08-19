@@ -44,3 +44,9 @@ export function get_el(element, multiple = false, parent = document) {
 //         rect1.y + rect1.height > rect2.y
 //     );
 // }
+
+export function is_intersecting(box1, box2){
+    if( box1.bottom < box2.top ) return false;
+    if( box1.top > box2.bottom ) return false;
+    return true;
+}

@@ -1,6 +1,6 @@
 import './builder.scss';
 import Draggable from 'components/draggable';
-import { wrap_div, create_div, get_el } from 'lib/utils';
+import { is_intersecting, create_div, get_el } from 'lib/utils';
 
 export default class Builder {
     
@@ -43,14 +43,11 @@ export default class Builder {
         const add_drop_zone = (destination, method)=>{
 
             const con = create_div('drop_zone_container')
-            const el = create_div('drop_zone', con)
+            const drop_zone = create_div('drop_zone', con)
             destination[method](con)
-            
-            this.drop_zones.push({
-                el,
-                rect: el.getBoundingClientRect(),
-            })
-            
+
+            drop_zone.rect = drop_zone.getBoundingClientRect();
+            this.drop_zones.push(drop_zone)
         }
 
         add_drop_zone(this.container, 'prepend');
@@ -58,14 +55,18 @@ export default class Builder {
         this.items.forEach(item=>{
             add_drop_zone(item.el, 'after')
         })
-
-        console.log(this.drop_zones)
-
     }
     
     drag_start(current_item){
 
         this.container.dataset.state = 'drag_start';
+        
+        this.available_drop_zones = this.drop_zones.filter(drop_zone=>{
+            if( drop_zone.parentElement.previousElementSibling === current_item.el ) return false;
+            if( drop_zone.parentElement.nextElementSibling === current_item.el ) return false;
+            return true;
+        })
+
     }
 
     drag_end(){
@@ -95,50 +96,31 @@ export default class Builder {
             current_drop_zone.dataset.state = 'drop_target';
         }
 
+        if( this.drop_zone ) {
+            const intersecting = is_intersecting(drag_box, this.drop_zone.rect);
+            this.drop_zone.dataset.state = intersecting ? 'drop_target' : '';
+
+            if( !intersecting ) {
+                this.drop_zone = null;
+            }
+        }
+        
     }
 
     get_drop_zone(drag_box){
         
-        for( const drop_zone of this.drop_zones ) {
+        for( const drop_zone of this.available_drop_zones ) {
 
             if( is_intersecting(drag_box, drop_zone.rect) ) {
-                return drop_zone.el;
+                return drop_zone;
             }
             
             if( is_intersecting(drag_box, drop_zone.rect) ) {
-                return drop_zone.el;
+                return drop_zone;
             }
 
         }
     }
 
-    // get_drop_target_el(drag_box, target){
-        
-    //     if( this.is_intersecting(drag_box, target.before) ) {
-    //         return target.before.el;
-    //     }
-
-    //     if( this.is_intersecting(drag_box, target.after) ) {
-    //         return target.after.el;
-    //     }
-
-    //     return null;
-    // }
-
-    // is_intersecting(drag_box, target){
-
-    //     if( drag_box.bottom < target.rect.top ) return false;
-    //     if( drag_box.top > target.rect.bottom ) return false;
-
-    //     // console.log('hit', drag_box, target)
-        
-    //     return true;
-    // }
-
 }
 
-function is_intersecting(box1, box2){
-    if( box1.bottom < box2.top ) return false;
-    if( box1.top > box2.bottom ) return false;
-    return true;
-}
