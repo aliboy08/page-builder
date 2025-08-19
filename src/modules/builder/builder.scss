@@ -1,0 +1,68 @@
+.canvas {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    
+    background: #ffffff11;
+    padding: 40px;
+    border-radius: 10px;
+    border: 1px solid #ffffff25;
+    margin: 5px;
+    min-height: 140px;
+    color: #ffffff67;
+    font-size: 30px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        border-color: #ffffff49;
+    }
+
+    &[data-state="grabbed"] {
+        border-color: #ffffff86;
+    }
+}
+
+.drag_container {
+    position: relative;
+
+    .drag_after,
+    .drag_before {
+        position: absolute;
+        width: 100%;
+        pointer-events: none;
+        height: 40px;
+        // opacity: 0;
+        background: transparent;
+
+        &[data-state="drop_target"] {
+            background: #30e2bb1c;
+        }
+    }
+
+    .drag_before {
+        top: 0;
+        // background: #30e2bb1c;
+    }
+    
+    .drag_after {
+        bottom: 0;
+        // background: #435ef711;
+    }
+    
+}
+
+.drag_indicator {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff5b;
+    background: #ffffff1f;
+    border-radius: 6px;
+    z-index: 1000;
+    position: absolute;
+    pointer-events: none;
+}
