@@ -1,4 +1,4 @@
-.canvas {
+.builder_container {
     display: flex;
     flex-direction: column;
 }
@@ -27,33 +27,21 @@
     }
 }
 
-.drag_container {
+.drop_zone_container {
+    height: 0;
     position: relative;
-
-    .drag_after,
-    .drag_before {
-        position: absolute;
-        width: 100%;
-        pointer-events: none;
-        height: 40px;
-        // opacity: 0;
+    
+    .drop_zone {
+        height: 30px;
         background: transparent;
+        position: relative;
+        top: -15px;
+        transition: background .1s ease;
 
         &[data-state="drop_target"] {
-            background: #30e2bb1c;
+            background: #30d6e273;
         }
     }
-
-    .drag_before {
-        top: 0;
-        // background: #30e2bb1c;
-    }
-    
-    .drag_after {
-        bottom: 0;
-        // background: #435ef711;
-    }
-    
 }
 
 .drag_indicator {

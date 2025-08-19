@@ -38,106 +38,78 @@ export default class Builder {
 
     init_drop_zones(){
 
-        this.dropzones = [];
+        this.drop_zones = [];
 
-        const add_dropzone = (destination, method)=>{
+        const add_drop_zone = (destination, method)=>{
 
-            const el = create_div('drop_zone')
-            destination[method](el)
-
-            this.dropzones.push({
+            const con = create_div('drop_zone_container')
+            const el = create_div('drop_zone', con)
+            destination[method](con)
+            
+            this.drop_zones.push({
                 el,
                 rect: el.getBoundingClientRect(),
             })
             
         }
 
-        add_dropzone(this.container, 'prepend');
+        add_drop_zone(this.container, 'prepend');
 
         this.items.forEach(item=>{
-            add_dropzone(item.el, 'after')
+            add_drop_zone(item.el, 'after')
         })
 
-    }
+        console.log(this.drop_zones)
 
-    init_drop_zone(item){
-
-        // const container = wrap_div(item.el, 'drag_container')
-
-        const drop_zone = create_div('drop_zone')
-        item.el.after(drop_zone)
-        
-        // item.before = {
-        //     el: before,
-        //     rect: before.getBoundingClientRect(),
-        // }
-
-        // const after = create_div('drag_after')
-        // container.append(after)
-
-        // item.after = {
-        //     el: after,
-        //     rect: after.getBoundingClientRect(),
-        // }
     }
     
     drag_start(current_item){
 
         this.container.dataset.state = 'drag_start';
-
-        this.drag_targets = this.items.filter(item => item !== current_item)
     }
 
     drag_end(){
 
         this.container.dataset.state = 'drag_end';
 
-        // this.drag_targets.forEach(target=>{
-        //     target.before.el.dataset.state = '';
-        //     target.after.el.dataset.state = '';
-        // })
-
-        if( this.drop_target ) {
-            this.drop_target.dataset.state = '';
+        if( this.drop_zone ) {
+            this.drop_zone.dataset.state = '';
         }
         
-        this.drop_target = null;
+        this.drop_zone = null;
 
     }
     
     drag_update(drag_box){
+        
+        const current_drop_zone = this.get_drop_zone(drag_box);
 
-        // const drop_target = this.get_drop_target(drag_box);
-        // console.log(drop_target)
+        if( current_drop_zone ) {
 
-        // if( drop_target ) {
+            if( this.drop_zone ) {
+                if( this.drop_zone === current_drop_zone ) return; 
+                this.drop_zone.dataset.state = '';
+            }
 
-        //     if( this.drop_target ) {
-        //         if( this.drop_target === drop_target ) return; 
-        //         this.drop_target.dataset.state = '';
-        //     }
-
-        //     this.drop_target = drop_target;
-        //     drop_target.dataset.state = 'drop_target';
-        // }
+            this.drop_zone = current_drop_zone;
+            current_drop_zone.dataset.state = 'drop_target';
+        }
 
     }
 
-    get_drop_target(drag_box){
+    get_drop_zone(drag_box){
         
-        for( const target of this.drag_targets ) {
+        for( const drop_zone of this.drop_zones ) {
 
-            if( is_intersecting(drag_box, target.before.rect) ) {
-                return target.before.el;
+            if( is_intersecting(drag_box, drop_zone.rect) ) {
+                return drop_zone.el;
             }
             
-            if( is_intersecting(drag_box, target.after.rect) ) {
-                return target.after.el;
+            if( is_intersecting(drag_box, drop_zone.rect) ) {
+                return drop_zone.el;
             }
 
         }
-        
-        return null;
     }
 
     // get_drop_target_el(drag_box, target){
