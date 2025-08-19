@@ -47,16 +47,21 @@ export default class Builder {
             destination[method](con)
 
             this.drop_zones.push(drop_zone)
+
+            return drop_zone
         }
 
         add_drop_zone(this.container, 'prepend');
 
         this.items.forEach(item=>{
-            add_drop_zone(item.el, 'after')
+            const d = add_drop_zone(item.el, 'after')
+            d.textContent = item.el.textContent;
         })
     }
     
     drag_start(current_item){
+
+        this.current_item = current_item;
 
         this.container.dataset.state = 'drag_start';
         
@@ -76,13 +81,17 @@ export default class Builder {
     drag_end(){
 
         this.container.dataset.state = 'drag_end';
-
+        
         if( this.drop_zone ) {
 
+            this.apply_reorder();
+            
+            // this.reposition(this.current_item.el, this.drop_zone.parentElement)
             this.drop_zone.dataset.state = '';
+            
         }
         
-        this.drop_zone = null;
+        // this.drop_zone = null;
 
     }
     
@@ -125,6 +134,14 @@ export default class Builder {
             }
 
         }
+    }
+
+    apply_reorder(){
+        
+        const current_item_dropzone = this.current_item.el.nextElementSibling;
+        
+        this.drop_zone.parentElement.after(this.current_item.el)
+        this.current_item.el.after(current_item_dropzone)
     }
 
 }
