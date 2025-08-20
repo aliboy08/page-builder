@@ -37,8 +37,7 @@ export default class Elements_Manager {
     load(container){
 
         container.innerHTML = this.get_html();
-
-
+        
         container.querySelectorAll('.element').forEach(el=>{
             new Draggable(el)
         })

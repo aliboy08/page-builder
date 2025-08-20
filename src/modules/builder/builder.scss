@@ -1,9 +1,9 @@
-.page_builder_app {
+.page_builder {
     display: flex;
 
 }
 
-.builder_container {
+.page_builder_content {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -33,7 +33,7 @@
     }
 }
 
-.builder_container:not([data-state="drag_start"]){
+.page_builder_content:not([data-state="drag_start"]){
     .container:hover{
         box-shadow: inset 0 0 0 1px #ffffff28;
     }

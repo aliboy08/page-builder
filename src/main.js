@@ -7,7 +7,7 @@ import Control_Panel from './modules/control_panel/control_panel';
 init();
 function init(){
 
-    new Builder('.builder_container');
+    new Builder('.page_builder_content');
     new Control_Panel('.control_panel');
     
 }

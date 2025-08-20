@@ -16,7 +16,7 @@ export default class Control_Panel {
 
         const resizer = new Resizer(this.container);
 
-        const parent = get_el('.page_builder_app')
+        const parent = get_el('.page_builder')
 
         const update = (value)=>{
             parent.style.paddingLeft = value+'px';

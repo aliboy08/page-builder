@@ -1,0 +1,24 @@
+.add_zone {
+
+    height: 40px;
+	background: rgb(58 255 211 / 17%);
+	color: #fff;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .1s ease;
+
+    &::before {
+        content: "+";
+        font-size: 24px;
+        line-height: 0;
+        color: rgb(255 255 255 / 46%);
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+}

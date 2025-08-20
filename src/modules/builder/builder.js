@@ -1,6 +1,7 @@
 import './builder.scss';
-import Draggable from 'components/draggable';
 import { is_intersecting, create_div, get_el } from 'lib/utils';
+import Draggable from 'components/draggable';
+import Add_Zone from './add_zone/add_zone';
 
 export default class Builder {
     
@@ -8,8 +9,20 @@ export default class Builder {
 
         this.container = get_el(container)
 
-        this.init_items()
-        this.init_drop_zones();
+        // this.init_items()
+        // this.init_drop_zones();
+
+        this.init_add_zones();
+    }
+
+    init_add_zones(){
+
+        const top = new Add_Zone();
+        this.container.prepend(top.el)
+
+        const bottom = new Add_Zone();
+        this.container.append(bottom.el)
+
     }
 
     init_items(){
