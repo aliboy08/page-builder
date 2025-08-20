@@ -33,8 +33,6 @@ export default class Animate_Position {
     }
 
     animate(){
-
-        
         
         const loop = ()=>{
             if( this.stop ) return;

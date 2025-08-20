@@ -1,0 +1,23 @@
+.control_panel {
+    background: #2c2c2c;
+	border-right: 1px solid rgba(255, 255, 255, 0.1215686275);
+	flex-shrink: 0;
+	width: 320px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+    z-index: 10;;
+}
+
+.control_panel .resize_handle {
+    position: absolute;
+    height: 100%;
+    background: #fff;
+    width: 12px;
+    top: 0;
+    right: -6px;
+    cursor: e-resize;
+    z-index: 10;
+    opacity: 0;
+}

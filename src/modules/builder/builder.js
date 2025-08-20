@@ -16,24 +16,20 @@ export default class Builder {
 
         this.items = [];
 
-        document.querySelectorAll('.container').forEach(el=>{
-            this.items.push(this.init_item(el))
+        document.querySelectorAll('.container').forEach(item=>{
+            this.items.push(this.init_item(item))
         })
     }
 
-    init_item(el){
+    init_item(item){
 
-        const item = {
-            el,
-        };
-        
-        const draggable = new Draggable(el)
+        const draggable = new Draggable(item)
 
         draggable.hooks.add('start', ()=>this.drag_start(item))
         draggable.hooks.add('end', ()=>this.drag_end())
         draggable.hooks.add('update', (drag_box)=>this.drag_update(drag_box))
         
-        return item
+        return item;
     }
 
     init_drop_zones(){
@@ -54,8 +50,7 @@ export default class Builder {
         add_drop_zone(this.container, 'prepend');
 
         this.items.forEach(item=>{
-            const d = add_drop_zone(item.el, 'after')
-            d.textContent = item.el.textContent;
+            add_drop_zone(item, 'after')
         })
     }
     
@@ -66,8 +61,8 @@ export default class Builder {
         this.container.dataset.state = 'drag_start';
         
         this.available_drop_zones = this.drop_zones.filter(drop_zone=>{
-            if( drop_zone.parentElement.previousElementSibling === current_item.el ) return false;
-            if( drop_zone.parentElement.nextElementSibling === current_item.el ) return false;
+            if( drop_zone.parentElement.previousElementSibling === current_item ) return false;
+            if( drop_zone.parentElement.nextElementSibling === current_item ) return false;
 
             const rect = drop_zone.getBoundingClientRect();
             drop_zone.top = rect.top + pageYOffset;
@@ -83,34 +78,30 @@ export default class Builder {
         this.container.dataset.state = 'drag_end';
         
         if( this.drop_zone ) {
-
             this.apply_reorder();
-            
-            // this.reposition(this.current_item.el, this.drop_zone.parentElement)
             this.drop_zone.dataset.state = '';
-            
         }
         
-        // this.drop_zone = null;
-
+        this.drop_zone = null;
     }
     
     drag_update(drag_box){
         
-        const current_drop_zone = this.get_drop_zone(drag_box);
+        const drop_zone = this.get_drop_zone(drag_box);
 
-        if( current_drop_zone ) {
+        if( drop_zone ) {
 
             if( this.drop_zone ) {
-                if( this.drop_zone === current_drop_zone ) return; 
+                if( this.drop_zone === drop_zone ) return; 
                 this.drop_zone.dataset.state = '';
             }
 
-            this.drop_zone = current_drop_zone;
-            current_drop_zone.dataset.state = 'drop_target';
+            this.drop_zone = drop_zone;
+            drop_zone.dataset.state = 'drop_target';
         }
 
         if( this.drop_zone ) {
+            
             const intersecting = is_intersecting(drag_box, this.drop_zone);
             this.drop_zone.dataset.state = intersecting ? 'drop_target' : '';
 
@@ -138,10 +129,10 @@ export default class Builder {
 
     apply_reorder(){
         
-        const current_item_dropzone = this.current_item.el.nextElementSibling;
+        const current_item_dropzone = this.current_item.nextElementSibling;
         
-        this.drop_zone.parentElement.after(this.current_item.el)
-        this.current_item.el.after(current_item_dropzone)
+        this.drop_zone.parentElement.after(this.current_item)
+        this.current_item.after(current_item_dropzone)
     }
 
 }
