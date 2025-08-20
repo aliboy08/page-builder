@@ -65,3 +65,42 @@ export function get_pos(element) {
         left: rect.left + win.pageXOffset
     });   
 }
+
+export function dispatch(event_name, data = {}, element = document){
+    const event = new Event(event_name)
+    event.data = data;
+    element.dispatchEvent(event);
+}
+
+export function outside_click_handler(el, on_outside_click){
+
+    const click_handler = (e)=>{
+        if( !is_child(e.target, el) ) {
+            on_outside_click();
+            end();
+        }
+    }
+
+    const start = ()=>{
+        setTimeout(()=>{
+            document.addEventListener('click', click_handler)
+        }, 100);
+    }
+
+    const end = ()=>{
+        document.removeEventListener('click', click_handler)
+    }
+
+    return { start, end }
+}
+
+export function is_child(target, parent){
+
+    if( target.nodeName === 'BODY' ) return false;
+
+    if( target == parent || target.parentElement == parent ) {
+        return true;
+    }
+    
+    return is_child(target.parentElement, parent);
+}

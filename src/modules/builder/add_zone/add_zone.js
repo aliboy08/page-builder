@@ -1,5 +1,5 @@
 import './add_zone.scss';
-import { create_div } from 'lib/utils'
+import { create_div } from 'lib/utils';
 
 export default class Add_Zone {
 
@@ -14,7 +14,8 @@ export default class Add_Zone {
         this.el = el;
 
         el.addEventListener('click', ()=>{
-            console.log('popup')
+            console.log('popup', window.builder.popup)
+            window.builder.popup.open();
         })
     }
 

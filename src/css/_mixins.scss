@@ -1,0 +1,29 @@
+@mixin flex_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin fixed_full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin icon($content, $size: inherit){
+    content: $content;
+    font-family: 'icomoon';
+    font-weight: 400;
+    font-size: $size;
+}
+
+@mixin round_center($width: auto, $height: auto){
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

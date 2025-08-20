@@ -2,19 +2,24 @@ import './builder.scss';
 import { is_intersecting, create_div, get_el } from 'lib/utils';
 import Draggable from 'components/draggable';
 import Add_Zone from './add_zone/add_zone';
+import Control_Panel from '../control_panel/control_panel';
+import Popup from 'components/popup/popup';
 
 export default class Builder {
     
-    constructor(container){
+    constructor(){
 
-        this.container = get_el(container)
+        this.container = get_el('.page_builder_content')
+
+        this.control_panel = new Control_Panel('.control_panel');
 
         // this.init_items()
         // this.init_drop_zones();
 
         this.init_add_zones();
+        this.init_popup();
     }
-
+    
     init_add_zones(){
 
         const top = new Add_Zone();
@@ -22,6 +27,15 @@ export default class Builder {
 
         const bottom = new Add_Zone();
         this.container.append(bottom.el)
+
+    }
+
+    init_popup(){
+
+        this.popup = new Popup({
+            close_duration: 500,
+        });
+
 
     }
 

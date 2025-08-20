@@ -1,6 +1,7 @@
 .control_panel {
-    background: #2a2a2a;
-	border-right: 1px solid rgba(255, 255, 255, 0.1215686275);
+    
+    background: var(--dark);
+	border-right: var(--border-light);
 	flex-shrink: 0;
 	width: 320px;
 	position: fixed;
