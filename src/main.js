@@ -1,3 +1,5 @@
+import '@fontsource-variable/inter';
+
 import './main.scss';
 import Builder from './modules/builder/builder';
 import Control_Panel from './modules/control_panel/control_panel';

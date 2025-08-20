@@ -1,5 +1,5 @@
 .control_panel {
-    background: #2c2c2c;
+    background: #2a2a2a;
 	border-right: 1px solid rgba(255, 255, 255, 0.1215686275);
 	flex-shrink: 0;
 	width: 320px;
@@ -8,16 +8,38 @@
 	left: 0;
 	height: 100%;
     z-index: 10;;
+    color: #fff;
+    padding: 16px;
+
+    > .inner {
+        height: 100%;
+    }
 }
 
 .control_panel .resize_handle {
     position: absolute;
     height: 100%;
-    background: #fff;
     width: 12px;
     top: 0;
     right: -6px;
     cursor: e-resize;
     z-index: 10;
     opacity: 0;
+}
+
+.control_panel .elements {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    .element {
+        border: 1px solid #ffffff2f;
+        border-radius: 4px;
+        background: #0000001f;
+        padding: 10px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

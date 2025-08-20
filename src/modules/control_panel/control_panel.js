@@ -1,12 +1,14 @@
 import './control_panel.scss';
-import Resizer from 'components/resizer';
 import { get_el } from 'lib/utils';
+import Resizer from 'components/resizer';
+import Elements_Manager from '../elements/manager/manager';
 
 export default class Control_Panel {
 
     constructor(){
+
         this.container = get_el('.control_panel')
-        this.parent_container = get_el('.page_builder_app')
+        this.init_manager();
         this.init_resizer();
     }
 
@@ -14,13 +16,23 @@ export default class Control_Panel {
 
         const resizer = new Resizer(this.container);
 
-        const update_padding = (value)=>{
-            this.parent_container.style.paddingLeft = value+'px';
+        const parent = get_el('.page_builder_app')
+
+        const update = (value)=>{
+            parent.style.paddingLeft = value+'px';
         }
 
-        update_padding(this.container.offsetWidth)
+        update(this.container.offsetWidth)
 
-        resizer.hooks.add('resize', update_padding)
+        resizer.hooks.add('resize', update)
+    }
+
+    init_manager(){
+        
+        const container = this.container.querySelector('.body');
+        const manager = new Elements_Manager();
+        
+        manager.load(container);
     }
 
 }
