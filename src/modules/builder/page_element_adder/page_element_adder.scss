@@ -1,0 +1,30 @@
+@use 'css/mixins' as a;
+
+.page_element_adder {
+
+    border: var(--border-light);
+    border-style: dashed;
+	width: 600px;
+	max-width: 100%;
+	height: 50px;
+	margin: 20px auto;
+	border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: border-color .1s ease;
+    
+    @include a.flex_center;
+    
+    &::before {
+        @include a.icon('\e900', 24px);
+        color: #ffffff71;
+        transition: color .1s ease;
+    }
+
+    &:hover {
+        border-color: #ffffff77;
+
+        &::before {
+            color: #ffffff9c;    
+        }
+    }
+}

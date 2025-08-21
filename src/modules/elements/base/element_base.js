@@ -5,10 +5,7 @@ export default class Element_Base {
     constructor(args = {}){
         this.id = args.id;
         this.name = args.name;
-        // this.data = {}
-
-        console.log('Element_Base init', this)
-
+        this.data = {}
     }
 
     get_html(){

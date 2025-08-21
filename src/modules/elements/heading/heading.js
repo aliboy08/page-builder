@@ -9,7 +9,9 @@ export default class Element_Heading extends Element_Base {
             name: 'Heading',
         })
 
-        console.log('Element_Heading init', this)
+        this.data = {
+            text: 'Heading Element',
+        }
     }
 
     inner_html(){

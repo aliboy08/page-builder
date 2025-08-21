@@ -2,27 +2,47 @@ import './builder.scss';
 import { is_intersecting, create_div, get_el } from 'lib/utils';
 import Draggable from 'components/draggable';
 import Add_Zone from './add_zone/add_zone';
-import Control_Panel from '../control_panel/control_panel';
+// import Control_Panel from '../control_panel/control_panel';
 import Popup from 'components/popup/popup';
-import Elements_Manager from '../elements/manager/elements_manager';
+// import Elements_Manager from '../elements_manager/elements_manager';
+import Hooks from 'components/hooks';
+import Page_Element_Adder from './page_element_adder/page_element_adder';
 
 export default class Builder {
     
-    constructor(){
+    constructor(selector = '#page_content'){
 
-        this.container = get_el('.page_builder_content')
+        this.container = get_el(selector)
 
-        this.elements_manager = new Elements_Manager();
+        // this.hooks = new Hooks([
+        //     '',
+        // ]);
 
-        this.control_panel = new Control_Panel();
-
-        this.control_panel.load_manager(this.elements_manager);
+        // this.hooks.do('init');
         
-        this.init_items()
-        // this.init_drop_zones();
+        // this.elements_manager = new Elements_Manager();
 
-        this.init_add_zones();
-        this.init_popup();
+        // this.control_panel = new Control_Panel();
+
+        // this.elements_manager.render_to(this.control_panel.body);
+        
+        // this.init_items()
+        // // this.init_drop_zones();
+
+        // this.init_add_zones();
+        // this.init_popup();
+
+        this.init_add_element();
+    }
+
+    init_add_element(){
+
+        const adder = new Page_Element_Adder(this.container);
+
+        // adder.hooks.add('click', ()=>{
+
+        // })
+        
     }
     
     init_add_zones(){

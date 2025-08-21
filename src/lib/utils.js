@@ -6,10 +6,15 @@ export function easing1(x){
     return 1 - Math.pow(1 - x, 5);
 }
 
-export function create_div(class_name = '', target, text = '', method = 'append'){
+export function create_div(selector = '', target, text = '', method = 'append'){
     
     const div = document.createElement('div')
-    div.className = class_name;
+    
+    if( selector[0] === '#' ) {
+        div.id = selector;
+    } else {
+        div.className = selector;
+    }
 
     if( text ) {
         div.textContent = text;

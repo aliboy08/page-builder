@@ -2,12 +2,16 @@
     display: flex;
 }
 
-.page_builder_content {
+.page_content {
+
     display: flex;
     flex-direction: column;
     flex: 1;
     position: relative;
 
+    min-height: 200px;
+    background: #00000028;
+    
     &[data-state="drag_start"]{
         cursor: grabbing;
     }
