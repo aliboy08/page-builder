@@ -6,10 +6,14 @@ export function easing1(x){
     return 1 - Math.pow(1 - x, 5);
 }
 
-export function create_div(class_name = '', target, method = 'append'){
+export function create_div(class_name = '', target, text = '', method = 'append'){
     
     const div = document.createElement('div')
     div.className = class_name;
+
+    if( text ) {
+        div.textContent = text;
+    }
 
     if( target ) {
         target[method](div)
@@ -60,10 +64,12 @@ export function get_pos(element) {
     const rect = element.getBoundingClientRect();
     const win = element.ownerDocument.defaultView;
 
-    return ({
-        top: rect.top + win.pageYOffset,
-        left: rect.left + win.pageXOffset
-    });   
+    const top = rect.top + win.pageYOffset;
+    const left = rect.left + win.pageXOffset;
+    const bottom = top + rect.height;
+    const right = left + rect.width;
+
+    return ({ top, left, right, bottom });   
 }
 
 export function dispatch(event_name, data = {}, element = document){

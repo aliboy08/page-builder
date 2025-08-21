@@ -1,22 +1,32 @@
 import './add_zone.scss';
-import { create_div } from 'lib/utils';
+import { create_div, get_pos, dispatch } from 'lib/utils';
+
+const height = 30;
 
 export default class Add_Zone {
 
-    constructor(args = {}){
-        this.args = args;
-        this.init();
-    }
+    constructor(parent, method = 'after'){
+        
+        this.parent = parent;
+        this.el = create_div('add_zone');
 
-    init(){
+        this['add_'+method]();
 
-        const el = create_div('add_zone');
-        this.el = el;
-
-        el.addEventListener('click', ()=>{
-            console.log('popup', window.builder.popup)
-            window.builder.popup.open();
+        this.el.style.height = height + 'px';
+        
+        this.el.addEventListener('click', ()=>{
+            dispatch('add_zone_element', {el: this.el});
         })
     }
 
+    add_prepend(){
+        this.parent.prepend(this.el);
+    }
+
+    add_after(){
+        this.parent.after(this.el);
+        const top = get_pos(this.parent).bottom - height / 2;
+        this.el.style.top = top + 'px';
+    }
+    
 }

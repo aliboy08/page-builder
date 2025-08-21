@@ -1,12 +1,12 @@
 .page_builder {
     display: flex;
-
 }
 
 .page_builder_content {
     display: flex;
     flex-direction: column;
     flex: 1;
+    position: relative;
 
     &[data-state="drag_start"]{
         cursor: grabbing;
@@ -52,7 +52,7 @@
         transition: background .1s ease;
 
         &[data-state="drop_target"] {
-            background: #30d6e273;
+            background: hsl(186.01deg 36.8% 45.47% / 71%);
         }
 
         color: #fff;

@@ -6,18 +6,15 @@ export default class Popup {
     constructor(args = {}){
         this.args = args;
         this.close_duration = args.close_duration ?? 0;
+        this.init();
     }
 
     init(){
-
-        if( this.initialized ) return;
-        this.initialized = true;
         
         this.container = create_div('popup', document.body)
         this.container.style.display = 'none';
 
         const inner = create_div('popup_inner', this.container)
-
         this.content = create_div('popup_content', inner)
 
         this.outside_click = outside_click_handler(inner, ()=>this.close())
@@ -26,7 +23,6 @@ export default class Popup {
     }
     
     open(){
-        this.init();
         this.container.style.display = '';
         this.outside_click.start();
     }
@@ -41,6 +37,14 @@ export default class Popup {
             this.container.dataset.state = 'closed';
         }, this.close_duration)
         
+    }
+
+    set_context(context){
+        this.container.dataset.context = context;
+    }
+    
+    set_html(html){
+        this.content.innerHTML = html;
     }
 
 }
