@@ -1,5 +1,6 @@
 import { create_div } from 'lib/utils';
 import { dispatch } from 'lib/utils';
+// import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Base {
 
@@ -28,6 +29,8 @@ export default class Element_Base {
 
         dispatch('element_before_render', { html })
 
+        // let render_method = global_hooks.apply_filters('element_render_method', 'append', html.type)
+        
         if( method === 'after' ) {
             target.after(html)
         }
@@ -38,7 +41,12 @@ export default class Element_Base {
             target.append(html)
         }
 
+
         dispatch('element_after_render', { html })
+    }
+
+    remove(){
+        this.el.remove();
     }
 
 }

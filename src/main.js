@@ -4,14 +4,11 @@ import './main.scss';
 import Builder from './modules/builder/builder';
 import Control_Panel from './modules/control_panel/control_panel';
 import Elements_Manager from './modules/elements_manager/elements_manager';
-
-// const hooks = new Hooks([
-//     'before_init',
-//     'init',
-//     'after_init',
-// ])
+import Hooks from 'components/hooks';
 
 function init(){
+
+    window.builder_hooks = new Hooks([]);
 
     const container = document.querySelector('#page_builder');
     
@@ -24,7 +21,6 @@ function init(){
         parent_container: container,
     });
     control_panel.init_manager(manager);
-    
     
 }
 document.addEventListener('DOMContentLoaded', init)

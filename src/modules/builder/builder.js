@@ -8,6 +8,7 @@ import Popup from 'components/popup/popup';
 import Hooks from 'components/hooks';
 import Page_Element_Adder from './page_element_adder/page_element_adder';
 import Element_Selector from 'components/element_selector';
+import Element_Remover from './js/element_remover';
 
 export default class Builder {
     
@@ -19,23 +20,9 @@ export default class Builder {
         
         this.selector = new Element_Selector();
 
-        // this.hooks = new Hooks([
-        //     '',
-        // ]);
+        this.remover = new Element_Remover(this.selector);
 
-        // this.hooks.do('init');
-        
-        // this.elements_manager = new Elements_Manager();
-
-        // this.control_panel = new Control_Panel();
-
-        // this.elements_manager.render_to(this.control_panel.body);
-        
-        // this.init_items()
-        // // this.init_drop_zones();
-
-        // this.init_add_zones();
-        // this.init_popup();
+        console.log('builder-remover!')
 
         this.init_add_element();
     }
@@ -56,8 +43,6 @@ export default class Builder {
         manager.hooks.add('select', (element)=>{
             
             const location = this.selector.selected;
-            
-            console.log('manager:select', { element, location })
 
             let render_mode = 'append';
 
