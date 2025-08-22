@@ -105,7 +105,7 @@ export function outside_click_handler(el, on_outside_click){
     return { start, end }
 }
 
-export function is_child(target, parent){
+export function is_child_of(target, parent){
 
     if( target.nodeName === 'BODY' ) return false;
 
@@ -113,5 +113,5 @@ export function is_child(target, parent){
         return true;
     }
     
-    return is_child(target.parentElement, parent);
+    return is_child_of(target.parentElement, parent);
 }

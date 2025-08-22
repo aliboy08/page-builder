@@ -74,7 +74,6 @@ export default class Elements_Manager {
     }
 
     init_el(el){
-
         
         el.addEventListener('click', ()=>{
             
@@ -89,9 +88,9 @@ export default class Elements_Manager {
 
         })
 
-        if( this.is_draggable ) {
-            new Draggable(el)
-        }
+        // if( this.is_draggable ) {
+        //     new Draggable(el)
+        // }
 
     }
 

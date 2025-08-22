@@ -1,3 +1,4 @@
+import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
 
@@ -19,7 +20,7 @@ export default class Element_Container extends Element_Base {
         
         const html = create_div(`container`);
 
-        html.innerHTML = this.inner_html();
+        // html.innerHTML = this.inner_html();
 
         return html;
     }

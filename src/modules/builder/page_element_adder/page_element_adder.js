@@ -11,36 +11,40 @@ export default class Page_Element_Adder {
 
         this.target = this.el;
         
-        const popup = new Popup({
-            close_duration: 500,
-        });
+        // const popup = new Popup({
+        //     close_duration: 500,
+        // });
 
-        const elements_manager = new Elements_Manager({
-            draggable: false,
-        });
+        // const elements_manager = new Elements_Manager({
+        //     draggable: false,
+        // });
 
-        elements_manager.hooks.add('select', (element)=>{
-            this.render_element(element);
-            popup.close();
-        })
+        // elements_manager.hooks.add('select', (element)=>{
+        //     this.render_element(element);
+        //     popup.close();
+        // })
+
+        this.selected = false;
         
-        this.el.addEventListener('click', ()=>{
-            
-            if( !this.popup_loaded ) {
-                this.popup_loaded = 1;
-                elements_manager.render_to(popup.content, {
-                    draggable: false,
-                })
-            }
+        // this.el.addEventListener('click', ()=>{
 
-            popup.open();
-        })
+        //     // this.el.dataset.state = 'selected';
+            
+        //     // if( !this.popup_loaded ) {
+        //     //     this.popup_loaded = 1;
+        //     //     elements_manager.render_to(popup.content, {
+        //     //         draggable: false,
+        //     //     })
+        //     // }
+
+        //     // popup.open();
+        // })
         
     }
 
     render_element(element){
         const html = element.get_html();
-        this.target.after(html)
+        this.target.before(html)
     }
 
     set_target(el){

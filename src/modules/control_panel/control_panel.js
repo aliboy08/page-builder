@@ -34,6 +34,9 @@ export default class Control_Panel {
         resizer.hooks.add('resize', update)
     }
 
+    init_manager(manager){
+        manager.render_to(this.body)
+    }
     // load_manager(manager){
     //     const container = this.container.querySelector('.body');
     //     manager.load(container);

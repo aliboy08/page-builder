@@ -1,4 +1,5 @@
 import { create_div } from 'lib/utils';
+import { dispatch } from 'lib/utils';
 
 export default class Element_Base {
 
@@ -19,6 +20,25 @@ export default class Element_Base {
 
     inner_html(){
         return '';
+    }
+
+    render(target, method = 'append'){
+
+        const html = this.get_html();
+
+        dispatch('element_before_render', { html })
+
+        if( method === 'after' ) {
+            target.after(html)
+        }
+        else if( method === 'before' ) {
+            target.before(html)
+        }
+        else {
+            target.append(html)
+        }
+
+        dispatch('element_after_render', { html })
     }
 
 }

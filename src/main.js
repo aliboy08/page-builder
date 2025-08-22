@@ -15,13 +15,16 @@ function init(){
 
     const container = document.querySelector('#page_builder');
     
-    const elements_manager = new Elements_Manager();
+    const manager = new Elements_Manager();
 
     const builder = new Builder('#page_content');
+    builder.init_manager(manager)
 
     const control_panel = new Control_Panel({
         parent_container: container,
     });
+    control_panel.init_manager(manager);
+    
     
 }
 document.addEventListener('DOMContentLoaded', init)

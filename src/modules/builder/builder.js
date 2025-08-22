@@ -7,12 +7,17 @@ import Popup from 'components/popup/popup';
 // import Elements_Manager from '../elements_manager/elements_manager';
 import Hooks from 'components/hooks';
 import Page_Element_Adder from './page_element_adder/page_element_adder';
+import Element_Selector from 'components/element_selector';
 
 export default class Builder {
     
     constructor(selector = '#page_content'){
 
-        this.container = get_el(selector)
+        this.container = get_el(selector);
+
+        this.selected_element = null;
+        
+        this.selector = new Element_Selector();
 
         // this.hooks = new Hooks([
         //     '',
@@ -38,11 +43,32 @@ export default class Builder {
     init_add_element(){
 
         const adder = new Page_Element_Adder(this.container);
-
+        this.selector.init(adder.el);
+        
         // adder.hooks.add('click', ()=>{
 
         // })
         
+    }
+
+    init_manager(manager){
+
+        manager.hooks.add('select', (element)=>{
+            
+            const location = this.selector.selected;
+            
+            console.log('manager:select', { element, location })
+
+            let render_mode = 'append';
+
+            if( location.classList.contains('page_element_adder') ) {
+                render_mode = 'before';
+            }
+
+            element.render(location,  render_mode)
+
+        })
+
     }
     
     init_add_zones(){
