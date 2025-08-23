@@ -1,5 +1,5 @@
 export default {
-    // base: '/page-builder/',
+    base: '/page-builder/',
 	resolve: {
 		alias: {
 			images: '/assets/images',
