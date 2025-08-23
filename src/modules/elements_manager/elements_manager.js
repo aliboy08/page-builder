@@ -42,14 +42,19 @@ export default class Elements_Manager {
             container.innerHTML = '';
         }
 
-        const els_container = create_div('elements_manager_list', container);
-        
-        // this.is_draggable = args.draggable ?? this.is_draggable;
+        container.append(this.get_html());
+    }
+
+    get_html(){
+
+        const container = create_div('elements_manager_list');
 
         this.create_els().forEach(el=>{
-            els_container.append(el)
+            container.append(el)
             this.init_el(el);
-        })        
+        })
+
+        return container;
     }
 
     create_els(){

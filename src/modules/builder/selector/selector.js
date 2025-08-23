@@ -22,6 +22,10 @@ export default class Element_Selector {
             // e.stopPropagation();
             
             this.select(el, args)
+
+            if( typeof args.on_click === 'function' ) {
+                args.on_click();
+            }
         })
     }
 

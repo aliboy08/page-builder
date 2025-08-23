@@ -24,7 +24,7 @@ export default class Control_Panel {
         this.parent_container.prepend(this.container)
 
         this.inner = create_div('inner', this.container)
-        this.body = create_div('body', this.inner)
+        // this.body = create_div('body', this.inner)
     }
 
     init_resizer(){
@@ -42,9 +42,15 @@ export default class Control_Panel {
 
     init_manager(manager){
 
-        manager.render_to(this.body)
+        // manager.render_to(this.body)
+        this.tabs.set_content('add_elements', manager.get_html())
+
+        global_hooks.add('add_zone_click', ()=>{
+            this.tabs.set('add_elements')
+        })
 
     }
+
     // load_manager(manager){
     //     const container = this.container.querySelector('.body');
     //     manager.load(container);
@@ -64,7 +70,6 @@ export default class Control_Panel {
         ]);
 
         this.inner.prepend(this.tabs.container)
-
     }
 
 }

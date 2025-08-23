@@ -19,19 +19,28 @@ export default class Control_Panel_Settings_Loader {
 
     load(element){
         
-        if( !element.settings?.fields ) return;
+        if( !element.settings?.fields ) {
+            this.control_panel.tabs.set_content('element_settings', '');
+            return;
+        }
+        
+        const html = this.get_fields_html(element);
 
-        this.control_panel.body.innerHTML = '';
+        this.control_panel.tabs.set_content('element_settings', html)
+        this.control_panel.tabs.set('element_settings')
 
-        this.render_fields(element);
     }
+    
+    get_fields_html(element){
 
-    render_fields(element){
+        const fragment = new DocumentFragment();
 
         element.settings.fields.forEach(field_args=>{
             const field = new fields[field_args.type](field_args, element);
-            this.control_panel.body.append(field.html);
+            fragment.append(field.html);
         })
+
+        return fragment;
     }
-    
+
 }

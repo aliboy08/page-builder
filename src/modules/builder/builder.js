@@ -8,6 +8,7 @@ import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Builder {
     
@@ -38,6 +39,10 @@ export default class Builder {
         this.selector.init(add_zone, {
             target: content,
         });
+
+        add_zone.addEventListener('click', ()=>{
+            global_hooks.do('add_zone_click')
+        })
         
     }
 

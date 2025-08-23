@@ -27,7 +27,6 @@ export default class Tabs {
 
             nav.content = create_div('tab_content', tabs_content)
             nav.content.style.display = 'none';
-            nav.content.textContent = tab.key;
 
             nav.addEventListener('click', ()=>this.set(tab.key))
         })
@@ -52,6 +51,18 @@ export default class Tabs {
         if( !this.current ) return;
         this.nav[this.current].classList.remove('active')
         this.nav[this.current].content.style.display = 'none';
+    }
+
+    set_content(key, html){
+
+        if( typeof html === 'string' ) {
+            this.nav[key].content.innerHTML = html;
+        }
+        else {
+            this.nav[key].content.innerHTML = '';
+            this.nav[key].content.append(html)
+        }
+        
     }
 
 }
