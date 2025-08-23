@@ -115,3 +115,13 @@ export function is_child_of(target, parent){
     
     return is_child_of(target.parentElement, parent);
 }
+
+export function generate_id(length=10){
+    const characters = '1234567890abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for( let i = 1; i <= length; i++ ) {
+        const index = Math.floor(Math.random() * characters.length);
+        result += characters[index];
+    }
+    return result;
+}

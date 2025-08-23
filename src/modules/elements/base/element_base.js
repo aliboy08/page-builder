@@ -1,18 +1,19 @@
 import { create_div } from 'lib/utils';
 import { dispatch } from 'lib/utils';
+import { generate_id } from 'lib/utils';
 // import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Base {
 
-    constructor(args = {}){
-        this.id = args.id;
-        this.name = args.name;
+    constructor(type, id = null){
+        this.type = type;
+        this.id = id ? id : generate_id();
         this.data = {}
     }
 
     get_html(){
         
-        const html = create_div(`element element_${this.id}`);
+        const html = create_div(`element element_${this.type}`);
 
         html.innerHTML = this.inner_html();
 
@@ -23,30 +24,36 @@ export default class Element_Base {
         return '';
     }
 
-    render(target, method = 'append'){
+    render(parent, method = 'append'){
 
         const html = this.get_html();
-
-        dispatch('element_before_render', { html })
-
-        // let render_method = global_hooks.apply_filters('element_render_method', 'append', html.type)
         
-        if( method === 'after' ) {
-            target.after(html)
-        }
-        else if( method === 'before' ) {
-            target.before(html)
-        }
-        else {
-            target.append(html)
+        switch(method) {
+            case 'append' : parent.append(html); break;
+            case 'after' : parent.after(html); break;
+            case 'before' : parent.before(html); break;
+            case 'prepend' : parent.prepend(html); break;
         }
 
+        this.html = html;
+        
+        parent.el_children.push(this);
 
         dispatch('element_after_render', { html })
+        
+        return html;
     }
 
     remove(){
         this.el.remove();
+    }
+
+    get_data(){
+        return {
+            id: this.id,
+            type: this.type,
+            data: this.data,
+        }
     }
 
 }

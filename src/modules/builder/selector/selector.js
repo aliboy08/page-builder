@@ -1,8 +1,12 @@
+import './selector.scss';
+
 export default class Element_Selector {
     
     constructor(){
 
         this.selected = null;
+        this.selected_trigger = null;
+        
         this.throttling = false;
         
         document.addEventListener('element_after_render', ({data})=>{
@@ -10,32 +14,49 @@ export default class Element_Selector {
         })
     }
 
-    init(el){
-
+    init(el, args = {}){
+        
         el.addEventListener('click', (e)=>{
             // e.stopPropagation();
-            this.select(el)
+            
+            this.select(el, args)
         })
     }
 
-    select(el){
+    select(el, args = {}){
 
         // throttle to simulate stop progration
-        if( this.throttle() ) return; 
-        
+        if( this.throttle() ) return;
+
         this.unselect_previous();
 
-        this.selected = el;
-        el.dataset.state = 'selected';
+        let target = el;
+
+        if( args.target ) {
+            target = args.target;
+            el.dataset.state = 'selected';
+            this.selected_trigger = el;
+        }
+        
+        this.selected = target;
+        target.dataset.state = 'selected';
     }
     
     unselect(el){
+
         el.dataset.state = '';
+
     }
 
     unselect_previous(){
+
         if( this.selected ) {
             this.unselect(this.selected)
+        }
+
+        if( this.selected_trigger ) {
+            this.selected_trigger.dataset.state = '';
+            this.selected_trigger = null;
         }
     }    
 

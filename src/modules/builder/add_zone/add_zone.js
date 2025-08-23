@@ -1,32 +1,22 @@
 import './add_zone.scss';
-import { create_div, get_pos, dispatch } from 'lib/utils';
+import { create_div } from 'lib/utils';
+// import Popup from 'components/popup/popup';
+// import Elements_Manager from 'src/modules/elements_manager/elements_manager';
 
-const height = 30;
-
-export default class Add_Zone {
-
-    constructor(parent, method = 'after'){
-        
-        this.parent = parent;
-        this.el = create_div('add_zone');
-
-        this['add_'+method]();
-
-        this.el.style.height = height + 'px';
-        
-        this.el.addEventListener('click', ()=>{
-            dispatch('add_zone_element', {el: this.el});
-        })
+export default class Page_Element_Adder {
+    
+    constructor(container){
+        this.el = create_div('page_element_adder', container)
+        this.target = container;
     }
 
-    add_prepend(){
-        this.parent.prepend(this.el);
+    render_element(element){
+        const html = element.get_html();
+        this.target.before(html)
     }
 
-    add_after(){
-        this.parent.after(this.el);
-        const top = get_pos(this.parent).bottom - height / 2;
-        this.el.style.top = top + 'px';
+    set_target(el){
+        this.target = el;
     }
     
 }

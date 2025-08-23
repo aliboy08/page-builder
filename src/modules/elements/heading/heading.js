@@ -2,12 +2,9 @@ import Element_Base from '../base/element_base';
 
 export default class Element_Heading extends Element_Base {
 
-    constructor(){
-        
-        super({
-            id: 'heading',
-            name: 'Heading',
-        })
+    constructor(id = null){
+
+        super('heading', id)
 
         this.data = {
             text: 'Heading Element',

@@ -4,32 +4,21 @@ import { create_div } from 'lib/utils';
 
 export default class Element_Container extends Element_Base {
 
-    constructor(){
+    constructor(id = null){
 
-        super({
-            id: 'container',
-            name: 'Container',
-        })
+        super('container', id)
 
-        this.data = {
-            text: 'Container',
-        }
+        this.el_children = [];
+
     }
 
     get_html(){
         
         const html = create_div(`container`);
 
-        // html.innerHTML = this.inner_html();
+        html.el_children = this.el_children;
 
         return html;
-    }
-
-    inner_html(){
-
-        const data = this.data;
-
-        return `${data.text}`;
     }
 
 }

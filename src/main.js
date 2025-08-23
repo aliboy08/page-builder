@@ -22,5 +22,9 @@ function init(){
     });
     control_panel.init_manager(manager);
     
+    const data = '[{"id":"xio7f7jz8l","type":"container","data":{},"children":[{"id":"ch7eiddkpv","type":"heading","data":{"text":"Heading Element"}},{"id":"sqb9qq50c4","type":"container","data":{},"children":[{"id":"36teay8rz4","type":"heading","data":{"text":"Heading Element"}},{"id":"rxvft1saf0","type":"heading","data":{"text":"Heading Element"}}]}]},{"id":"e8vf8x05cp","type":"container","data":{},"children":[{"id":"nyaf11ctbx","type":"container","data":{},"children":[{"id":"f3uyogki64","type":"heading","data":{"text":"Heading Element"}},{"id":"6mojvf9urt","type":"heading","data":{"text":"Heading Element"}},{"id":"clq3mu2p2k","type":"container","data":{},"children":[{"id":"w88nymmdfd","type":"heading","data":{"text":"Heading Element"}}]}]}]}]';
+
+    builder.load(data);
+    
 }
 document.addEventListener('DOMContentLoaded', init)

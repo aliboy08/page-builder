@@ -10,11 +10,8 @@ export default class Element_Remover {
             
             el.remove();
             selector.selected = null;
-            console.log(selector.selected)
         })
 
     }
-
-
     
 }

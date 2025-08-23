@@ -1,220 +1,119 @@
 import './builder.scss';
 import { is_intersecting, create_div, get_el } from 'lib/utils';
-import Draggable from 'components/draggable';
-import Add_Zone from './add_zone/add_zone';
-// import Control_Panel from '../control_panel/control_panel';
-import Popup from 'components/popup/popup';
-// import Elements_Manager from '../elements_manager/elements_manager';
-import Hooks from 'components/hooks';
-import Page_Element_Adder from './page_element_adder/page_element_adder';
-import Element_Selector from 'components/element_selector';
-import Element_Remover from './js/element_remover';
+// import Draggable from 'components/draggable';
+// import Popup from 'components/popup/popup';
+// import Hooks from 'components/hooks';
+// import Page_Element_Adder from './page_element_adder/page_element_adder';
+import Element_Selector from './selector/selector';
+import Element_Remover from './remover/remover';
+import Builder_Save from './save/save';
 
 export default class Builder {
     
     constructor(selector = '#page_content'){
-
-        this.container = get_el(selector);
-
-        this.selected_element = null;
         
+        this.container = get_el(selector);
         this.selector = new Element_Selector();
 
-        this.remover = new Element_Remover(this.selector);
+        new Element_Remover(this.selector);
+        new Builder_Save(this);
 
-        console.log('builder-remover!')
-
-        this.init_add_element();
+        this.init_content();
     }
 
-    init_add_element(){
-
-        const adder = new Page_Element_Adder(this.container);
-        this.selector.init(adder.el);
+    init_content(){
         
-        // adder.hooks.add('click', ()=>{
+        const content = get_el('#page_content_body')
+        this.content = content;
+        content.el_children = [];
 
-        // })
+        this.selector.selected = content;
+
+        const add_zone = create_div('page_element_adder')
+        content.after(add_zone)
+        
+        this.selector.init(add_zone, {
+            target: content,
+        });
         
     }
 
     init_manager(manager){
-
-        manager.hooks.add('select', (element)=>{
-            
+        
+        const render_element = (element)=>{
             const location = this.selector.selected;
-
-            let render_mode = 'append';
-
-            if( location.classList.contains('page_element_adder') ) {
-                render_mode = 'before';
-            }
-
-            element.render(location,  render_mode)
-
+            if( !location?.el_children ) return;
+            element.render(location)
+        }
+        
+        manager.hooks.add('select', (element)=>{
+            render_element(element)
         })
 
-    }
-    
-    init_add_zones(){
-
-        const add_zone = new Add_Zone(this.container, 'prepend');
-
-        // this.container.prepend(add_zone.el)
-        
-        // const bottom = new Add_Zone();
-        // this.container.append(bottom.el)
-
+        this.manager = manager;
     }
 
-    init_popup(){
+    get_data(){
+
+        const data = [];
         
-        const popup = new Popup({
-            close_duration: 500,
-        });
+        console.log(this.content.el_children)
 
-        document.addEventListener('add_zone_element', ({ data })=>{
+        const get_elements_data = (parent, data)=>{
 
-            console.log('add_zone_element', data.el)
+            parent.el_children.forEach(element=>{
 
-            this.elements_manager.set_target(data.el)
+                const element_data = element.get_data();
 
-            popup.set_context('add_elements')
-            
-            this.elements_manager.load(popup.content, {
-                draggable: false,
-                on_select: ()=>popup.close(),
+                get_children_data(element, element_data);
+
+                data.push(element_data)
+
             })
 
-            popup.open();
+        }
 
-        })
-        
-    }
-
-    init_items(){
-
-        this.items = [];
-
-        document.querySelectorAll('.container').forEach(item=>{
-            this.items.push(this.init_item(item))
-        })
-    }
-
-    init_item(item){
-
-        const add_zone = new Add_Zone(item, 'after');
-
-        // const draggable = new Draggable(item)
-        // draggable.hooks.add('start', ()=>this.drag_start(item))
-        // draggable.hooks.add('end', ()=>this.drag_end())
-        // draggable.hooks.add('update', (drag_box)=>this.drag_update(drag_box))
-        
-        return item;
-    }
-
-    // init_drop_zones(){
-
-    //     this.drop_zones = [];
-
-    //     const add_drop_zone = (destination, method)=>{
-
-    //         const con = create_div('drop_zone_container')
-    //         const drop_zone = create_div('drop_zone', con)
-    //         destination[method](con)
-
-    //         this.drop_zones.push(drop_zone)
-
-    //         return drop_zone
-    //     }
-
-    //     add_drop_zone(this.container, 'prepend');
-
-    //     this.items.forEach(item=>{
-    //         add_drop_zone(item, 'after')
-    //     })
-    // }
-    
-    // drag_start(current_item){
-
-    //     this.current_item = current_item;
-
-    //     this.container.dataset.state = 'drag_start';
-        
-    //     this.available_drop_zones = this.drop_zones.filter(drop_zone=>{
-    //         if( drop_zone.parentElement.previousElementSibling === current_item ) return false;
-    //         if( drop_zone.parentElement.nextElementSibling === current_item ) return false;
-
-    //         const rect = drop_zone.getBoundingClientRect();
-    //         drop_zone.top = rect.top + pageYOffset;
-    //         drop_zone.bottom = rect.bottom + pageYOffset;
-
-    //         return true;
-    //     })
-
-    // }
-
-    // drag_end(){
-
-    //     this.container.dataset.state = 'drag_end';
-        
-    //     if( this.drop_zone ) {
-    //         this.apply_reorder();
-    //         this.drop_zone.dataset.state = '';
-    //     }
-        
-    //     this.drop_zone = null;
-    // }
-    
-    // drag_update(drag_box){
-        
-    //     const drop_zone = this.get_drop_zone(drag_box);
-
-    //     if( drop_zone ) {
-
-    //         if( this.drop_zone ) {
-    //             if( this.drop_zone === drop_zone ) return; 
-    //             this.drop_zone.dataset.state = '';
-    //         }
-
-    //         this.drop_zone = drop_zone;
-    //         drop_zone.dataset.state = 'drop_target';
-    //     }
-
-    //     if( this.drop_zone ) {
+        const get_children_data = (element, element_data)=>{
             
-    //         const intersecting = is_intersecting(drag_box, this.drop_zone);
-    //         this.drop_zone.dataset.state = intersecting ? 'drop_target' : '';
-
-    //         if( !intersecting ) {
-    //             this.drop_zone = null;
-    //         }
-    //     }
-        
-    // }
-
-    // get_drop_zone(drag_box){
-        
-    //     for( const drop_zone of this.available_drop_zones ) {
-
-    //         if( is_intersecting(drag_box, drop_zone) ) {
-    //             return drop_zone;
-    //         }
+            if( !element?.el_children?.length ) return;
             
-    //         if( is_intersecting(drag_box, drop_zone) ) {
-    //             return drop_zone;
-    //         }
+            element_data.children = [];
+            
+            get_elements_data(element, element_data.children);
+            
+        }
 
-    //     }
-    // }
+        get_elements_data(this.content, data);
 
-    // apply_reorder(){
+        return data;
+    }
+
+    load(elements_data){
         
-    //     const current_item_dropzone = this.current_item.nextElementSibling;
+        elements_data = JSON.parse(elements_data)
         
-    //     this.drop_zone.parentElement.after(this.current_item)
-    //     this.current_item.after(current_item_dropzone)
-    // }
+        const render_elements = (elements_data, parent)=>{
 
+            elements_data.forEach(element_data=>{
+
+                const constructor = this.manager.elements[element_data.type].init;
+                const element = new constructor(element_data.id);
+                const element_html = element.render(parent)
+                
+                render_children(element_data, element_html);
+            })
+            
+        }
+
+        const render_children = (element_data, parent)=>{
+            if( !element_data.children?.length ) return;
+            render_elements(element_data.children, parent);
+        }
+        
+        render_elements(elements_data, this.content);
+
+        console.log(this.content.el_children)
+        
+    }
+    
 }
-

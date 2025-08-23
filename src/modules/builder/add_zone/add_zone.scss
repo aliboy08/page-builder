@@ -1,25 +1,42 @@
-.add_zone {
+@use 'css/mixins' as a;
 
-    height: 0;
-	background: hsl(186.01deg 36.8% 45.47% / 71%);
-	color: #fff;
-	align-items: center;
-	justify-content: center;
-	display: flex;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity .1s ease;
-    position: absolute;
-    width: 100%;
+.page_element_adder {
+    
+	margin: 40px auto;
+    padding: 10px;
     
     &::before {
-        content: "+";
-        font-size: 24px;
-        line-height: 0;
-        color: rgb(255 255 255 / 46%);
+        
+        border: var(--border-light);
+        border-style: dashed;
+
+        width: 800px;
+        max-width: 100%;
+        height: 50px;
+
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        transition: border-color .1s ease;
+
+
+        @include a.flex_center;
+        @include a.icon('\e900', 24px);
+        color: #ffffff71;
+        transition: color .1s ease;
     }
 
+    &[data-state="selected"],
     &:hover {
-        opacity: 1;
+        &::before {
+            border-color: #ffffff77;
+            color: #ffffff9c;
+        }
+    }
+    
+}
+
+.page_content[data-state="selected"]{
+    > .page_element_adder::before {
+        border-color: #ffffffd2;
     }
 }

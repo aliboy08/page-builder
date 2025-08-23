@@ -1,5 +1,5 @@
 .container {
-    
+
     background: #ffffff11;
     padding: 40px;
     border-radius: 10px;
@@ -7,10 +7,9 @@
     color: #ffffff67;
     font-size: 30px;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: box-shadow .1s ease;
+    
+    display: var(--display);
+    flex-direction: var(--flex-direction);
     
     &[data-state="grabbed"] {
         box-shadow: inset 0 0 0 2px #ffffffc5;
