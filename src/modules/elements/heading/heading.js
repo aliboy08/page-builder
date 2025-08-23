@@ -18,7 +18,6 @@ export default class Element_Heading extends Element_Base {
                     key: 'text',
                     label: 'Text',
                     on_change: (value)=>{
-                        console.log('element:text_change', value)
                         this.data.text = value;
                         this.html.textContent = value;
                     }
@@ -28,11 +27,7 @@ export default class Element_Heading extends Element_Base {
     }
     
     inner_html(){
-
         const data = this.data;
-        
-        console.log('inner_html')
-
         return `${data.text}`;
     }
 

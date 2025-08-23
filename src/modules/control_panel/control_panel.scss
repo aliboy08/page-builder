@@ -28,19 +28,26 @@
     opacity: 0;
 }
 
-// .control_panel .elements_manager_list {
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-//     gap: 10px;
+.control_panel {
 
-//     .element {
-//         border: 1px solid #ffffff2f;
-//         border-radius: 4px;
-//         background: #0000001f;
-//         padding: 10px;
-//         font-size: 12px;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//     }
-// }
+    .tabs_nav {
+        border-bottom: 1px solid #ffffff2c;
+        font-size: 12px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .tab_nav {
+        padding: 8px 20px;
+        background: rgb(255 255 255 / 4%);
+        cursor: pointer;
+
+        &.active {
+            background: rgb(255 255 255 / 12%);
+        }
+    }
+
+    .tab_content {
+        padding: 15px 0 16px;
+    }
+}

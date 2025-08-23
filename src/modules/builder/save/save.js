@@ -23,7 +23,7 @@ export default class Builder_Save {
             setTimeout(()=>{
                 button.textContent = 'Save';
                 button.dataset.state = '';
-            }, 2000)
+            }, 1500)
             
         })
 
