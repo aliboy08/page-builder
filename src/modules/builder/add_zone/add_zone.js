@@ -6,7 +6,7 @@ import { create_div } from 'lib/utils';
 export default class Page_Element_Adder {
     
     constructor(container){
-        this.el = create_div('page_element_adder', container)
+        this.el = create_div('add_zone', container)
         this.target = container;
     }
 

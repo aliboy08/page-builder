@@ -1,9 +1,11 @@
 @use 'css/mixins' as a;
 
-.page_element_adder {
+.add_zone {
     
 	margin: 40px auto;
     padding: 10px;
+    display: flex;
+    justify-content: center;
     
     &::before {
         

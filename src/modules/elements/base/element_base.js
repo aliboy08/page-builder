@@ -1,7 +1,6 @@
 import { create_div } from 'lib/utils';
 import { dispatch } from 'lib/utils';
 import { generate_id } from 'lib/utils';
-// import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Base {
 
@@ -16,6 +15,8 @@ export default class Element_Base {
         const html = create_div(`element element_${this.type}`);
 
         html.innerHTML = this.inner_html();
+        
+        html.element = this;
 
         return html;
     }
@@ -37,6 +38,8 @@ export default class Element_Base {
 
         this.html = html;
         
+        this.el_parent = parent;
+
         parent.el_children.push(this);
 
         dispatch('element_after_render', { html })
@@ -45,7 +48,9 @@ export default class Element_Base {
     }
 
     remove(){
-        this.el.remove();
+        const index = this.el_parent.el_children.indexOf(this)
+        this.el_parent.el_children.splice(index, 1)
+        this.html.remove();
     }
 
     get_data(){

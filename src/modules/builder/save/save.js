@@ -23,7 +23,7 @@ export default class Builder_Save {
 
     save(){
         const data = this.builder.get_data();
-        console.log(JSON.stringify(data))
+        localStorage.setItem('page_builder_data', JSON.stringify(data))
     }
 
 }

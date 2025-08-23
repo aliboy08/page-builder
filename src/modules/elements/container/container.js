@@ -17,6 +17,8 @@ export default class Element_Container extends Element_Base {
         const html = create_div(`container`);
 
         html.el_children = this.el_children;
+        
+        html.element = this;
 
         return html;
     }

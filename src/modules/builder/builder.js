@@ -29,7 +29,7 @@ export default class Builder {
 
         this.selector.selected = content;
 
-        const add_zone = create_div('page_element_adder')
+        const add_zone = create_div('add_zone')
         content.after(add_zone)
         
         this.selector.init(add_zone, {
