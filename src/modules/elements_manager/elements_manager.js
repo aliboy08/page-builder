@@ -76,34 +76,10 @@ export default class Elements_Manager {
     init_el(el){
         
         el.addEventListener('click', ()=>{
-            
-            const element = new this.elements[el.type].init(key);
-
+            const element = new this.elements[el.type].init();
             this.hooks.do('select', element)
-            // this.add_element(el)
-
-            // if( typeof args.on_select === 'function' ) {
-            //     args.on_select();
-            // }
-
         })
-
-        // if( this.is_draggable ) {
-        //     new Draggable(el)
-        // }
-
+        
     }
-
-    // add_element(el){
-
-    //     const element = new elements[el.element_id].init();
-
-    //     element.data = {
-    //         text: 'Heading Element',
-    //     }
-
-    //     this.target.after(element.get_html())
-
-    // }
 
 }

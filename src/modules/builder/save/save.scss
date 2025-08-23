@@ -1,4 +1,5 @@
 .save_button {
+
     position: fixed;
     top: 5px;
     right: 5px;
@@ -11,6 +12,13 @@
     color: #fafafaa4;
     z-index: 10;
     font-size: 12px;
+
+    width: 70px;
+    
+    &[data-state="saved"]{
+        border-color: #59c75966;
+        color: #59c759;
+    }
 
     &:hover {
         background: #ffffff31;

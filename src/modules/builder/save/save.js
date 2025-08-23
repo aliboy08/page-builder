@@ -15,7 +15,16 @@ export default class Builder_Save {
         button.textContent = 'Save';
 
         button.addEventListener('click', ()=>{
+
             this.save();
+            
+            button.textContent = 'Saved';
+            button.dataset.state = 'saved';
+            setTimeout(()=>{
+                button.textContent = 'Save';
+                button.dataset.state = '';
+            }, 2000)
+            
         })
 
         return button;
@@ -58,6 +67,5 @@ export default class Builder_Save {
 
         return data;
     }
-
 
 }
