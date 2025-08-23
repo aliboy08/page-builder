@@ -1,5 +1,7 @@
 import './selector.scss';
 
+import { global_hooks } from 'src/global_hooks';
+
 export default class Element_Selector {
     
     constructor(){
@@ -40,6 +42,11 @@ export default class Element_Selector {
         
         this.selected = target;
         target.dataset.state = 'selected';
+
+        if( target.element ) {
+            global_hooks.do('select_element', target.element)
+        }
+        
     }
     
     unselect(el){

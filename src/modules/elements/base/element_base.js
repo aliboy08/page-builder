@@ -8,6 +8,8 @@ export default class Element_Base {
         this.type = type;
         this.id = id ? id : generate_id();
         this.data = {}
+        this.settings = {};
+        
     }
 
     get_html(){

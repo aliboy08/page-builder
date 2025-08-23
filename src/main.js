@@ -4,12 +4,8 @@ import './main.scss';
 import Builder from './modules/builder/builder';
 import Control_Panel from './modules/control_panel/control_panel';
 import Elements_Manager from './modules/elements_manager/elements_manager';
-import Hooks from 'components/hooks';
 
 function init(){
-
-    window.builder_hooks = new Hooks([]);
-
     const container = document.querySelector('#page_builder');
     
     const manager = new Elements_Manager();
@@ -23,7 +19,7 @@ function init(){
     control_panel.init_manager(manager);
     
     const data = localStorage.getItem('page_builder_data');
-    if( data ) builder.load(data)
+    if( data ) builder.content_loader.load(data)
     
 }
 document.addEventListener('DOMContentLoaded', init)

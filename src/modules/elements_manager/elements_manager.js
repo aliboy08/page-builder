@@ -77,7 +77,7 @@ export default class Elements_Manager {
         
         el.addEventListener('click', ()=>{
             
-            const element = new this.elements[el.type].init();
+            const element = new this.elements[el.type].init(key);
 
             this.hooks.do('select', element)
             // this.add_element(el)

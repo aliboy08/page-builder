@@ -7,6 +7,7 @@ import { is_intersecting, create_div, get_el } from 'lib/utils';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Builder_Save from './save/save';
+import Builder_Content_Loader from './load/content_loader';
 
 export default class Builder {
     
@@ -17,6 +18,8 @@ export default class Builder {
 
         new Element_Remover(this.selector);
         new Builder_Save(this);
+
+        this.content_loader = new Builder_Content_Loader(this);
 
         this.init_content();
     }
@@ -51,69 +54,6 @@ export default class Builder {
         })
 
         this.manager = manager;
-    }
-
-    get_data(){
-
-        const data = [];
-        
-        console.log(this.content.el_children)
-
-        const get_elements_data = (parent, data)=>{
-
-            parent.el_children.forEach(element=>{
-
-                const element_data = element.get_data();
-
-                get_children_data(element, element_data);
-
-                data.push(element_data)
-
-            })
-
-        }
-
-        const get_children_data = (element, element_data)=>{
-            
-            if( !element?.el_children?.length ) return;
-            
-            element_data.children = [];
-            
-            get_elements_data(element, element_data.children);
-            
-        }
-
-        get_elements_data(this.content, data);
-
-        return data;
-    }
-
-    load(elements_data){
-        
-        elements_data = JSON.parse(elements_data)
-        
-        const render_elements = (elements_data, parent)=>{
-
-            elements_data.forEach(element_data=>{
-
-                const constructor = this.manager.elements[element_data.type].init;
-                const element = new constructor(element_data.id);
-                const element_html = element.render(parent)
-                
-                render_children(element_data, element_html);
-            })
-            
-        }
-
-        const render_children = (element_data, parent)=>{
-            if( !element_data.children?.length ) return;
-            render_elements(element_data.children, parent);
-        }
-        
-        render_elements(elements_data, this.content);
-
-        console.log(this.content.el_children)
-        
     }
     
 }

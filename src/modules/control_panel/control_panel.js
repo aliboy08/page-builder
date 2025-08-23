@@ -1,6 +1,8 @@
 import './control_panel.scss';
 import { get_el, create_div } from 'lib/utils';
 import Resizer from 'components/resizer';
+import { global_hooks } from 'src/global_hooks';
+import Control_Panel_Settings_Loader from './settings_loader';
 
 export default class Control_Panel {
 
@@ -9,6 +11,10 @@ export default class Control_Panel {
         this.parent_container = args.parent_container;
         this.init_html();
         this.init_resizer();
+
+        this.settings_loader = new Control_Panel_Settings_Loader(this);
+        
+        
     }
     
     init_html(){
