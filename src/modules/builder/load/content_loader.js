@@ -9,29 +9,31 @@ export default class Builder_Content_Loader {
         elements_data = JSON.parse(elements_data)
         
         const manager = this.builder.manager;
-        
-        const render_elements = (elements_data, parent)=>{
+
+        const load_element = (element_data)=>{
+            const constructor = manager.elements[element_data.type].init;
+            const element = new constructor(element_data.id);
+            element.data = element_data.data;
+            return element;
+        }
+
+        const render_elements = (parent_element, elements_data)=>{
 
             elements_data.forEach(element_data=>{
 
-                const constructor = manager.elements[element_data.type].init;
-                const element = new constructor(element_data.id);
+                const element = load_element(element_data);
 
-                element.data = element_data.data;
+                parent_element.render_child(element);
 
-                const element_html = element.render(parent)
+                if( element_data?.children?.length ) {
+                    render_elements(element, element_data.children)
+                }
                 
-                render_children(element_data, element_html);
             })
             
         }
 
-        const render_children = (element_data, parent)=>{
-            if( !element_data.children?.length ) return;
-            render_elements(element_data.children, parent);
-        }
-        
-        render_elements(elements_data, this.builder.content);
+        render_elements(this.builder, elements_data);
         
     }
 }

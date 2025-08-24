@@ -7,68 +7,40 @@ export default class Element_Selector {
     constructor(){
 
         this.selected = null;
-        this.selected_trigger = null;
-        
+
         this.throttling = false;
-        
-        document.addEventListener('element_after_render', ({data})=>{
-            this.init(data.html)
+
+        global_hooks.add('element_after_render', (element)=>{
+            this.init(element)
         })
     }
 
-    init(el, args = {}){
+    init(element){
         
-        el.addEventListener('click', (e)=>{
-            // e.stopPropagation();
-            
-            this.select(el, args)
-
-            if( typeof args.on_click === 'function' ) {
-                args.on_click();
-            }
+        element.html.addEventListener('click', ()=>{
+            this.select(element)
         })
     }
 
-    select(el, args = {}){
+    select(element){
 
         // throttle to simulate stop progration
         if( this.throttle() ) return;
-
         this.unselect_previous();
-
-        let target = el;
-
-        if( args.target ) {
-            target = args.target;
-            el.dataset.state = 'selected';
-            this.selected_trigger = el;
-        }
         
-        this.selected = target;
-        target.dataset.state = 'selected';
+        this.selected = element;
 
-        if( target.element ) {
-            global_hooks.do('select_element', target.element)
-        }
+        console.log('select', element)
         
-    }
-    
-    unselect(el){
+        this.selected.html.dataset.state = 'selected';
 
-        el.dataset.state = '';
-
+        global_hooks.do('select_element', element)
     }
 
     unselect_previous(){
-
-        if( this.selected ) {
-            this.unselect(this.selected)
-        }
-
-        if( this.selected_trigger ) {
-            this.selected_trigger.dataset.state = '';
-            this.selected_trigger = null;
-        }
+        if( !this.selected ) return;
+        this.selected.html.dataset.state = '';
+        this.selected = null;
     }    
 
     throttle(){

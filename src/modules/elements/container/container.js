@@ -1,6 +1,7 @@
 import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Container extends Element_Base {
 
@@ -8,19 +9,32 @@ export default class Element_Container extends Element_Base {
 
         super('container', id)
 
-        this.el_children = [];
-
+        this.children = [];
     }
 
     get_html(){
         
-        const html = create_div(`container`);
-
-        html.el_children = this.el_children;
+        const con = create_div(`con`);
         
-        html.element = this;
+        const inner = create_div('con_inner', con)
+        
+        // con.render_target = inner;
+        // inner.el_children = this.el_children;
+        // inner.element = this;
 
-        return html;
+        this.inner = inner;
+
+        return con;
+    }
+
+    render_child(child_element){
+
+        child_element.html = child_element.get_html();
+
+        this.inner.append(child_element.html);
+        this.children.push(child_element)
+
+        global_hooks.do('element_after_render', child_element)
     }
 
 }

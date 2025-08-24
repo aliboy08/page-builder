@@ -14,17 +14,18 @@ export default class Builder_Save {
         button.className = 'save_button';
         button.textContent = 'Save';
 
-        button.addEventListener('click', ()=>{
-
-            this.save();
-            
+        const save_indicator = ()=>{
             button.textContent = 'Saved';
             button.dataset.state = 'saved';
             setTimeout(()=>{
                 button.textContent = 'Save';
                 button.dataset.state = '';
             }, 1500)
-            
+        }
+
+        button.addEventListener('click', ()=>{
+            this.save();
+            save_indicator();
         })
 
         return button;
@@ -41,29 +42,28 @@ export default class Builder_Save {
         
         const get_elements_data = (parent, data)=>{
 
-            parent.el_children.forEach(element=>{
+            parent.children.forEach(element=>{
 
                 const element_data = element.get_data();
-
-                get_children_data(element, element_data);
-
                 data.push(element_data)
 
+                get_children_data(element, element_data);
+                
             })
 
         }
 
-        const get_children_data = (element, element_data)=>{
+        const get_children_data = (parent, element_data)=>{
             
-            if( !element?.el_children?.length ) return;
-            
+            if( !parent?.children?.length ) return;
+
             element_data.children = [];
-            
-            get_elements_data(element, element_data.children);
+
+            get_elements_data(parent, element_data.children);
             
         }
-
-        get_elements_data(this.builder.content, data);
+        
+        get_elements_data(this.builder, data);
 
         return data;
     }

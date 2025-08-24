@@ -5,6 +5,7 @@ import Control_Panel from './modules/control_panel/control_panel';
 import Elements_Manager from './modules/elements_manager/elements_manager';
 
 function init(){
+    
     const container = document.querySelector('#page_builder');
     
     const manager = new Elements_Manager();

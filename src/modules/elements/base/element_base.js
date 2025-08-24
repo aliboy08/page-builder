@@ -1,6 +1,6 @@
 import { create_div } from 'lib/utils';
-import { dispatch } from 'lib/utils';
 import { generate_id } from 'lib/utils';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Base {
 
@@ -9,7 +9,6 @@ export default class Element_Base {
         this.id = id ? id : generate_id();
         this.data = {}
         this.settings = {};
-        
     }
 
     get_html(){
@@ -27,24 +26,25 @@ export default class Element_Base {
         return '';
     }
 
-    render(parent, method = 'append'){
+    render_to(parent, method = 'append'){
 
         const html = this.get_html();
         
-        switch(method) {
-            case 'append' : parent.append(html); break;
-            case 'after' : parent.after(html); break;
-            case 'before' : parent.before(html); break;
-            case 'prepend' : parent.prepend(html); break;
-        }
+        // switch(method) {
+        //     case 'append' : parent.append(html); break;
+        //     case 'after' : parent.after(html); break;
+        //     case 'before' : parent.before(html); break;
+        //     case 'prepend' : parent.prepend(html); break;
+        // }
+
+        parent.append(html);
 
         this.html = html;
         
-        this.el_parent = parent;
+        // this.el_parent = parent;
+        // parent.el_children.push(this);
 
-        parent.el_children.push(this);
-
-        dispatch('element_after_render', { html })
+        global_hooks.do('element_after_render', this)
         
         return html;
     }
