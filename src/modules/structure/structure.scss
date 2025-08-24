@@ -1,31 +1,25 @@
-@use './css/tabs.scss';
-@use './css/element_settings.scss';
-
-.control_panel {
+.elements_structure {
     
     background: var(--dark);
-	border-right: var(--border-light);
+	border-left: var(--border-light);
 	flex-shrink: 0;
-	width: 320px;
+	width: 200px;
 	position: fixed;
 	top: 0;
-	left: 0;
+	right: 0;
 	height: 100%;
     z-index: 10;;
     color: #fff;
     padding: 16px;
-
-    > .inner {
-        height: 100%;
-    }
+    
 }
 
-.control_panel .resize_handle {
+.elements_structure .resize_handle {
     position: absolute;
     height: 100%;
     width: 12px;
     top: 0;
-    right: -6px;
+    left: -6px;
     cursor: e-resize;
     z-index: 10;
     opacity: 0;

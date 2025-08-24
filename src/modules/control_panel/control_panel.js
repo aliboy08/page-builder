@@ -1,9 +1,9 @@
 import './control_panel.scss';
-import { get_el, create_div } from 'lib/utils';
+import { create_div } from 'lib/utils';
 import Resizer from 'components/resizer';
-import { global_hooks } from 'src/global_hooks';
 import Control_Panel_Settings_Loader from './settings_loader';
 import Tabs from 'components/tabs/tabs';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Control_Panel {
 
@@ -13,6 +13,7 @@ export default class Control_Panel {
         this.init_html();
         this.init_tabs();
         this.init_resizer();
+        this.init_selector();
         
         this.settings_loader = new Control_Panel_Settings_Loader(this);
     }
@@ -51,11 +52,6 @@ export default class Control_Panel {
 
     }
 
-    // load_manager(manager){
-    //     const container = this.container.querySelector('.body');
-    //     manager.load(container);
-    // }
-
     init_tabs(){
             
         this.tabs = new Tabs([
@@ -70,6 +66,17 @@ export default class Control_Panel {
         ]);
 
         this.inner.prepend(this.tabs.container)
+    }
+
+    init_selector(){
+
+        // global_hooks.add('select_element', (element)=>{
+
+        //     if( element.type === 'container' ) {
+        //         this.tabs.set('add_elements')
+        //     }
+            
+        // })
     }
 
 }

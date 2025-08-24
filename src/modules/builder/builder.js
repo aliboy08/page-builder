@@ -5,6 +5,7 @@ import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
+import Element_Inserter from './insert/element_inserter';
 import { global_hooks } from 'src/global_hooks';
 
 export default class Builder {
@@ -16,6 +17,7 @@ export default class Builder {
         
         new Element_Remover(this.selector);
         new Builder_Save(this);
+        new Element_Inserter();
 
         this.content_loader = new Builder_Content_Loader(this);
 
@@ -33,7 +35,9 @@ export default class Builder {
 
             this.children.push(element)
             element.render_to(this.content)
-
+            
+            global_hooks.do('parent_element_render', element)
+            
             element.remove = ()=>{
                 const index = this.children.indexOf(element);
                 this.children.splice(index, 1);
@@ -51,8 +55,8 @@ export default class Builder {
         
         add_zone.addEventListener('click', ()=>{
             this.selector.unselect_previous();
-            global_hooks.do('add_zone_click')
             add_zone.dataset.state = 'selected';
+            global_hooks.do('add_zone_click')
         })
 
         global_hooks.add('select_element', ()=>{
@@ -66,15 +70,12 @@ export default class Builder {
             
             if( this.selector.selected ) {
 
-                console.log('render_to_element', this.selector.selected)
-                
                 if( this.selector.selected.render_child ) {
                     this.selector.selected.render_child(element)
                 }
-                
+            
             }
             else {
-                console.log('render_to_body')
                 this.render_child(element)
             }
             

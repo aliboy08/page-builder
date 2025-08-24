@@ -4,8 +4,12 @@ export default class Element_Text_Editor extends Element_Base {
 
     constructor(id = null){
 
-        super('text_editor', id)
-
+        super({
+            type: 'text_editor',
+            name: 'Text Editor',
+            id,
+        });
+        
         this.data = {
             text: 'Text Editor',
         }

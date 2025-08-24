@@ -5,7 +5,11 @@ export default class Element_Heading extends Element_Base {
 
     constructor(id = null){
 
-        super('heading', id)
+        super({
+            type: 'heading',
+            name: 'Heading',
+            id,
+        });
         
         this.data = {
             text: 'Heading Element',

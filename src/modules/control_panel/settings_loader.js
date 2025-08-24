@@ -1,4 +1,5 @@
 import { global_hooks } from 'src/global_hooks';
+import { create_div } from 'lib/utils';
 
 import Field_Text from '../fields/text/field_text';
 
@@ -19,10 +20,10 @@ export default class Control_Panel_Settings_Loader {
 
     load(element){
         
-        if( !element.settings?.fields ) {
-            this.control_panel.tabs.set_content('element_settings', '');
-            return;
-        }
+        // if( !element.settings?.fields ) {
+        //     this.control_panel.tabs.set_content('element_settings', '');
+        //     return;
+        // }
         
         const html = this.get_fields_html(element);
 
@@ -33,14 +34,18 @@ export default class Control_Panel_Settings_Loader {
     
     get_fields_html(element){
 
-        const fragment = new DocumentFragment();
+        const container = create_div('element_settings');
 
-        element.settings.fields.forEach(field_args=>{
-            const field = new fields[field_args.type](field_args, element);
-            fragment.append(field.html);
-        })
-
-        return fragment;
+        create_div('element_name', container, element.name + ' Settings')
+        
+        if( element?.settings?.fields ) {
+            element.settings.fields.forEach(field_args=>{
+                const field = new fields[field_args.type](field_args, element);
+                container.append(field.html);
+            })
+        }
+        
+        return container;
     }
 
 }

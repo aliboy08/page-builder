@@ -4,9 +4,10 @@ import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Base {
 
-    constructor(type, id = null){
-        this.type = type;
-        this.id = id ? id : generate_id();
+    constructor(args = {}){
+        this.type = args.type;
+        this.id = args.id || generate_id();
+        this.name = args.name;
         this.data = {}
         this.settings = {};
     }

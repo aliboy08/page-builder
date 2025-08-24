@@ -7,7 +7,11 @@ export default class Element_Container extends Element_Base {
 
     constructor(id = null){
 
-        super('container', id)
+        super({
+            type: 'container',
+            name: 'Container',
+            id,
+        });
 
         this.children = [];
     }

@@ -29,8 +29,6 @@ export default class Element_Selector {
         this.unselect_previous();
         
         this.selected = element;
-
-        console.log('select', element)
         
         this.selected.html.dataset.state = 'selected';
 
