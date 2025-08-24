@@ -40,9 +40,6 @@ export default class Element_Base {
         parent.append(html);
 
         this.html = html;
-        
-        // this.el_parent = parent;
-        // parent.el_children.push(this);
 
         global_hooks.do('element_after_render', this)
         

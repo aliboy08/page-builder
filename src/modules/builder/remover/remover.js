@@ -4,13 +4,14 @@ export default class Element_Remover {
         
         document.addEventListener('keydown', (e)=>{
             if( e.key !== 'Delete' ) return;
+            if( !selector.selected ) return;
 
-            const target = selector.selected;
-            if( !target.element ) return;
-            if( target.id === 'page_content_body' ) return;
-            
-            target.element.remove();
-            selector.selected = null;
+            const element = selector.selected;
+            console.log('element_remover', element)
+
+            if( element.remove ) {
+                element.remove();
+            }
         })
 
     }

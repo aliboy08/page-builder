@@ -30,9 +30,18 @@ export default class Builder {
         this.children = [];
 
         this.render_child = (element)=>{
+
             this.children.push(element)
             element.render_to(this.content)
+
+            element.remove = ()=>{
+                const index = this.children.indexOf(element);
+                this.children.splice(index, 1);
+                element.html.remove();
+                element = null;
+            }
         }
+        
     }
 
     init_add_zone(){

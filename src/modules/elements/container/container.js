@@ -15,14 +15,8 @@ export default class Element_Container extends Element_Base {
     get_html(){
         
         const con = create_div(`con`);
-        
-        const inner = create_div('con_inner', con)
-        
-        // con.render_target = inner;
-        // inner.el_children = this.el_children;
-        // inner.element = this;
 
-        this.inner = inner;
+        this.inner = create_div('con_inner', con)
 
         return con;
     }
@@ -34,7 +28,16 @@ export default class Element_Container extends Element_Base {
         this.inner.append(child_element.html);
         this.children.push(child_element)
 
+        child_element.parent = this;
+
+        child_element.remove = ()=>{
+            const index = this.children.indexOf(child_element);
+            this.children.splice(index, 1);
+            child_element.html.remove();
+            child_element = null;
+        }
+
         global_hooks.do('element_after_render', child_element)
     }
-
+    
 }
