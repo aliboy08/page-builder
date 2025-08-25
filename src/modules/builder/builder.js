@@ -39,6 +39,9 @@ export default class Builder {
             global_hooks.do('parent_element_render', element)
             
             element.remove = ()=>{
+
+                global_hooks.do('element_remove', element)
+
                 const index = this.children.indexOf(element);
                 this.children.splice(index, 1);
                 element.html.remove();
@@ -69,16 +72,13 @@ export default class Builder {
         const render_element = (element)=>{
             
             if( this.selector.selected ) {
-
                 if( this.selector.selected.render_child ) {
                     this.selector.selected.render_child(element)
                 }
-            
             }
             else {
                 this.render_child(element)
             }
-            
         }
         
         manager.hooks.add('select', (element)=>{

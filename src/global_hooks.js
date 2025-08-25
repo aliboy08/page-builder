@@ -5,6 +5,7 @@ export const global_hooks = new Hooks([
     'after_init',
     'select_element',
     'element_after_render',
+    'element_remove',
     'add_zone_click',
     'parent_element_render',
 ]);

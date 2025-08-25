@@ -35,6 +35,9 @@ export default class Element_Container extends Element_Base {
         child_element.parent = this;
 
         child_element.remove = ()=>{
+
+            global_hooks.do('element_remove', child_element)
+
             const index = this.children.indexOf(child_element);
             this.children.splice(index, 1);
             child_element.html.remove();

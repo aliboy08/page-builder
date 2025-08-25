@@ -16,7 +16,6 @@ export default class Element_Selector {
     }
 
     init(element){
-        
         element.html.addEventListener('click', ()=>{
             this.select(element)
         })

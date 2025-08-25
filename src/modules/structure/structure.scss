@@ -1,5 +1,4 @@
 .elements_structure {
-    
     background: var(--dark);
 	border-left: var(--border-light);
 	flex-shrink: 0;
@@ -10,7 +9,7 @@
 	height: 100%;
     z-index: 10;;
     color: #fff;
-    padding: 16px;
+    padding: 40px 16px 16px;
     
 }
 
@@ -23,4 +22,16 @@
     cursor: e-resize;
     z-index: 10;
     opacity: 0;
+}
+
+.elements_structure {
+
+    .item {
+        font-size: 13px;
+    }
+
+    .children {
+        padding-left: 10px;
+        border-left: 1px solid #ffffff47;
+    }
 }
