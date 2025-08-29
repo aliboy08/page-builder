@@ -22,11 +22,6 @@ export default class Control_Panel_Settings_Loader {
 
     load(element){
         
-        // if( !element.settings?.fields ) {
-        //     this.control_panel.tabs.set_content('element_settings', '');
-        //     return;
-        // }
-        
         const html = this.get_fields_html(element);
 
         this.control_panel.tabs.set_content('element_settings', html)
@@ -35,8 +30,6 @@ export default class Control_Panel_Settings_Loader {
     }
     
     get_fields_html(element){
-
-        console.log('get_fields_html', element)
 
         const container = create_div('element_settings');
 

@@ -9,18 +9,13 @@ export default class Elements_Structure {
 
         this.parent_container = args.parent_container;
 
-        this.init_html();
-        this.init_resizer();
-
         this.items = {};
 
-        global_hooks.add('element_after_render', (element)=>{
-            this.add_item(element);
-        })
-
-        global_hooks.add('element_remove', (element)=>{
-            this.remove_item(element)
-        })
+        this.init_html();
+        this.init_resizer();
+        this.init_add();
+        this.init_remove();
+        this.init_select();
     }
 
     init_html(){
@@ -47,27 +42,67 @@ export default class Elements_Structure {
         resizer.hooks.add('resize', update)
     }
 
-    add_item(element){
+    init_add(){
 
-        const parent_item = this.get_parent_item(element);
-        const item = create_div('item', parent_item, element.name)
+        const get_parent_item = (element)=>{
+            if( !element.parent ) return this.body;
+            return element.parent.structure_el.children_con;
+        }
         
-        if( element.type === 'container' ) {
-            item.children_con = create_div('children', item)
+        const add = (element)=>{
+
+            const parent_item = get_parent_item(element);
+
+            const item = create_div('item', parent_item)
+            
+            if( element.type === 'container' ) {
+
+                item.parent_el = create_div('item parent', item, element.name)
+
+                item.children_con = create_div('children', item)
+            }
+            else {
+                item.textContent = element.name;
+            }
+
+            item.element = element;
+
+            item.addEventListener('click', ()=>{
+                element.html.click();
+            })
+            
+            element.structure_el = item;
         }
 
-        item.element = element;
-        
-        element.structure_el = item;
+        global_hooks.add('element_after_render', (element)=>{
+            add(element)
+        })
+
     }
 
-    remove_item(element){
-        element.structure_el.remove();
-    }
+    init_remove(){
 
-    get_parent_item(element){
-        if( !element.parent ) return this.body;
-        return element.parent.structure_el.children_con;
+        const remove = (element)=>{
+            element.structure_el.remove();
+        }
+
+        global_hooks.add('element_remove', (element)=>{
+            remove(element)
+        })
+    }
+    
+    init_select(){
+
+        let current = null;
+
+        global_hooks.add('select_element', (element)=>{
+            if( current ) current.classList.remove('selected');
+
+            current = element.structure_el.parent_el ?? element.structure_el;
+            
+            current.classList.add('selected');
+        })
+
     }
 
 }

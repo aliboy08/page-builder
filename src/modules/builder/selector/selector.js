@@ -16,6 +16,7 @@ export default class Element_Selector {
     }
 
     init(element){
+
         element.html.addEventListener('click', ()=>{
             this.select(element)
         })
@@ -25,6 +26,7 @@ export default class Element_Selector {
 
         // throttle to simulate stop progration
         if( this.throttle() ) return;
+        
         this.unselect_previous();
         
         this.selected = element;
@@ -35,7 +37,9 @@ export default class Element_Selector {
     }
 
     unselect_previous(){
+
         if( !this.selected ) return;
+
         this.selected.html.dataset.state = '';
         this.selected = null;
     }    

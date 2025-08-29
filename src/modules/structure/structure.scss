@@ -27,7 +27,19 @@
 .elements_structure {
 
     .item {
-        font-size: 13px;
+        font-size: 12px;
+        padding: 3px 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        
+
+        &:hover {
+            background: #ffffff12;
+        }
+
+        &.selected {
+            background: #ffffff12;
+        }
     }
 
     .children {
