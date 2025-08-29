@@ -36,6 +36,8 @@ export default class Control_Panel_Settings_Loader {
     
     get_fields_html(element){
 
+        console.log('get_fields_html', element)
+
         const container = create_div('element_settings');
 
         create_div('element_name', container, element.name + ' Settings')
