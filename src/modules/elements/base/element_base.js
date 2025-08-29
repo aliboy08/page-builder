@@ -1,6 +1,7 @@
 import { create_div } from 'lib/utils';
 import { generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
+import Hooks from 'components/hooks';
 
 export default class Element_Base {
 
@@ -10,6 +11,11 @@ export default class Element_Base {
         this.name = args.name;
         this.data = {}
         this.settings = {};
+
+        this.hooks = new Hooks([
+            'after_render'
+        ])
+
     }
 
     get_html(){
@@ -19,7 +25,7 @@ export default class Element_Base {
         html.innerHTML = this.inner_html();
         
         html.element = this;
-
+        
         return html;
     }
 
@@ -43,6 +49,8 @@ export default class Element_Base {
         this.html = html;
 
         global_hooks.do('element_after_render', this)
+
+        this.hooks.do('after_render');
         
         return html;
     }

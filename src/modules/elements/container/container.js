@@ -2,6 +2,7 @@ import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
+import { get_4d_value } from 'src/modules/styles/styles_utils';
 
 export default class Element_Container extends Element_Base {
 
@@ -14,20 +15,52 @@ export default class Element_Container extends Element_Base {
         });
 
         this.children = [];
+        
+        this.init_fields();
+        
+        this.hooks.add('after_render', ()=>{
+            this.init_styles();
+        })
+    }
+
+    init_styles(){
+
+        if( this.data.padding ) {
+            this.html.style.padding = get_4d_value(this.data.padding);
+        }
+
+        if( this.data.margin ) {
+            this.html.style.margin = get_4d_value(this.data.margin);
+        } 
+
+    }
+
+    init_fields(){
 
         this.settings = {
             fields: [
                 {
                     type: 'num4d',
+                    key: 'padding',
+                    label: 'Padding',
+                    on_change: (value)=>{
+                        this.data.padding = value;
+                        this.html.style.padding = get_4d_value(value);
+                    }
+                },
+
+                {
+                    type: 'num4d',
                     key: 'margin',
                     label: 'Margin',
                     on_change: (value)=>{
-                        // this.data.text = value;
-                        // this.html.textContent = value;
+                        this.data.margin = value;
+                        this.html.style.margin = get_4d_value(value);
                     }
-                }
+                },
             ],
         };
+
     }
 
     get_html(){

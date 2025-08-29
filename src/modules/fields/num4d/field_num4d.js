@@ -11,7 +11,7 @@ export default class Field_Num4d extends Field_Base {
 
         this.html = this.get_html();
         
-        // this.init_element_interface(field_args, element)
+        this.init_element_interface(field_args, element)
     }
 
     inner_html(){
@@ -36,22 +36,43 @@ export default class Field_Num4d extends Field_Base {
 
     load_value(data){
 
-        if( !data[this.key] ) return;
+        const value = data[this.key];
+        if( !value ) return;
 
-        this.input.value = data[this.key];
+        for( const key in value ) {
+            this.input[key].value = value[key];
+        }
+
+        console.log('num4d_load', value)
     }
 
-    // init_element_interface(field_args, element){
+    init_element_interface(field_args, element){
 
-    //     this.key = field_args.key;
+        this.key = field_args.key;
         
-    //     if( typeof field_args.on_change === 'function' ) {
-    //         this.input.addEventListener('change', ()=>{
-    //             field_args.on_change(this.input.value);
-    //         })
-    //     }
+        if( typeof field_args.on_change === 'function' ) {
+            let d;
+            for( const key in this.input ) {
+                this.input[key].addEventListener('change', ()=>{
+                    clearTimeout(d)
+                    d = setTimeout(()=>{
+                        field_args.on_change(this.get_value());
+                    })
+                })
+            }
+        }
 
-    //     this.load_value(element.data)
-    // }
+        this.load_value(element.data)
+    }
+
+    get_value(){
+
+        return {
+            top: this.input.top.value,
+            right: this.input.right.value,
+            bottom: this.input.bottom.value,
+            left: this.input.left.value,
+        }
+    }
     
 }
