@@ -23,6 +23,10 @@ export default class Builder_Content_Loader {
 
                 const element = load_element(element_data);
 
+                if( element.children?.length ) {
+                    element.no_add_zone = true;
+                }
+
                 parent_element.render_child(element);
 
                 if( element_data?.children?.length ) {

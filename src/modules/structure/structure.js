@@ -49,8 +49,6 @@ export default class Elements_Structure {
 
     add_item(element){
 
-        console.log(element)
-
         const parent_item = this.get_parent_item(element);
         const item = create_div('item', parent_item, element.name)
         

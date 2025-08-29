@@ -14,6 +14,20 @@ export default class Element_Container extends Element_Base {
         });
 
         this.children = [];
+
+        this.settings = {
+            fields: [
+                {
+                    type: 'num4d',
+                    key: 'margin',
+                    label: 'Margin',
+                    on_change: (value)=>{
+                        // this.data.text = value;
+                        // this.html.textContent = value;
+                    }
+                }
+            ],
+        };
     }
 
     get_html(){
@@ -21,11 +35,19 @@ export default class Element_Container extends Element_Base {
         const con = create_div(`con`);
 
         this.inner = create_div('con_inner', con)
-
+        
+        if( !this.no_add_zone ) {
+            this.add_zone = create_div('add_zone', this.inner)
+        }
+        
         return con;
     }
 
     render_child(child_element){
+
+        if( this.add_zone ) {
+            this.add_zone.remove();
+        }
 
         child_element.html = child_element.get_html();
 

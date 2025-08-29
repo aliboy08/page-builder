@@ -2,9 +2,11 @@ import { global_hooks } from 'src/global_hooks';
 import { create_div } from 'lib/utils';
 
 import Field_Text from '../fields/text/field_text';
+import Field_Num4d from '../fields/num4d/field_num4d';
 
 const fields = {
     text: Field_Text,
+    num4d: Field_Num4d,
 }
 
 export default class Control_Panel_Settings_Loader {

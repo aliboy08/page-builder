@@ -7,25 +7,30 @@ export default class Field_Text extends Field_Base {
 
         super('text');
 
+        this.field_args = field_args;
+
         this.html = this.get_html();
+
         this.init_element_interface(field_args, element)
     }
 
     inner_html(){
-        
+
+        const { key, label } = this.field_args;
+
         const fragment = new DocumentFragment();
+        
+        this.create_label(label, fragment);
 
-        const input = document.createElement('input')
-        input.type = 'text';
-        fragment.append(input)
-
-        this.input = input;
+        this.input = this.create_input(key, fragment);
         
         return fragment;
     }
 
     load_value(data){
+
         if( !data[this.key] ) return;
+
         this.input.value = data[this.key];
     }
 
