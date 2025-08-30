@@ -44,25 +44,31 @@ export default class Elements_Structure {
 
     init_add(){
 
-        const get_parent_item = (element)=>{
+        const get_parent_container = (element)=>{
             if( !element.parent ) return this.body;
             return element.parent.structure_el.children_con;
+        }
+
+        const init_toggle = (item)=>{
+            const btn = create_div('toggle_btn', item)
+            btn.addEventListener('click', (e)=>{
+                e.stopPropagation()
+                item.parentElement.classList.toggle('toggle_children')
+
+            })
         }
         
         const add = (element)=>{
 
-            const parent_item = get_parent_item(element);
+            const parent_con = get_parent_container(element);
 
-            const item = create_div('item', parent_item)
+            const item_con = create_div('item_con', parent_con)
+
+            const item = create_div('item', item_con, element.name)
             
             if( element.type === 'container' ) {
-
-                item.parent_el = create_div('item parent', item, element.name)
-
-                item.children_con = create_div('children', item)
-            }
-            else {
-                item.textContent = element.name;
+                item.children_con = create_div('children', item_con)
+                init_toggle(item)
             }
 
             item.element = element;
@@ -97,9 +103,7 @@ export default class Elements_Structure {
 
         global_hooks.add('select_element', (element)=>{
             if( current ) current.classList.remove('selected');
-
-            current = element.structure_el.parent_el ?? element.structure_el;
-            
+            current = element.structure_el;
             current.classList.add('selected');
         })
 

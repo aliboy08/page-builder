@@ -26,24 +26,79 @@
 
 .elements_structure {
 
-    .item {
-        font-size: 12px;
-        padding: 3px 6px;
-        border-radius: 4px;
-        cursor: pointer;
-        
+    .structure_body {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
 
-        &:hover {
-            background: #ffffff12;
-        }
-
-        &.selected {
-            background: #ffffff12;
+        > .item_con {
+            background: #ffffff05;
+            border: 1px solid #ffffff28;
+            border-radius: 3px;
+            padding: 3px 3px
         }
     }
 
-    .children {
-        padding-left: 10px;
-        border-left: 1px solid #ffffff47;
+    .item {
+
+        font-size: 12px;
+        padding: 2px 2px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+        user-select: none;
+        
+        &:hover {
+            background: #ffffff0a;
+        }
+
+        &.selected {
+            background: #ffffff1a;
+        }
+
+        .toggle_btn {
+            
+            background: #ffffff17;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            width: 16px;
+            height: 16px;
+
+            &:hover {
+                background: #ffffff3a;
+            }
+
+            &::after {
+                content: '\e904';
+                font-family: icomoon;
+            }
+        }
+    }
+
+    .item_con {
+        
+        .children {
+            display: none;
+            padding-left: 10px;
+            flex-direction: column;
+            // border-left: 1px solid #ffffff47;
+        }
+
+        &.toggle_children {
+
+            > .item {
+                > .toggle_btn::after {
+                    transform: rotate(180deg)
+                }
+            }
+
+            > .children {
+                display: flex;
+            }
+        }
     }
 }
