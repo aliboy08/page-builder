@@ -32,17 +32,17 @@
         gap: 5px;
 
         > .item_con {
-            background: #ffffff05;
+            background: #ffffff11;
             border: 1px solid #ffffff28;
             border-radius: 3px;
-            padding: 3px 3px
+            // padding: 3px 3px
         }
     }
 
     .item {
 
         font-size: 12px;
-        padding: 2px 2px;
+        padding: 3px 6px;
         border-radius: 4px;
         cursor: pointer;
         display: flex;
@@ -60,7 +60,7 @@
 
         .toggle_btn {
             
-            background: #ffffff17;
+            background: #ffffff2c;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,8 +83,9 @@
         
         .children {
             display: none;
-            padding-left: 10px;
+            padding: 3px 0 3px 10px;
             flex-direction: column;
+            
             // border-left: 1px solid #ffffff47;
         }
 

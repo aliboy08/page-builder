@@ -101,10 +101,26 @@ export default class Elements_Structure {
 
         let current = null;
 
+        const open_parent = (item)=>{
+
+            const item_con = item.parentElement;
+            const children_con = item_con.parentElement;
+            const is_first_level = children_con.classList.contains('structure_body');
+
+            if( !is_first_level ) {
+                children_con.parentElement.classList.add('toggle_children')
+                open_parent(children_con.previousElementSibling);
+            }
+            else {
+                item_con.classList.add('toggle_children')
+            }
+        }
+
         global_hooks.add('select_element', (element)=>{
             if( current ) current.classList.remove('selected');
             current = element.structure_el;
             current.classList.add('selected');
+            setTimeout(()=>open_parent(current), 100)
         })
 
     }
