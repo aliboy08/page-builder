@@ -1,6 +1,6 @@
 import './field_num4d.scss';
 import Field_Base from '../base/field_base';
-import { get_4d_value } from 'src/modules/styles/styles_utils';
+// import { get_4d_value } from 'src/modules/styles/styles_utils';
 
 export default class Field_Num4d extends Field_Base {
 
@@ -50,17 +50,20 @@ export default class Field_Num4d extends Field_Base {
 
         this.key = field_args.key;
         
-        if( typeof field_args.on_change === 'function' ) {
-            let d;
-            for( const key in this.input ) {
-                this.input[key].addEventListener('change', ()=>{
-                    clearTimeout(d)
-                    d = setTimeout(()=>{
+        if( typeof field_args.on_change_base === 'function' ) {
 
+            let d;
+
+            for( const key in this.input ) {
+
+                this.input[key].addEventListener('change', ()=>{
+
+                    clearTimeout(d)
+
+                    d = setTimeout(()=>{
                         const value = this.get_value();
                         // const css_value = get_4d_value(value);
-
-                        field_args.on_change(value);
+                        field_args.on_change_base(value);
                     })
                 })
             }

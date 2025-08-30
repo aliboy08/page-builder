@@ -39,7 +39,6 @@ export default class Element_Heading extends Element_Base {
             key: 'text',
             label: 'Text',
             on_change: (value)=>{
-                this.data.text = value;
                 this.html.textContent = value;
             }
         })

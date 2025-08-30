@@ -58,9 +58,15 @@ export default class Element_Base {
             css_target.style[field.css_property] = css_value;
         }
 
-        field.on_change = (value)=>{
+        field.on_change_base = (value)=>{
+
             this.data[field.key] = value;
+
             field.apply_css();
+
+            if( typeof field.on_change === 'function' ) {
+                field.on_change(value)
+            }
         }
         
         this.settings.fields.push(field);
