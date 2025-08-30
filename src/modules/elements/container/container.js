@@ -43,9 +43,9 @@ export default class Element_Container extends Element_Base {
 
         this.add_field({
             type: 'color_picker',
-            key: 'background',
-            label: 'Background',
-            css_property: 'background',
+            key: 'background_color',
+            label: 'Background Color',
+            css_property: 'backgroundColor',
         })
         
     }

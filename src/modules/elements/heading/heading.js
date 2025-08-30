@@ -16,20 +16,6 @@ export default class Element_Heading extends Element_Base {
         }
 
         this.init_fields();
-        
-        // this.settings = {
-        //     fields: [
-        //         {
-        //             type: 'text',
-        //             key: 'text',
-        //             label: 'Text',
-        //             on_change: (value)=>{
-        //                 this.data.text = value;
-        //                 this.html.textContent = value;
-        //             }
-        //         }
-        //     ],
-        // };
     }
 
     init_fields(){
@@ -41,6 +27,13 @@ export default class Element_Heading extends Element_Base {
             on_change: (value)=>{
                 this.html.textContent = value;
             }
+        })
+
+        this.add_field({
+            type: 'color_picker',
+            key: 'text_color',
+            label: 'Text Color',
+            css_property: 'color',
         })
         
     }
