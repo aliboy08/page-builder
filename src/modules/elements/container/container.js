@@ -33,6 +33,20 @@ export default class Element_Container extends Element_Base {
             label: 'Margin',
             css_property: 'margin',
         })
+
+        this.add_field({
+            type: 'text',
+            key: 'min_height',
+            label: 'Min Height',
+            css_property: 'minHeight',
+        })
+
+        this.add_field({
+            type: 'color_picker',
+            key: 'background',
+            label: 'Background',
+            css_property: 'background',
+        })
         
     }
 

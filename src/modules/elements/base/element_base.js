@@ -1,8 +1,9 @@
 import { create_div } from 'lib/utils';
 import { generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
-import Hooks from 'components/hooks';
 import { get_4d_value } from 'src/modules/styles/styles_utils';
+
+import Hooks from 'components/hooks';
 
 export default class Element_Base {
 
