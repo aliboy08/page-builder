@@ -32,7 +32,20 @@ export default class Field_Num4d extends Field_Base {
             left: this.create_input(key+'_left', field_con),
         }
         
+        this.create_input_clear(fragment, ()=>this.clear_value())
+        
         return fragment;
+    }
+
+    clear_value(){
+        for( const key in this.input ) {
+            this.input[key].value = '';
+        }
+
+        const value = this.get_value()
+        console.log('clear_value', value)
+
+        this.field_args.on_change_base(value);
     }
 
     load_value(data){
@@ -53,14 +66,11 @@ export default class Field_Num4d extends Field_Base {
         let d;
 
         for( const key in this.input ) {
-
             this.input[key].addEventListener('change', ()=>{
-
                 clearTimeout(d)
-
                 d = setTimeout(()=>{
-                    const value = this.get_value();
-                    // const css_value = get_4d_value(value);
+                    const value = this.get_value()
+                    console.log('clear_value', value)
                     field_args.on_change_base(value);
                 })
             })
@@ -70,7 +80,6 @@ export default class Field_Num4d extends Field_Base {
     }
 
     get_value(){
-
         return {
             top: this.input.top.value,
             right: this.input.right.value,

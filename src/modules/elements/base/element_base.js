@@ -1,7 +1,6 @@
-import { create_div } from 'lib/utils';
-import { generate_id } from 'lib/utils';
+import { create_div, generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
-import { get_4d_value } from 'src/modules/styles/styles_utils';
+import { apply_css } from 'src/modules/styles/styles_utils';
 
 import Hooks from 'components/hooks';
 
@@ -35,28 +34,14 @@ export default class Element_Base {
     }
 
     add_field(field){
-
-        const get_css_value = ()=>{
-
-            const value = this.data[field.key] ?? null;
-            if( value === null ) return null;
-            
-            if( field.type === 'num4d' ) {
-                return get_4d_value(value);
-            }
-
-            return value;
-        }
         
         field.apply_css = ()=>{
 
             if( !field.css_property ) return;
-            
-            const css_value = get_css_value();
-            if( css_value === null ) return;
-            
+
             const css_target = field.css_target ?? this.html;
-            css_target.style[field.css_property] = css_value;
+
+            apply_css(css_target, field, this.data);
         }
 
         field.on_change_base = (value)=>{
