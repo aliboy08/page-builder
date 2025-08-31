@@ -9,6 +9,7 @@ export default class Field_Base {
         this.create_div = create_div;
         this.create_label = create_label;
         this.create_input = create_input;
+        this.create_input_clear = create_input_clear;
     }
 
     get_html(){
@@ -38,4 +39,14 @@ function create_input(key, container, type = 'text'){
     input.name = key;
     container.append(input)
     return input
+}
+
+function create_input_clear(container, onclick){
+    const el = this.create_div('clear_input', container)
+    if( typeof onclick === 'function' ) {
+        el.addEventListener('click', ()=>{
+            onclick();
+        })
+    }
+    return el;
 }

@@ -5,3 +5,18 @@
         }
     }
 }
+
+.field_color_picker {
+
+    .input_con {
+        display: flex;
+        gap: 5px;
+
+        input[type="color"] {
+            padding: 0;
+            width: 100px;
+        }
+
+    }
+    
+}

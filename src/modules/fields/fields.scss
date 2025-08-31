@@ -21,4 +21,26 @@
     .field_label {
         margin-bottom: 5px;
     }
+
+    .clear_input {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #ffffff17;
+        padding: 3px;
+        border-radius: 3px;
+        width: 27px;
+        flex-shrink: 0;
+
+        &:hover {
+            background: #ffffff2d;
+        }
+
+        &::before {
+            content: '\e906';
+            font-family: 'icomoon';
+            font-weight: 400;
+        }
+    }
 }

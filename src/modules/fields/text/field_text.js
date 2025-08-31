@@ -38,12 +38,10 @@ export default class Field_Text extends Field_Base {
 
         this.key = field_args.key;
         
-        if( typeof field_args.on_change_base === 'function' ) {
-            this.input.addEventListener('change', ()=>{
-                field_args.on_change_base(this.input.value);
-            })
-        }
-
+        this.input.addEventListener('change', ()=>{
+            field_args.on_change_base(this.input.value);
+        })
+        
         this.load_value(element.data)
     }
     

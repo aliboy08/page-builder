@@ -5,13 +5,13 @@ export default class Field_Color_Picker extends Field_Base {
 
     constructor(field_args, element){
 
-        super('text');
+        super('color_picker');
 
         this.field_args = field_args;
 
         this.html = this.get_html();
 
-        this.init_element_interface(field_args, element)
+        this.load_value(element.data)
     }
 
     inner_html(){
@@ -22,7 +22,23 @@ export default class Field_Color_Picker extends Field_Base {
         
         this.create_label(label, fragment);
 
-        this.input = this.create_input(key, fragment, 'color');
+        const input_con = this.create_div('input_con', fragment)
+
+        const color_input = this.create_input(key + '_color_picker', input_con, 'color');
+        const input = this.create_input(key, input_con);
+        
+        this.set = (value)=>{
+
+            color_input.value = value;
+            input.value = value;
+
+            this.field_args.on_change_base(value);
+        }
+        
+        color_input.addEventListener('change', ()=>this.set(color_input.value))
+        input.addEventListener('change', ()=>this.set(input.value))
+
+        this.create_input_clear(input_con, ()=>this.set(''))
         
         return fragment;
     }
@@ -30,21 +46,9 @@ export default class Field_Color_Picker extends Field_Base {
     load_value(data){
 
         if( !data[this.key] ) return;
-
-        this.input.value = data[this.key];
-    }
-
-    init_element_interface(field_args, element){
-
-        this.key = field_args.key;
         
-        if( typeof field_args.on_change_base === 'function' ) {
-            this.input.addEventListener('change', ()=>{
-                field_args.on_change_base(this.input.value);
-            })
-        }
-
-        this.load_value(element.data)
+        this.color_input.value = data[this.key];
+        this.input.value = data[this.key];
     }
     
 }

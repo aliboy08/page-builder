@@ -50,23 +50,20 @@ export default class Field_Num4d extends Field_Base {
 
         this.key = field_args.key;
         
-        if( typeof field_args.on_change_base === 'function' ) {
+        let d;
 
-            let d;
+        for( const key in this.input ) {
 
-            for( const key in this.input ) {
+            this.input[key].addEventListener('change', ()=>{
 
-                this.input[key].addEventListener('change', ()=>{
+                clearTimeout(d)
 
-                    clearTimeout(d)
-
-                    d = setTimeout(()=>{
-                        const value = this.get_value();
-                        // const css_value = get_4d_value(value);
-                        field_args.on_change_base(value);
-                    })
+                d = setTimeout(()=>{
+                    const value = this.get_value();
+                    // const css_value = get_4d_value(value);
+                    field_args.on_change_base(value);
                 })
-            }
+            })
         }
 
         this.load_value(element.data)
