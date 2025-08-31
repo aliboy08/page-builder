@@ -1,8 +1,8 @@
 import './control_panel.scss';
 import { create_div } from 'lib/utils';
 import Resizer from 'components/resizer';
-import Control_Panel_Settings_Loader from './settings_loader';
 import Tabs from 'components/tabs/tabs';
+import Fields_Manager from '../fields/fiields_manager';
 import { global_hooks } from 'src/global_hooks';
 
 export default class Control_Panel {
@@ -10,12 +10,11 @@ export default class Control_Panel {
     constructor(args = {}){
         
         this.parent_container = args.parent_container;
+
         this.init_html();
         this.init_tabs();
         this.init_resizer();
-        this.init_selector();
-        
-        this.settings_loader = new Control_Panel_Settings_Loader(this);
+        this.init_settings();
     }
     
     init_html(){
@@ -25,7 +24,6 @@ export default class Control_Panel {
         this.parent_container.prepend(this.container)
 
         this.inner = create_div('inner', this.container)
-        // this.body = create_div('body', this.inner)
     }
 
     init_resizer(){
@@ -43,7 +41,6 @@ export default class Control_Panel {
 
     init_manager(manager){
 
-        // manager.render_to(this.body)
         this.tabs.set_content('add_elements', manager.get_html())
 
         global_hooks.add('add_zone_click', ()=>{
@@ -68,15 +65,25 @@ export default class Control_Panel {
         this.inner.prepend(this.tabs.container)
     }
 
-    init_selector(){
+    init_settings(){
+        
+        const fields_manager = new Fields_Manager();
 
-        // global_hooks.add('select_element', (element)=>{
-
-        //     if( element.type === 'container' ) {
-        //         this.tabs.set('add_elements')
-        //     }
+        const load_element_settings = (element)=>{
             
-        // })
+            const container = create_div('element_settings');
+            create_div('element_name', container, element.name);
+
+            fields_manager.render_element_settings(element, container)
+            
+            this.tabs.set_content('element_settings', container)
+            this.tabs.set('element_settings')
+        }
+        
+        global_hooks.add('select_element', (element)=>{
+            load_element_settings(element);
+        })
+
     }
 
 }
