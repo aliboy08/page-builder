@@ -4,6 +4,7 @@ import { create_div } from 'lib/utils';
 import Element_Container from '../elements/container/container';
 import Element_Heading from '../elements/heading/heading';
 import Element_Text_Editor from '../elements/text_editor/text_editor';
+import Element_HTML from '../elements/html/html';
 
 // import Draggable from 'components/draggable';
 import Hooks from 'components/hooks';
@@ -24,6 +25,10 @@ export default class Elements_Manager {
             text_editor: {
                 name: 'Text Editor',
                 init: Element_Text_Editor,
+            },
+            html: {
+                name: 'HTML',
+                init: Element_HTML,
             },
         }
         

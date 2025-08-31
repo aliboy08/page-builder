@@ -1,11 +1,11 @@
-// import './field_text.scss';
+import './field_textarea.scss';
 import Field_Base from '../base/field_base';
 
-export default class Field_Text extends Field_Base {
+export default class Field_Textarea extends Field_Base {
 
     constructor(field_args, element){
 
-        super('text');
+        super('textarea');
 
         this.field_args = field_args;
 
@@ -22,7 +22,10 @@ export default class Field_Text extends Field_Base {
         
         this.create_label(label, fragment);
 
-        this.input = this.create_input(key, fragment);
+        // this.input = this.create_input(key, fragment);
+        this.input = document.createElement('textarea');
+        this.input.name = key;
+        fragment.append(this.input)
         
         return fragment;
     }

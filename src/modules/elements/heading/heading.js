@@ -1,5 +1,4 @@
 import Element_Base from '../base/element_base';
-// import Element_Settings from '../base/element_settings';
 
 export default class Element_Heading extends Element_Base {
 

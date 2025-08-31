@@ -4,11 +4,13 @@ import { create_div } from 'lib/utils';
 import Field_Text from '../fields/text/field_text';
 import Field_Num4d from '../fields/num4d/field_num4d';
 import Field_Color_Picker from '../fields/color_picker/color_picker';
+import Field_Textarea from '../fields/textarea/field_textarea';
 
 const fields = {
     text: Field_Text,
     num4d: Field_Num4d,
     color_picker: Field_Color_Picker,
+    textarea: Field_Textarea,
 }
 
 export default class Control_Panel_Settings_Loader {
