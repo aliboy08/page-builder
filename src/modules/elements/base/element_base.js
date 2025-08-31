@@ -51,7 +51,7 @@ export default class Element_Base {
         field.apply_css = ()=>{
 
             if( !field.css_property ) return;
-
+            
             const css_value = get_css_value();
             if( css_value === null ) return;
             
@@ -95,11 +95,11 @@ export default class Element_Base {
         parent.append(html);
 
         this.html = html;
-
+        
         global_hooks.do('element_after_render', this)
         
         // this.hooks.do('after_render');
-
+        
         this.load_styles();
         
         return html;
@@ -120,6 +120,7 @@ export default class Element_Base {
     }
 
     load_styles(){
+
         this.settings.fields.forEach(field=>{
             field.apply_css();
         })

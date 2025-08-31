@@ -75,7 +75,7 @@ export default class Element_Container extends Element_Base {
         this.children.push(child_element)
 
         child_element.parent = this;
-
+        
         child_element.remove = ()=>{
 
             global_hooks.do('element_remove', child_element)
@@ -85,6 +85,8 @@ export default class Element_Container extends Element_Base {
             child_element.html.remove();
             child_element = null;
         }
+
+        child_element.load_styles();
 
         global_hooks.do('element_after_render', child_element)
     }
