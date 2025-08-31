@@ -10,8 +10,8 @@ export default class Field_Color_Picker extends Field_Base {
         this.field_args = field_args;
 
         this.html = this.get_html();
-
-        this.load_value(element.data)
+        
+        this.init_element_interface(field_args, element)
     }
 
     inner_html(){
@@ -32,7 +32,7 @@ export default class Field_Color_Picker extends Field_Base {
             color_input.value = value;
             input.value = value;
 
-            this.field_args.on_change_base(value);
+            this.on_set(value);
         }
         
         color_input.addEventListener('change', ()=>this.set(color_input.value))
@@ -44,11 +44,19 @@ export default class Field_Color_Picker extends Field_Base {
     }
 
     load_value(data){
-
         if( !data[this.key] ) return;
+        this.set(data[this.key])
+    }
+
+    init_element_interface(field_args, element){
+
+        this.key = field_args.key;
+
+        this.on_set = (value)=>{
+            field_args.on_change_base(value);
+        }
         
-        this.color_input.value = data[this.key];
-        this.input.value = data[this.key];
+        this.load_value(element.data)
     }
     
 }
