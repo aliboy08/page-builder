@@ -1,11 +1,11 @@
 import './builder.scss';
-import { is_intersecting, create_div, get_el } from 'lib/utils';
-// import Draggable from 'components/draggable';
+import { create_div, get_el } from 'lib/utils';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
+import Element_Inserter from './insert/element_inserter';
+import Elements_Reorder from './reorder/reorder';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
-import Element_Inserter from './insert/element_inserter';
 import { global_hooks } from 'src/global_hooks';
 
 export default class Builder {
@@ -15,7 +15,7 @@ export default class Builder {
         this.container = get_el(selector);
         this.selector = new Element_Selector();
         
-        new Element_Remover(this.selector);
+        new Element_Remover(this);
         new Builder_Save(this);
         new Element_Inserter();
 
@@ -23,6 +23,8 @@ export default class Builder {
 
         this.init_content();
         this.init_add_zone();
+
+        new Elements_Reorder();
     }
 
     init_content(){
@@ -39,6 +41,8 @@ export default class Builder {
             global_hooks.do('parent_element_render', element)
             
             element.remove = ()=>{
+
+                console.log('builder:child:remove', element)
 
                 global_hooks.do('element_remove', element)
 

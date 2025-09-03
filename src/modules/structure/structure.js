@@ -88,10 +88,27 @@ export default class Elements_Structure {
 
     init_remove(){
 
-        const remove = (element)=>{
-            element.structure_el.remove();
+        const is_top_level = (element)=>{
+            return element.structure_el.parentElement.parentElement === this.body;
         }
 
+        const remove_children = (parent)=>{
+            if( !parent?.children?.length ) return;
+            parent.children.forEach(child=>{
+                remove(child)
+            })
+        }
+
+        const remove = (element)=>{
+
+            if( is_top_level(element) ) {
+                return element.structure_el.parentElement.remove();
+            }
+            
+            remove_children(element)
+            element.structure_el.remove();
+        }
+        
         global_hooks.add('element_remove', (element)=>{
             remove(element)
         })
@@ -103,7 +120,12 @@ export default class Elements_Structure {
 
         const open_parent = (item)=>{
 
+            if( !item ) return;
+            
             const item_con = item.parentElement;
+
+            if( !item_con ) return;
+
             const children_con = item_con.parentElement;
             const is_first_level = children_con.classList.contains('structure_body');
 

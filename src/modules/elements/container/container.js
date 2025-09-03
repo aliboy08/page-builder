@@ -54,6 +54,8 @@ export default class Element_Container extends Element_Base {
         
         const con = create_div(`con`);
 
+        con.element = this;
+
         this.inner = create_div('con_inner', con)
         
         if( !this.no_add_zone ) {

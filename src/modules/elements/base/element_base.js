@@ -91,6 +91,9 @@ export default class Element_Base {
     }
 
     remove(){
+
+        console.log('element:base:remove', this)
+
         const index = this.el_parent.el_children.indexOf(this)
         this.el_parent.el_children.splice(index, 1)
         this.html.remove();

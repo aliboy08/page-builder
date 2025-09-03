@@ -1,0 +1,34 @@
+.reorder_element {
+    position: relative;
+
+    &:hover {
+        > .reorder_handle {
+            display: flex;
+        }
+    }
+}
+
+.reorder_handle {
+
+    display: none;
+    cursor: grab;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #ffffff7e;
+    border-radius: 3px;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff6b;
+
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+
+    &::after {
+        content: '\e907';
+        font-family: 'icomoon';
+    }
+
+}
