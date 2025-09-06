@@ -9,6 +9,9 @@ export default class Elements_Reorder {
 
         this.containers = [];
 
+        this.state = '';
+        this.target = null;
+
         global_hooks.add('element_after_render', (element)=>{
 
             if( element.type === 'container' ) {
@@ -23,40 +26,40 @@ export default class Elements_Reorder {
 
         const handle = create_div('reorder_handle', element.html)
         element.html.classList.add('reorder_element')
+        handle.style.display = 'none';
 
         const dragabble = new Draggable(handle)
 
-        const container_hover = (e)=>{
-            const target = e.target;
-            const element = target.element
-            console.log('container_hover', {target, element})
-        }
+        element.html.addEventListener('pointerenter', ()=>{
+            this.target = element;
+            if( this.state === 'drag_start' ) return;
+            handle.style.display = '';
+        })
 
-        const start = ()=>{
-
-            console.log('start')
-
-            // this.containers.forEach(container=>{
-            //     if( element === container ) return;
-            //     container.html.addEventListener('pointerover', container_hover)
-            // })
-        }
-
-        const end = ()=>{
-
-            console.log('end')
-            
-            // this.containers.forEach(container=>{
-            //     container.html.removeEventListener('pointerover', container_hover)
-            // })
-        }
+        element.html.addEventListener('pointerleave', ()=>{
+            handle.style.display = 'none';
+        })
         
-        dragabble.hooks.add('start', start)
-        dragabble.hooks.add('end', end)
+        dragabble.hooks.add('start', ()=>{
+            this.state = 'drag_start';
+        })
+        dragabble.hooks.add('end', ()=>{
+            this.state = 'drag_end';
+            this.apply_reorder(element, this.target)
+        })
     }
 
-}
+    apply_reorder(element, target){
+        
+        if( element === target ) return;
 
-function get_drop_position(el, ){
+        if( target.type === 'container' ) {
+            target.html.append(element.html)
+        }
+        else {
+            target.html.after(element.html)
+        }
 
+        console.log('apply_reorder', { element, target })
+    }
 }
