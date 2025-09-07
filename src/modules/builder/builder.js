@@ -7,6 +7,7 @@ import Elements_Reorder from './reorder/reorder';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
 import { global_hooks } from 'src/global_hooks';
+import Add_Zone from './add_zone/add_zone';
 
 export default class Builder {
     
@@ -30,44 +31,22 @@ export default class Builder {
     init_content(){
         
         this.content = get_el('#page_content_body')
-
-        this.children = [];
-
-        this.render_child = (element)=>{
-
-            this.children.push(element)
-            element.render_to(this.content)
-            
-            global_hooks.do('parent_element_render', element)
-            
-            element.remove = ()=>{
-
-                console.log('builder:child:remove', element)
-
-                global_hooks.do('element_remove', element)
-
-                const index = this.children.indexOf(element);
-                this.children.splice(index, 1);
-                element.html.remove();
-                element = null;
-            }
-        }
-        
+        this.content.elements = [];
+        this.content.elements_append_to = this.content;
     }
 
     init_add_zone(){
-
-        const add_zone = create_div('add_zone')
-        this.content.after(add_zone)
         
-        add_zone.addEventListener('click', ()=>{
+        const add_zone = new Add_Zone()
+        this.content.after(add_zone.el)
+        
+        add_zone.el.addEventListener('click', ()=>{
             this.selector.unselect_previous();
-            add_zone.dataset.state = 'selected';
             global_hooks.do('add_zone_click')
         })
-
+        
         global_hooks.add('select_element', ()=>{
-            add_zone.dataset.state = '';
+            add_zone.el.dataset.state = '';
         })
     }
 
@@ -75,13 +54,19 @@ export default class Builder {
         
         const render_element = (element)=>{
             
-            if( this.selector.selected ) {
-                if( this.selector.selected.render_child ) {
-                    this.selector.selected.render_child(element)
+            const selected = this.selector.selected;
+
+            if( selected ) {
+
+                if( selected.elements ) {
+                    element.render_to(selected)
+                } else {
+                    element.render_after(selected)
                 }
+                
             }
             else {
-                this.render_child(element)
+                element.render_to(this.content)
             }
         }
         

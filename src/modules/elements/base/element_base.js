@@ -2,6 +2,8 @@ import { create_div, generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { apply_css } from 'src/modules/styles/styles_utils';
 
+import init_element_overlay from './element_overlay';
+
 import Hooks from 'components/hooks';
 
 export default class Element_Base {
@@ -9,16 +11,20 @@ export default class Element_Base {
     constructor(args = {}){
 
         this.type = args.type;
+
         this.id = args.id || generate_id();
+
         this.name = args.name;
+
         this.data = {}
+
         this.settings = {
             fields: [],
         };
 
-        this.hooks = new Hooks([
-            'after_render'
-        ])
+        // this.hooks = new Hooks([
+        //     'after_render'
+        // ])
 
         this._init_fields();
     }
@@ -59,43 +65,69 @@ export default class Element_Base {
     }
     
     get_html(){
-        
-        const html = create_div(`element element_${this.type}`);
 
-        html.innerHTML = this.inner_html();
+        const element_class_name =  this.element_class_name ?? 'element'
         
+        const html = create_div(`${element_class_name} element_${this.type}`);
+        
+        if( typeof this.inner_html === 'function' ) {
+            html.innerHTML = this.inner_html();
+        }
+
+        this.html = html;
+
         html.element = this;
         
         return html;
     }
-
-    inner_html(){
-        return '';
-    }
-
+    
     render_to(parent){
-
-        const html = this.get_html();
-
-        parent.append(html);
-
-        this.html = html;
         
-        global_hooks.do('element_after_render', this)
+        this.parent = parent;
+
+        parent.elements.push(this)
+
+        parent.elements_append_to.append(this.get_html());
         
-        // this.hooks.do('after_render');
+        if( typeof parent.after_child_render === 'function' ) {
+            parent.after_child_render(this);
+        }
+
+        if( typeof this.after_render === 'function' ) {
+            this.after_render()
+        }
         
         this.load_styles();
+
+        global_hooks.do('element_after_render', this)
         
-        return html;
+        return this.html;
+    }
+
+    render_after(target){
+        
+        target.html.after(this.get_html())
+        
+        const insert_index = target.parent.elements.indexOf(target);
+        target.parent.elements.splice(insert_index+1, 0, this)
+
+        if( typeof this.after_render === 'function' ) {
+            this.after_render()
+        }
+        
+        this.load_styles();
+
+        global_hooks.do('element_after_render', this)
+
+        return this.html;
     }
 
     remove(){
 
-        console.log('element:base:remove', this)
+        const index = this.parent.elements.indexOf(this)
 
-        const index = this.el_parent.el_children.indexOf(this)
-        this.el_parent.el_children.splice(index, 1)
+        this.parent.elements.splice(index, 1)
+
         this.html.remove();
     }
 
@@ -114,4 +146,8 @@ export default class Element_Base {
         })
     }
 
+    move_to(target_element){
+        
+    }
+    
 }

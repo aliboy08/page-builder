@@ -1,22 +1,21 @@
 import './add_zone.scss';
 import { create_div } from 'lib/utils';
-// import Popup from 'components/popup/popup';
-// import Elements_Manager from 'src/modules/elements_manager/elements_manager';
 
-export default class Page_Element_Adder {
+export default class Add_Zone {
     
-    constructor(container){
-        this.el = create_div('add_zone', container)
-        this.target = container;
+    constructor(args = {}){
+        
+        const el = create_div('add_zone')
+        this.el = el;
+
+        if( args.append_to ) {
+            args.append_to.append(el)
+        }
+
+        el.addEventListener('click', ()=>{
+            el.dataset.state = 'selected';
+        })
+
     }
 
-    render_element(element){
-        const html = element.get_html();
-        this.target.before(html)
-    }
-
-    set_target(el){
-        this.target = el;
-    }
-    
 }

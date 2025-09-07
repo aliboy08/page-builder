@@ -13,9 +13,9 @@ export default class Elements_Structure {
 
         this.init_html();
         this.init_resizer();
-        this.init_add();
-        this.init_remove();
-        this.init_select();
+        // this.init_add();
+        // this.init_remove();
+        // this.init_select();
     }
 
     init_html(){

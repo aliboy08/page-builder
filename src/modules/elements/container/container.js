@@ -1,7 +1,7 @@
 import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import Add_Zone from 'src/modules/builder/add_zone/add_zone';
 
 export default class Element_Container extends Element_Base {
 
@@ -13,9 +13,11 @@ export default class Element_Container extends Element_Base {
             id,
         });
 
-        this.children = [];
+        this.elements = [];
+
+        this.element_class_name = 'container';
         
-        this.init_fields();
+        this.init_fields();        
     }
     
     init_fields(){
@@ -49,48 +51,28 @@ export default class Element_Container extends Element_Base {
         })
         
     }
+    
+    after_render(){
 
-    get_html(){
-        
-        const con = create_div(`con`);
+        const inner = create_div('con_inner', this.html)
 
-        con.element = this;
+        this.elements_append_to = inner;
 
-        this.inner = create_div('con_inner', con)
-        
         if( !this.no_add_zone ) {
-            this.add_zone = create_div('add_zone', this.inner)
+            this.add_zone = new Add_Zone({
+                append_to: inner,
+            })
         }
         
-        return con;
     }
 
-    render_child(child_element){
+    after_child_render(){
 
         if( this.add_zone ) {
-            this.add_zone.remove();
+            this.add_zone.el.remove();
+            this.add_zone = null;
         }
 
-        child_element.html = child_element.get_html();
-
-        this.inner.append(child_element.html);
-        this.children.push(child_element)
-
-        child_element.parent = this;
-        
-        child_element.remove = ()=>{
-
-            global_hooks.do('element_remove', child_element)
-
-            const index = this.children.indexOf(child_element);
-            this.children.splice(index, 1);
-            child_element.html.remove();
-            child_element = null;
-        }
-
-        child_element.load_styles();
-
-        global_hooks.do('element_after_render', child_element)
     }
-    
+
 }

@@ -16,9 +16,7 @@ export default class Element_Text_Editor extends Element_Base {
     }
 
     inner_html(){
-
         const data = this.data;
-
         return `${data.text}`;
     }
 

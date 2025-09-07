@@ -2,13 +2,12 @@
 //     box-shadow: inset 0 0 0 1px #ffffff50;
 // }
 
-.con:hover,
-.element:hover {
+.element:hover,
+.element_container:hover {
     box-shadow: inset 0 0 0 1px #ffffff21;
 }
 
 .element[data-state="selected"],
-.con[data-state="selected"] {
+.element_container[data-state="selected"] {
     box-shadow: inset 0 0 0 1px #ffffff50;
 }
-

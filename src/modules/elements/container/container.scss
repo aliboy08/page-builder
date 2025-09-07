@@ -1,5 +1,4 @@
-.con {
-
+.container {
     // min-height: 140px;
     color: #ffffff67;
     font-size: 30px;
@@ -16,6 +15,9 @@
     &[data-state="grabbed"] {
         box-shadow: inset 0 0 0 2px #ffffffc5;
     }
+    
+    padding: 20px;
+
 }
 
 .con_inner {

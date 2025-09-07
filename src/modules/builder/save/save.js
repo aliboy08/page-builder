@@ -32,6 +32,7 @@ export default class Builder_Save {
     }
 
     save(){
+
         const data = this.get_data();
 
         console.log('save', data)
@@ -45,7 +46,9 @@ export default class Builder_Save {
         
         const get_elements_data = (parent, data)=>{
 
-            parent.children.forEach(element=>{
+            console.log('get_elements_data', data)
+
+            parent.elements.forEach(element=>{
 
                 const element_data = element.get_data();
                 data.push(element_data)
@@ -58,15 +61,15 @@ export default class Builder_Save {
 
         const get_children_data = (parent, element_data)=>{
             
-            if( !parent?.children?.length ) return;
+            if( !parent?.elements?.length ) return;
 
-            element_data.children = [];
+            element_data.elements = [];
 
-            get_elements_data(parent, element_data.children);
+            get_elements_data(parent, element_data.elements);
             
         }
         
-        get_elements_data(this.builder, data);
+        get_elements_data(this.builder.content, data);
 
         return data;
     }

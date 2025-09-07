@@ -11,7 +11,12 @@ export default class Element_Selector {
         this.throttling = false;
 
         global_hooks.add('element_after_render', (element)=>{
+            
             this.init(element)
+
+            if( !this.selected ) {
+                this.select(element)
+            }
         })
     }
 
