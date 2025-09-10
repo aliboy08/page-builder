@@ -120,35 +120,46 @@ export default class Elements_Reorder {
     
     apply_reorder(element){
         
-        console.log('apply_reorder', {
-            drop_target: this.drop_target,
-            drop_position: this.drop_position,
-        })
-        
+        const drop_target = this.drop_target;
+
         if( !this.last_hover.element ) return;
-        if( this.drop_target === element ) return;
+        if( drop_target === element ) return;
         
-        if( this.drop_position === 'top' || this.drop_position === 'left') {
-            this.reposition_before(element, this.drop_target)
+        const prev_parent = element.parent;
+
+        element.parent.elements.splice(element.get_index(), 1)
+        
+        if( this.last_hover.type === 'add_zone' ) {
+            this.reposition_in(element, drop_target)
+        }
+        else if( this.drop_position === 'top' || this.drop_position === 'left') {
+            this.reposition_before(element, drop_target)
+        }
+        else if( this.drop_position === 'bottom' || this.drop_position === 'right') {
+            this.reposition_after(element, drop_target)
         }
         
-        if( this.drop_position === 'bottom' || this.drop_position === 'right') {
-            this.reposition_after(element, this.drop_target)
-        }
+        prev_parent.update_add_zone();
+        element.parent.update_add_zone();
     }
 
     reposition_before(element, drop_target){
-        element.parent.elements.splice(element.get_index(), 1)
         drop_target.html.before(element.html)
         drop_target.parent.elements.splice(drop_target.get_index(), 0, element)
         element.parent = drop_target.parent;
     }
     
     reposition_after(element, drop_target){
-        element.parent.elements.splice(element.get_index(), 1)
+
         drop_target.html.after(element.html)
         drop_target.parent.elements.splice(drop_target.get_index()+1, 0, element)
         element.parent = drop_target.parent;
+    }
+
+    reposition_in(element, drop_target){
+        drop_target.elements_append_to.append(element.html)
+        drop_target.elements.push(element)
+        element.parent = drop_target;
     }
 
 }

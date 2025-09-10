@@ -16,6 +16,9 @@ export default class Add_Zone {
             el.dataset.state = 'selected';
         })
 
+        el.element = args.element;
+        el.type = 'add_zone';
+
     }
 
 }

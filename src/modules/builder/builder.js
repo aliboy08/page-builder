@@ -38,6 +38,7 @@ export default class Builder {
         this.content = get_el('#page_content_body')
         this.content.elements = [];
         this.content.elements_append_to = this.content;
+        this.content.update_add_zone = ()=>{};
     }
 
     init_add_zone(){

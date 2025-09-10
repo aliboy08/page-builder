@@ -18,6 +18,7 @@ export default class Element_Container extends Element_Base {
         this.element_class_name = 'el_con';
         
         this.init_fields();        
+        this.init_add_zone();
     }
     
     init_fields(){
@@ -58,21 +59,53 @@ export default class Element_Container extends Element_Base {
 
         this.elements_append_to = inner;
 
-        if( !this.no_add_zone ) {
-            this.add_zone = new Add_Zone({
-                append_to: inner,
-            })
-        }
+        this.update_add_zone();
         
     }
 
     after_child_render(){
 
-        if( this.add_zone ) {
+        this.update_add_zone();
+        
+    }
+
+    init_add_zone(){
+        
+        const add = ()=>{
+
+            if( this.add_zone ) return;
+
+            this.add_zone = new Add_Zone({
+                append_to: this.elements_append_to,
+                element: this,
+            })
+
+            console.log('add_zone:add')
+
+        }
+
+        const remove = ()=>{
+
+            if( !this.add_zone ) return;
+
             this.add_zone.el.remove();
-            this.add_zone = null;
+            this.add_zone = null
+            console.log('add_zone:remove')
+        }
+
+        this.update_add_zone = ()=>{
+
+            console.log('update_add_zone', this.elements)
+
+            if( !this.elements.length ) {
+                add();
+            }
+            else {
+                remove();
+            }
         }
 
     }
+
 
 }
