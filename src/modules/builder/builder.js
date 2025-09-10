@@ -1,13 +1,14 @@
 import './builder.scss';
-import { create_div, get_el } from 'lib/utils';
+import { get_el } from 'lib/utils';
+import { global_hooks } from 'src/global_hooks';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Element_Inserter from './insert/element_inserter';
-import Elements_Reorder from './reorder/reorder';
+import Elements_Reorder from './element_controls/reorder/reorder';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
-import { global_hooks } from 'src/global_hooks';
 import Add_Zone from './add_zone/add_zone';
+import Element_Controls from './element_controls/element_controls';
 
 export default class Builder {
     
@@ -25,7 +26,9 @@ export default class Builder {
         this.init_content();
         this.init_add_zone();
 
-        new Elements_Reorder();
+        new Elements_Reorder(this);
+
+        this.init_element_controls();
     }
 
     init_content(){
@@ -39,14 +42,17 @@ export default class Builder {
         
         const add_zone = new Add_Zone()
         this.content.after(add_zone.el)
+        this.global_add_zone = add_zone;
         
         add_zone.el.addEventListener('click', ()=>{
             this.selector.unselect_previous();
             global_hooks.do('add_zone_click')
+            add_zone.active = true;
         })
         
         global_hooks.add('select_element', ()=>{
             add_zone.el.dataset.state = '';
+            add_zone.active = false;
         })
     }
 
@@ -55,7 +61,7 @@ export default class Builder {
         const render_element = (element)=>{
             
             const selected = this.selector.selected;
-
+            
             if( selected ) {
 
                 if( selected.elements ) {
@@ -71,10 +77,22 @@ export default class Builder {
         }
         
         manager.hooks.add('select', (element)=>{
+
             render_element(element)
+
+            if( this.global_add_zone.active ) {
+                this.selector.select(element)
+            }
         })
 
         this.manager = manager;
+    }
+
+    init_element_controls(){
+        global_hooks.add('element_render', (element)=>{
+            element.controls = new Element_Controls(element)
+            global_hooks.do('element_controls_init', element.controls)
+        }, 100)
     }
     
 }

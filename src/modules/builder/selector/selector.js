@@ -10,20 +10,23 @@ export default class Element_Selector {
 
         this.throttling = false;
 
-        global_hooks.add('element_after_render', (element)=>{
-            
+        global_hooks.add('element_render', (element)=>{
             this.init(element)
+        })
 
-            if( !this.selected ) {
-                this.select(element)
-            }
+        global_hooks.add('structure_el_click', (element)=>{
+            this.select(element)
         })
     }
 
     init(element){
+
+        // if( !this.selected ) this.select(element)
+
         element.html.addEventListener('click', ()=>{
             this.select(element)
         })
+        
     }
 
     select(element){
@@ -36,7 +39,6 @@ export default class Element_Selector {
         this.selected = element;
         
         this.selected.html.dataset.state = 'selected';
-
         global_hooks.do('select_element', element)
     }
 

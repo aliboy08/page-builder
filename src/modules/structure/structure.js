@@ -13,9 +13,9 @@ export default class Elements_Structure {
 
         this.init_html();
         this.init_resizer();
-        // this.init_add();
-        // this.init_remove();
-        // this.init_select();
+        this.init_add();
+        this.init_remove();
+        this.init_select();
     }
 
     init_html(){
@@ -45,7 +45,7 @@ export default class Elements_Structure {
     init_add(){
 
         const get_parent_container = (element)=>{
-            if( !element.parent ) return this.body;
+            if( !element.parent.type ) return this.body;
             return element.parent.structure_el.children_con;
         }
 
@@ -59,9 +59,9 @@ export default class Elements_Structure {
         }
         
         const add = (element)=>{
-
+            
             const parent_con = get_parent_container(element);
-
+            
             const item_con = create_div('item_con', parent_con)
 
             const item = create_div('item', item_con, element.name)
@@ -72,16 +72,15 @@ export default class Elements_Structure {
             }
 
             item.element = element;
+            element.structure_el = item;
 
             item.addEventListener('click', ()=>{
-                element.html.click();
+                global_hooks.do('structure_el_click', element)
             })
-            
-            element.structure_el = item;
         }
 
-        global_hooks.add('element_after_render', (element)=>{
-            add(element)
+        global_hooks.add('element_render', (element)=>{
+            add(element)                                                                                           
         })
 
     }

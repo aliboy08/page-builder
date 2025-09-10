@@ -14,11 +14,13 @@
 	height: 100%;
     z-index: 10;;
     color: #fff;
-    padding: 16px;
-
+    
     > .inner {
+        padding: 16px;
         height: 100%;
+        overflow: auto;
     }
+
 }
 
 .control_panel .resize_handle {

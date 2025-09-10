@@ -23,7 +23,7 @@ export default class Control_Panel {
         this.container.className = 'control_panel';
         this.parent_container.prepend(this.container)
 
-        this.inner = create_div('inner', this.container)
+        this.inner = create_div('inner scrollbar_style_1', this.container)
     }
 
     init_resizer(){

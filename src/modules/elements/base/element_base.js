@@ -1,9 +1,6 @@
 import { create_div, generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { apply_css } from 'src/modules/styles/styles_utils';
-
-import init_element_overlay from './element_overlay';
-
 import Hooks from 'components/hooks';
 
 export default class Element_Base {
@@ -22,13 +19,15 @@ export default class Element_Base {
             fields: [],
         };
 
-        // this.hooks = new Hooks([
-        //     'after_render'
-        // ])
+        this.hooks = new Hooks([
+            'on_render'
+        ])
 
         this._init_fields();
-    }
 
+        this.hooks.add('on_render', ()=>this.on_render())
+    }
+    
     _init_fields(){
         
         this.add_field({
@@ -66,9 +65,9 @@ export default class Element_Base {
     
     get_html(){
 
-        const element_class_name =  this.element_class_name ?? 'element'
+        const element_class_name =  this.element_class_name ?? 'el'
         
-        const html = create_div(`${element_class_name} element_${this.type}`);
+        const html = create_div(`${element_class_name} el_${this.type}`);
         
         if( typeof this.inner_html === 'function' ) {
             html.innerHTML = this.inner_html();
@@ -89,40 +88,42 @@ export default class Element_Base {
 
         parent.elements_append_to.append(this.get_html());
         
+        this.hooks.do('on_render')
+
         if( typeof parent.after_child_render === 'function' ) {
             parent.after_child_render(this);
         }
-
-        if( typeof this.after_render === 'function' ) {
-            this.after_render()
-        }
-        
-        this.load_styles();
-
-        global_hooks.do('element_after_render', this)
         
         return this.html;
     }
 
     render_after(target){
-        
+
         target.html.after(this.get_html())
         
         const insert_index = target.parent.elements.indexOf(target);
+
         target.parent.elements.splice(insert_index+1, 0, this)
 
-        if( typeof this.after_render === 'function' ) {
-            this.after_render()
-        }
-        
-        this.load_styles();
-
-        global_hooks.do('element_after_render', this)
+        this.hooks.do('on_render')
 
         return this.html;
     }
 
+    on_render(){
+        
+        this.load_styles();
+
+        global_hooks.do('element_render', this)
+
+        if( typeof this.after_render === 'function' ) {
+            this.after_render()
+        }
+    }
+
     remove(){
+        
+        global_hooks.do('element_remove', this)
 
         const index = this.parent.elements.indexOf(this)
 
@@ -140,14 +141,13 @@ export default class Element_Base {
     }
 
     load_styles(){
-
         this.settings.fields.forEach(field=>{
             field.apply_css();
         })
     }
 
-    move_to(target_element){
-        
+    get_index(){
+        return this.parent.elements.indexOf(this);
     }
     
 }

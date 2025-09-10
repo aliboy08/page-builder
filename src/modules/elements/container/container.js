@@ -15,7 +15,7 @@ export default class Element_Container extends Element_Base {
 
         this.elements = [];
 
-        this.element_class_name = 'container';
+        this.element_class_name = 'el_con';
         
         this.init_fields();        
     }

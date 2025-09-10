@@ -1,0 +1,28 @@
+@use './reorder/reorder.scss';
+
+.el, .el_con {
+    position: relative;
+}
+
+.el_controls {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.el_con, .el {
+
+    &:hover {
+        > .el_controls {
+            box-shadow: inset 0 0 0 1px rgba(81, 169, 157, 0.178);
+        }
+    }
+
+    &[data-state="reorder"],
+    &[data-state="selected"] {
+        > .el_controls {
+            box-shadow: inset 0 0 0 1px rgb(81 169 157);
+        }
+    }
+}
+

@@ -11,7 +11,7 @@ export default class Element_Remover {
 
             const element = selector.selected;
             
-            if( element.remove ) {
+            if( element ) {
                 element.remove();
             }
         })

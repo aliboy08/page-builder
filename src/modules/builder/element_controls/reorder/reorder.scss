@@ -1,0 +1,90 @@
+.el_controls .reorder_handle {
+
+    display: flex;
+    cursor: grab;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #ffffff7e;
+    border-radius: 3px;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff6b;
+    pointer-events: auto;
+
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+
+    &::after {
+        content: '\e907';
+        font-family: 'icomoon';
+    }
+
+}
+
+.el_controls .drop_zone {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .1s ease;
+    background: #46ffd731;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &::before {
+        font-family: 'icomoon';
+        font-size: 20px;
+    }
+
+    &.bottom,
+    &.top {
+        width: 100%;
+        height: 24px;
+        z-index: 1;
+    }
+
+    &.left,
+    &.right {
+        width: 24px;
+        height: 100%;
+        z-index: 2;
+    }
+
+    &.top {
+        top: 0;
+        &::before {
+            content: '\e905';
+        }
+    }
+    &.bottom {
+        bottom: 0;
+        &::before {
+            content: '\e904';
+        }
+    }
+
+    &.left {
+        left: 0;
+        &::before {
+            content: '\e903';
+        }
+    }
+
+    &.right {
+        right: 0;
+        &::before {
+            content: '\e902';
+        }
+    }
+}
+
+.reorder_start .el_controls .drop_zone {
+    pointer-events: auto;
+}

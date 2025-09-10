@@ -1,0 +1,25 @@
+:root {
+	--sb-track-color: #14141434;
+	--sb-thumb-color: #ffffff2a;
+	--sb-size: 8px;
+}
+
+.scrollbar_style_1::-webkit-scrollbar {
+	width: var(--sb-size);
+}
+
+.scrollbar_style_1::-webkit-scrollbar-track {
+	background: var(--sb-track-color);
+	border-radius: 3px;
+}
+
+.scrollbar_style_1::-webkit-scrollbar-thumb {
+	background: var(--sb-thumb-color);
+	border-radius: 3px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+	.scrollbar_style_1 {
+		scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+	}
+}
