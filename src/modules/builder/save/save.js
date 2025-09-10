@@ -46,11 +46,10 @@ export default class Builder_Save {
         
         const get_elements_data = (parent, data)=>{
 
-            console.log('get_elements_data', data)
-
             parent.elements.forEach(element=>{
 
                 const element_data = element.get_data();
+                
                 data.push(element_data)
 
                 get_children_data(element, element_data);

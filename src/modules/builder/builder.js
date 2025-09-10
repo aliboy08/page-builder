@@ -18,8 +18,10 @@ export default class Builder {
         this.selector = new Element_Selector();
         
         new Element_Remover(this);
-        new Builder_Save(this);
+        const save = new Builder_Save(this);
         new Element_Inserter();
+
+        window.get_data = ()=>save.get_data()
 
         this.content_loader = new Builder_Content_Loader(this);
 

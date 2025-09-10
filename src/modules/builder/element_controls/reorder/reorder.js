@@ -55,15 +55,12 @@ export default class Elements_Reorder {
     init_handle(element){
 
         const handle = create_div('reorder_handle', element.controls.html)
-        // controls.element.html.classList.add('reorder_element')
         
         handle.show = ()=>{
-            // handle.state = 'show';
             handle.style.display = '';
         }
 
         handle.hide = ()=>{
-            // handle.state = 'hide';
             handle.style.display = 'none';
         }
 
@@ -122,27 +119,36 @@ export default class Elements_Reorder {
     }
     
     apply_reorder(element){
-
+        
+        console.log('apply_reorder', {
+            drop_target: this.drop_target,
+            drop_position: this.drop_position,
+        })
+        
         if( !this.last_hover.element ) return;
         if( this.drop_target === element ) return;
-
-        const element_index = element.get_index();
-        const drop_index = this.drop_target.get_index();
-
-        let new_index;
         
         if( this.drop_position === 'top' || this.drop_position === 'left') {
-            this.drop_target.html.before(element.html)
-            new_index = drop_index;
+            this.reposition_before(element, this.drop_target)
         }
         
         if( this.drop_position === 'bottom' || this.drop_position === 'right') {
-            this.drop_target.html.after(element.html)
-            new_index = drop_index + 1;
+            this.reposition_after(element, this.drop_target)
         }
+    }
 
-        this.drop_target.parent.elements.splice(new_index, 0, element)
-        element.parent.elements.splice(element_index, 1)
+    reposition_before(element, drop_target){
+        element.parent.elements.splice(element.get_index(), 1)
+        drop_target.html.before(element.html)
+        drop_target.parent.elements.splice(drop_target.get_index(), 0, element)
+        element.parent = drop_target.parent;
     }
     
+    reposition_after(element, drop_target){
+        element.parent.elements.splice(element.get_index(), 1)
+        drop_target.html.after(element.html)
+        drop_target.parent.elements.splice(drop_target.get_index()+1, 0, element)
+        element.parent = drop_target.parent;
+    }
+
 }
