@@ -36,6 +36,9 @@ export default class Builder_Content_Loader {
             })
             
         }
+        
+        this.render_elements = render_elements;
+        console.log('load', elements_data)
 
         render_elements(this.builder.content, elements_data);
         

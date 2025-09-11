@@ -133,11 +133,27 @@ export default class Element_Base {
     }
 
     get_data(){
-        return {
+
+        const data = {
             id: this.id,
             type: this.type,
             data: this.data,
         }
+
+        if( this.elements ) {
+            data.elements = this.get_children_data();
+        }
+
+        return data;
+    }
+
+    get_children_data(){
+        if( !this.elements ) return [];
+        const children = [];
+        this.elements.forEach(element=>{
+            children.push(element.get_data())
+        })
+        return children;
     }
 
     load_styles(){

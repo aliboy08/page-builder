@@ -11,4 +11,5 @@ export const global_hooks = new Hooks([
     'element_controls_init',
     'structure_el_click',
     'reorder_element',
+    'control_panel_init',
 ]);

@@ -10,12 +10,14 @@ export function create_div(selector = '', target, text = '', method = 'append'){
     
     const div = document.createElement('div')
     
-    if( selector[0] === '#' ) {
-        div.id = selector;
-    } else {
-        div.className = selector;
+    if( selector ) {
+        if( selector[0] === '#' ) {
+            div.id = selector;
+        } else {
+            div.className = selector;
+        }
     }
-
+    
     if( text ) {
         div.textContent = text;
     }

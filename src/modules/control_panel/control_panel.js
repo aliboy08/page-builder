@@ -15,6 +15,9 @@ export default class Control_Panel {
         this.init_tabs();
         this.init_resizer();
         this.init_settings();
+        this.init_misc_controls();
+
+        global_hooks.do('control_panel_init', this)
     }
     
     init_html(){
@@ -59,6 +62,10 @@ export default class Control_Panel {
             {
                 key: 'element_settings',
                 label: 'Element Settings',
+            },
+            {
+                key: 'misc_controls',
+                label: 'Misc',
             }
         ]);
 
@@ -84,6 +91,13 @@ export default class Control_Panel {
             load_element_settings(element);
         })
 
+    }
+
+    init_misc_controls(){
+
+        const container = create_div('misc_controls');
+        this.misc_controls = container;
+        this.tabs.set_content('misc_controls', container)
     }
 
 }

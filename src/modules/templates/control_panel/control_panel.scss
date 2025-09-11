@@ -1,0 +1,51 @@
+.template_items {
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .item {
+        border: 1px solid #ffffff1c;
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 3px 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .remove,
+        .load {
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .remove {
+
+            margin-left: auto;
+
+            &:hover {
+                color: rgb(218, 84, 84);
+            }
+            
+            &::after {
+                content: '\e90d';
+                font-family: 'icomoon';
+                font-weight: 400;
+            }
+        }
+
+        .load {
+
+            &:hover {
+                color: rgb(61, 201, 124);
+            }
+
+            &::after {
+                content: '\e916';
+                font-family: 'icomoon';
+                font-weight: 400;
+            }
+        }
+    }
+}

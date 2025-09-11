@@ -1,0 +1,40 @@
+.el_controls .buttons_con {
+
+    height: 20px;
+	position: absolute;
+    top: -24px;
+    display: none;
+    width: 100%;
+    justify-content: center;
+    
+    .btn {
+        border: 1px solid #ffffff33;
+        width: 24px;
+        border-radius: 4px 4px 0 0;
+        background: #252527;
+        pointer-events: auto;
+
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+            background: #2e2e31;
+        }
+
+        &::before {
+            content: '\e9bb';
+            font-family: 'icomoon';
+            font-size: 10px;
+        }
+    }
+}
+
+.el_con[data-state="selected"],
+.el[data-state="selected"] {
+    > .el_controls .buttons_con {
+        display: flex;
+    }
+}
