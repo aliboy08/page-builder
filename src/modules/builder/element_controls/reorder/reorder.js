@@ -19,7 +19,6 @@ export default class Elements_Reorder {
             this.no_target_listener(e)
             this.last_hover = e.target;
         })
-        
     }
 
     init_reorder(element){
@@ -127,6 +126,8 @@ export default class Elements_Reorder {
         
         const prev_parent = element.parent;
 
+        const drop_position = this.drop_position;
+
         element.parent.elements.splice(element.get_index(), 1)
         
         if( this.last_hover.type === 'add_zone' ) {
@@ -138,6 +139,8 @@ export default class Elements_Reorder {
         else if( this.drop_position === 'bottom' || this.drop_position === 'right') {
             this.reposition_after(element, drop_target)
         }
+
+        global_hooks.do('reorder_element', { element, prev_parent, drop_target, drop_position })
         
         prev_parent.update_add_zone();
         element.parent.update_add_zone();
@@ -150,7 +153,6 @@ export default class Elements_Reorder {
     }
     
     reposition_after(element, drop_target){
-
         drop_target.html.after(element.html)
         drop_target.parent.elements.splice(drop_target.get_index()+1, 0, element)
         element.parent = drop_target.parent;

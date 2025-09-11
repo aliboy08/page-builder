@@ -79,9 +79,6 @@ export default class Element_Container extends Element_Base {
                 append_to: this.elements_append_to,
                 element: this,
             })
-
-            console.log('add_zone:add')
-
         }
 
         const remove = ()=>{
@@ -90,12 +87,9 @@ export default class Element_Container extends Element_Base {
 
             this.add_zone.el.remove();
             this.add_zone = null
-            console.log('add_zone:remove')
         }
 
         this.update_add_zone = ()=>{
-
-            console.log('update_add_zone', this.elements)
 
             if( !this.elements.length ) {
                 add();
@@ -106,6 +100,5 @@ export default class Element_Container extends Element_Base {
         }
 
     }
-
 
 }

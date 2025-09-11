@@ -10,4 +10,5 @@ export const global_hooks = new Hooks([
     'parent_element_render',
     'element_controls_init',
     'structure_el_click',
+    'reorder_element',
 ]);

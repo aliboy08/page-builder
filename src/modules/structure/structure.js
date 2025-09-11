@@ -16,6 +16,7 @@ export default class Elements_Structure {
         this.init_add();
         this.init_remove();
         this.init_select();
+        this.init_reorder();
     }
 
     init_html(){
@@ -144,6 +145,20 @@ export default class Elements_Structure {
             setTimeout(()=>open_parent(current), 100)
         })
 
+    }
+
+    init_reorder(){
+
+        global_hooks.add('reorder_element', ({element, drop_target, drop_position})=>{
+            
+            if( drop_position === 'top' || drop_position === 'right' ) {
+                drop_target.structure_el.before(element.structure_el);
+            }
+            else if( drop_position === 'bottom' || drop_position === 'left' ) {
+                drop_target.structure_el.after(element.structure_el);
+            }
+            
+        })
     }
 
 }
