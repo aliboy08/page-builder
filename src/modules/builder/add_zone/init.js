@@ -25,7 +25,6 @@ function init_main_add_zone(){
             
     add_zone.el.addEventListener('click', ()=>{
         builder.selector.unselect_previous();
-        control_panel.tabs.set('add_elements');
     })
     
     global_hooks.add('select_element', ()=>{
@@ -68,6 +67,12 @@ function init_container_add_zone(){
 
     global_hooks.add('element/remove', (element)=>{
         element?.parent?.add_zone?.update();
+    })
+
+    global_hooks.add('add_zone/select', ({add_zone})=>{
+        setTimeout(()=>{
+            control_panel.set_tab('add_elements');
+        }, 10)
     })
 
 }

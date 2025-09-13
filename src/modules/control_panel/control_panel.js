@@ -40,12 +40,11 @@ export default class Control_Panel {
     }
 
     init_manager(manager){
-
+        
         this.tabs.set_content('add_elements', manager.get_html())
 
         global_hooks.add('add_zone/select', ()=>{
-            console.log('control_panel/add_zone:select')
-            this.tabs.set('add_elements')
+            this.set_tab('add_elements')
         })
     }
 
@@ -67,6 +66,13 @@ export default class Control_Panel {
         global_events.do('control_panel/tabs/init', this.tabs)
     }
 
+    set_tab(key){
+        clearTimeout(this.set_tab_debounce)
+        this.set_tab_debounce = setTimeout(()=>{
+            this.tabs.set(key)
+        }, 100);
+    }
+
     init_settings(){
         
         const fields_manager = new Fields_Manager();
@@ -79,7 +85,7 @@ export default class Control_Panel {
             fields_manager.render_element_settings(element, container)
             
             this.tabs.set_content('element_settings', container)
-            this.tabs.set('element_settings')
+            this.set_tab('element_settings')
         }
         
         global_hooks.add('select_element', (element)=>{

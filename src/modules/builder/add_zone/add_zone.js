@@ -1,5 +1,6 @@
 import './add_zone.scss';
 import { create_div } from 'lib/utils';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Add_Zone {
     
@@ -25,6 +26,7 @@ export default class Add_Zone {
     select(){
         this.el.dataset.state = 'selected';
         this.active = true;
+        global_hooks.do('add_zone/select', {add_zone: this})
     }
 
     init_html(){
