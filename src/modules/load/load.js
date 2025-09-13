@@ -1,12 +1,12 @@
 import { global_events } from 'src/global_hooks';
+import { init_element } from '../elements/manager';
 
-let builder, elements_manager
+let builder;
 
 global_events.on('init', init)
 function init(e){
 
     builder = e.builder;
-    elements_manager = e.elements_manager;
 
     const data = localStorage.getItem('page_builder_data');
     
@@ -26,7 +26,7 @@ function render_elements(parent_element, elements_data){
 
     elements_data.forEach(element_data=>{
 
-        const element = load_element(element_data);
+        const element = init_element(element_data);
 
         if( element_data.elements?.length ) {
             element.no_add_zone = true;
@@ -39,13 +39,4 @@ function render_elements(parent_element, elements_data){
         }
         
     })
-}
-
-function load_element(element_data){
-
-    const constructor = elements_manager.elements[element_data.type].init;
-    const element = new constructor(element_data.id);
-    element.data = element_data.data;
-
-    return element;
 }

@@ -1,4 +1,5 @@
-.elements_manager_list {
+.elements {
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -13,15 +14,5 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-    }
-}
-
-.popup_content .elements_manager_list {
-
-    display: flex;
-    gap: 20px;
-
-    .element {
-        flex-basis: 140px;
     }
 }

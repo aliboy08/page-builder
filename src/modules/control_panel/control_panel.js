@@ -15,6 +15,8 @@ export default class Control_Panel {
         this.init_tabs();
         this.init_resizer();
         this.init_settings();
+
+        global_events.do('control_panel/init', { control_panel: this })
     }
     
     init_html(){
