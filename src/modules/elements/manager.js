@@ -69,7 +69,7 @@ function render_element(element){
         
     }
     else {
-        element.render_to(this.content)
+        element.render_to(builder.content)
     }
 
 }
