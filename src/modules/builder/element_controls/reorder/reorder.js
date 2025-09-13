@@ -142,8 +142,8 @@ export default class Elements_Reorder {
 
         global_hooks.do('reorder_element', { element, prev_parent, drop_target, drop_position })
         
-        prev_parent.update_add_zone();
-        element.parent.update_add_zone();
+        prev_parent?.add_zone?.update();
+        element.parent?.add_zone?.update();
     }
 
     reposition_before(element, drop_target){

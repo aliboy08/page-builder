@@ -1,13 +1,12 @@
 import './builder.scss';
 import { get_el } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import { global_hooks, global_events } from 'src/global_hooks';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Element_Inserter from './insert/element_inserter';
 import Elements_Reorder from './element_controls/reorder/reorder';
 import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
-import Add_Zone from './add_zone/add_zone';
 import Element_Controls from './element_controls/element_controls';
 
 export default class Builder {
@@ -26,11 +25,12 @@ export default class Builder {
         this.content_loader = new Builder_Content_Loader(this);
 
         this.init_content();
-        this.init_add_zone();
 
         new Elements_Reorder(this);
 
         this.init_element_controls();
+
+        global_events.do('builder/init', {builder: this})
     }
 
     init_content(){
@@ -38,25 +38,6 @@ export default class Builder {
         this.content = get_el('#page_content_body')
         this.content.elements = [];
         this.content.elements_append_to = this.content;
-        this.content.update_add_zone = ()=>{};
-    }
-
-    init_add_zone(){
-        
-        const add_zone = new Add_Zone()
-        this.content.after(add_zone.el)
-        this.global_add_zone = add_zone;
-        
-        add_zone.el.addEventListener('click', ()=>{
-            this.selector.unselect_previous();
-            global_hooks.do('add_zone_click')
-            add_zone.active = true;
-        })
-        
-        global_hooks.add('select_element', ()=>{
-            add_zone.el.dataset.state = '';
-            add_zone.active = false;
-        })
     }
 
     init_manager(manager){
@@ -80,12 +61,7 @@ export default class Builder {
         }
         
         manager.hooks.add('select', (element)=>{
-
             render_element(element)
-
-            if( this.global_add_zone.active ) {
-                this.selector.select(element)
-            }
         })
 
         this.manager = manager;

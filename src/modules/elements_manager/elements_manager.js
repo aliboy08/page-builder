@@ -8,6 +8,7 @@ import Element_HTML from '../elements/html/html';
 
 // import Draggable from 'components/draggable';
 import Hooks from 'components/hooks';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Elements_Manager {
 
@@ -88,6 +89,7 @@ export default class Elements_Manager {
         el.addEventListener('click', ()=>{
             const element = new this.elements[el.type].init();
             this.hooks.do('select', element)
+            global_hooks.do('elements_manager/select', { element })
         })
         
     }

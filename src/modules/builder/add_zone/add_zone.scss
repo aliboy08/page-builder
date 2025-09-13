@@ -2,10 +2,12 @@
 
 .add_zone {
     
-	margin: 40px auto;
-    padding: 10px;
+	margin: 20px auto;
     display: flex;
     justify-content: center;
+
+    width: 400px;
+    max-width: 100%;
     
     &::before {
         
@@ -19,6 +21,7 @@
         border-radius: var(--border-radius-md);
         cursor: pointer;
         transition: border-color .1s ease;
+        background: #ffffff0e;
 
 
         @include a.flex_center;

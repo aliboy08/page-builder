@@ -1,7 +1,16 @@
+import { global_events } from 'src/global_hooks';
+
 export default class Builder_Content_Loader {
 
     constructor(builder){
+
         this.builder = builder;
+
+        global_events.on('init', ()=>{
+            const data = localStorage.getItem('page_builder_data');
+            this.load(data)
+            global_events.do('builder/content/load')
+        })
     }
 
     load(elements_data){
@@ -38,7 +47,6 @@ export default class Builder_Content_Loader {
         }
         
         this.render_elements = render_elements;
-        console.log('load', elements_data)
 
         render_elements(this.builder.content, elements_data);
         

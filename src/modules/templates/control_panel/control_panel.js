@@ -34,10 +34,10 @@ function init_controls(container){
     dom.wrap(input) 
 
     btn.onclick = ()=>{
-        global_hooks.do('save_template', { name: input.value })
+        global_hooks.do('template/save', { name: input.value })
     }
 
-    global_hooks.add('save_template_success', ({ template })=>{
+    global_hooks.add('template/save/success', ({ template })=>{
         input.value = '';
         render_item(template);
     })
@@ -54,19 +54,16 @@ function render_items(container){
         dom.div('name', item_con, template.name)
         
         dom.div('load', item_con).onclick = ()=>{
-            global_hooks.do('load_template', { template })
+            global_hooks.do('load_template', {template})
         }
 
         dom.div('remove', item_con).onclick = ()=>{
             item_con.remove();
-
-            console.log('remove:click', template)
-
-            global_hooks.do('template_remove', template.id)
+            global_hooks.do('template/remove', {id: template.id})
         }
     }
 
-    global_events.on('load_template_items', ({templates})=>{
+    global_events.on('template/load_data', ({templates})=>{
         templates.forEach(template=>{
             render_item(template, items_con)
         })

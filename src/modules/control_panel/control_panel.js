@@ -43,7 +43,8 @@ export default class Control_Panel {
 
         this.tabs.set_content('add_elements', manager.get_html())
 
-        global_hooks.add('add_zone_click', ()=>{
+        global_hooks.add('add_zone/select', ()=>{
+            console.log('control_panel/add_zone:select')
             this.tabs.set('add_elements')
         })
     }

@@ -1,7 +1,7 @@
 import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
-import Add_Zone from 'src/modules/builder/add_zone/add_zone';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Container extends Element_Base {
 
@@ -17,8 +17,7 @@ export default class Element_Container extends Element_Base {
 
         this.element_class_name = 'el_con';
         
-        this.init_fields();        
-        this.init_add_zone();
+        this.init_fields();
     }
     
     init_fields(){
@@ -59,46 +58,14 @@ export default class Element_Container extends Element_Base {
 
         this.elements_append_to = inner;
 
-        this.update_add_zone();
+        global_hooks.do('element/container/render', { element: this })
         
     }
 
     after_child_render(){
-
-        this.update_add_zone();
         
-    }
-
-    init_add_zone(){
+        this?.add_zone?.update();
         
-        const add = ()=>{
-
-            if( this.add_zone ) return;
-
-            this.add_zone = new Add_Zone({
-                append_to: this.elements_append_to,
-                element: this,
-            })
-        }
-
-        const remove = ()=>{
-
-            if( !this.add_zone ) return;
-
-            this.add_zone.el.remove();
-            this.add_zone = null
-        }
-
-        this.update_add_zone = ()=>{
-
-            if( !this.elements.length ) {
-                add();
-            }
-            else {
-                remove();
-            }
-        }
-
     }
 
 }

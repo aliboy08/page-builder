@@ -109,7 +109,7 @@ export default class Elements_Structure {
             element.structure_el.remove();
         }
         
-        global_hooks.add('element_remove', (element)=>{
+        global_hooks.add('element/before_remove', (element)=>{
             remove(element)
         })
     }

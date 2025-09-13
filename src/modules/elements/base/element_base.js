@@ -123,13 +123,15 @@ export default class Element_Base {
 
     remove(){
         
-        global_hooks.do('element_remove', this)
+        global_hooks.do('element/before_remove', this)
 
         const index = this.parent.elements.indexOf(this)
 
         this.parent.elements.splice(index, 1)
 
         this.html.remove();
+
+        global_hooks.do('element/remove', this)
     }
 
     get_data(){
@@ -148,11 +150,15 @@ export default class Element_Base {
     }
 
     get_children_data(){
+
         if( !this.elements ) return [];
+
         const children = [];
+
         this.elements.forEach(element=>{
             children.push(element.get_data())
         })
+
         return children;
     }
 
