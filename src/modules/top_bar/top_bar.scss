@@ -1,0 +1,20 @@
+.elements_structure,
+.page_content,
+.control_panel {
+    margin-top: 32px;
+}
+
+.top_bar {
+    height: 32px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #26282c;
+    z-index: 1000;
+    border-bottom: 1px solid #ffffff27;
+
+    display: flex;
+    padding: 4px 12px;
+
+}

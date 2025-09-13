@@ -51,9 +51,12 @@ function set_selector(el, value){
     if( !value ) return;
 
     if( value[0] === '#' ) {
-        el.id = value;
+        el.id = value.slice(1, value.length);
     } else {
         el.className = value;
     }
-    
+}
+
+export function get(selector){
+    return document.querySelector(selector);
 }

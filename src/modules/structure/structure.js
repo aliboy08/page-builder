@@ -21,8 +21,7 @@ export default class Elements_Structure {
 
     init_html(){
 
-        this.container = create_div('#elements_structure')
-        this.container.className = 'elements_structure';
+        this.container = create_div('elements_structure')
         this.parent_container.append(this.container)
 
         this.body = create_div('structure_body', this.container)

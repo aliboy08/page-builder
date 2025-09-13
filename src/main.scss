@@ -5,4 +5,7 @@
 @use 'css/animations.scss';
 @use 'css/scrollbar.scss';
 
+@use 'modules/top_bar/top_bar.scss';
+@use 'modules/save/save.scss';
+
 @import 'css/icons/icomoon/style.css';

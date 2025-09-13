@@ -12,7 +12,7 @@ export function create_div(selector = '', target, text = '', method = 'append'){
     
     if( selector ) {
         if( selector[0] === '#' ) {
-            div.id = selector;
+            div.id = selector.slice(1, selector.length);
         } else {
             div.className = selector;
         }

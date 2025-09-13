@@ -34,8 +34,10 @@ function init(){
 
     global_events.do('init', { control_panel, builder })
     
+    import('./modules/top_bar/top_bar')
     import('./modules/templates/init')
     import('./modules/builder/add_zone/init')
+    import('./modules/save/save')
 }
 
 document.addEventListener('DOMContentLoaded', init)

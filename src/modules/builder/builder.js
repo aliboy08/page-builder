@@ -3,9 +3,7 @@ import { get_el } from 'lib/utils';
 import { global_hooks, global_events } from 'src/global_hooks';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
-import Element_Inserter from './insert/element_inserter';
 import Elements_Reorder from './element_controls/reorder/reorder';
-import Builder_Save from './save/save';
 import Builder_Content_Loader from './load/content_loader';
 import Element_Controls from './element_controls/element_controls';
 
@@ -17,10 +15,6 @@ export default class Builder {
         this.selector = new Element_Selector();
         
         new Element_Remover(this);
-        const save = new Builder_Save(this);
-        new Element_Inserter();
-
-        window.get_data = ()=>save.get_data()
 
         this.content_loader = new Builder_Content_Loader(this);
 
