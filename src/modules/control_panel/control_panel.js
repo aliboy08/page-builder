@@ -1,5 +1,5 @@
 import './control_panel.scss';
-import { create_div } from 'lib/utils';
+import { create_div, get_el } from 'lib/utils';
 import Resizer from 'components/resizer';
 import Tabs from 'components/tabs/tabs';
 import Fields_Manager from '../fields/fiields_manager';
@@ -21,8 +21,7 @@ export default class Control_Panel {
     
     init_html(){
 
-        this.container = create_div('control_panel')
-        this.parent_container.prepend(this.container)
+        this.container = get_el('#control_panel')
 
         this.inner = create_div('inner scrollbar_style_1', this.container)
     }

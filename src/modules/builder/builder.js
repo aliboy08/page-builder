@@ -20,7 +20,7 @@ export default class Builder {
         new Elements_Reorder(this);
 
         this.init_element_controls();
-
+        
         global_events.do('builder/init', {builder: this})
     }
 
@@ -59,6 +59,7 @@ export default class Builder {
     }
 
     init_element_controls(){
+        
         global_hooks.add('element_render', (element)=>{
             element.controls = new Element_Controls(element)
             global_hooks.do('element_controls_init', element.controls)

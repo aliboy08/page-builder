@@ -20,6 +20,8 @@ function load(data){
     data = JSON.parse(data)
 
     render_elements(builder.content, data);
+
+    global_events.do('elements/loaded', { builder })
 }
 
 function render_elements(parent_element, elements_data){

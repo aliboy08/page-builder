@@ -1,5 +1,5 @@
 import './structure.scss';
-import { create_div } from 'lib/utils';
+import { create_div, get_el } from 'lib/utils';
 import Resizer from 'components/resizer';
 import { global_hooks } from 'src/global_hooks';
 
@@ -21,8 +21,10 @@ export default class Elements_Structure {
 
     init_html(){
 
-        this.container = create_div('elements_structure')
-        this.parent_container.append(this.container)
+        // this.container = create_div('elements_structure')
+        // this.parent_container.append(this.container)
+
+        this.container = get_el('#elements_structure')
 
         this.body = create_div('structure_body', this.container)
     }

@@ -23,6 +23,11 @@ export function create_div(selector = '', target, text = '', method = 'append'){
     }
 
     if( target ) {
+
+        if( typeof target === 'string' ) {
+            target = get_el(target)
+        }
+
         target[method](div)
     }
 
