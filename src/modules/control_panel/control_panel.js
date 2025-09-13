@@ -3,7 +3,7 @@ import { create_div } from 'lib/utils';
 import Resizer from 'components/resizer';
 import Tabs from 'components/tabs/tabs';
 import Fields_Manager from '../fields/fiields_manager';
-import { global_hooks } from 'src/global_hooks';
+import { global_hooks, global_events } from 'src/global_hooks';
 
 export default class Control_Panel {
 
@@ -15,9 +15,6 @@ export default class Control_Panel {
         this.init_tabs();
         this.init_resizer();
         this.init_settings();
-        this.init_misc_controls();
-
-        global_hooks.do('control_panel_init', this)
     }
     
     init_html(){
@@ -49,7 +46,6 @@ export default class Control_Panel {
         global_hooks.add('add_zone_click', ()=>{
             this.tabs.set('add_elements')
         })
-
     }
 
     init_tabs(){
@@ -63,13 +59,11 @@ export default class Control_Panel {
                 key: 'element_settings',
                 label: 'Element Settings',
             },
-            {
-                key: 'misc_controls',
-                label: 'Misc',
-            }
         ]);
 
         this.inner.prepend(this.tabs.container)
+
+        global_events.do('control_panel/tabs/init', this.tabs)
     }
 
     init_settings(){
@@ -91,13 +85,6 @@ export default class Control_Panel {
             load_element_settings(element);
         })
 
-    }
-
-    init_misc_controls(){
-
-        const container = create_div('misc_controls');
-        this.misc_controls = container;
-        this.tabs.set_content('misc_controls', container)
     }
 
 }

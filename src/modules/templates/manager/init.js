@@ -22,6 +22,7 @@ function init(){
     })
 
     global_hooks.add('template_remove', (template_id)=>{
+        console.log('hook:template_remove:', template_id)
         manager.remove(template_id)
     })
 

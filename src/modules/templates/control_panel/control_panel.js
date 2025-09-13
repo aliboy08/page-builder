@@ -6,13 +6,26 @@ let render_item;
 
 init();
 function init(){
-    init_controls();
-    render_items();
+    global_events.on('control_panel/tabs/init', (tabs)=>{
+        init_tabs(tabs);
+    })
 }
 
-function init_controls(){
+function init_tabs(tabs){
 
-    const container = page_builder.control_panel.misc_controls;
+    tabs.create_tab({
+        key: 'templates',
+        label: 'Templates',
+    });
+
+    const container = dom.div('templates');
+    init_controls(container);
+    render_items(container);
+    
+    tabs.set_content('templates', container)
+}
+
+function init_controls(container){
     
     const btn = dom.button('Save Template', container)
 
@@ -30,9 +43,7 @@ function init_controls(){
     })
 }
 
-function render_items(){
-
-    const container = page_builder.control_panel.misc_controls;
+function render_items(container){
 
     const items_con = dom.div('template_items', container)
 
@@ -48,7 +59,10 @@ function render_items(){
 
         dom.div('remove', item_con).onclick = ()=>{
             item_con.remove();
-            global_hooks.do('template_remove', item.id)
+
+            console.log('remove:click', template)
+
+            global_hooks.do('template_remove', template.id)
         }
     }
 

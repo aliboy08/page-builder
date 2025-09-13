@@ -12,9 +12,12 @@ export default class Hooks {
     }
     
     add(action_name, fn, priority = 10){
-
-        if( !this.actions[action_name] ) return;
+        
         if( typeof fn !== 'function' ) return;
+
+        if( !this.actions[action_name] ) {
+            this.actions[action_name] = [];
+        }
 
         if( typeof this.actions[action_name][priority] === 'undefined' ) {
             this.actions[action_name][priority] = [];

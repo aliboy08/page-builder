@@ -41,7 +41,7 @@ export default class Template_Manager {
     }
 
     remove(id){
-
+        
         const index = this.data.findIndex(i=>i.id===id);
         if( index === -1 ) return;
         this.data.splice(index, 1);

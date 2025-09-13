@@ -6,35 +6,35 @@ export default class Tabs {
     constructor(args){
         
         if( Array.isArray(args) ) {
-            this.create_html(args)
+            this.init_html(args)
         }
 
     }
     
-    create_html(args){
+    init_html(args){
 
         const container = create_div('tabs');
-
-        const tabs_nav = create_div('tabs_nav', container);
-        const tabs_content = create_div('tabs_content', container);
+        this.tabs_nav = create_div('tabs_nav', container);
+        this.tabs_content = create_div('tabs_content', container);
 
         this.nav = {};
         
-        args.forEach(tab=>{
-
-            const nav = create_div('tab_nav', tabs_nav, tab.label);
-            this.nav[tab.key] = nav;
-
-            nav.content = create_div('tab_content', tabs_content)
-            nav.content.style.display = 'none';
-
-            nav.addEventListener('click', ()=>this.set(tab.key))
-        })
+        args.forEach(tab=>this.create_tab(tab))
         
-
         this.set(Object.keys(this.nav)[0])
         
         this.container = container;
+    }
+
+    create_tab(tab){
+
+        const nav = create_div('tab_nav', this.tabs_nav, tab.label);
+        this.nav[tab.key] = nav;
+
+        nav.content = create_div('tab_content', this.tabs_content)
+        nav.content.style.display = 'none';
+
+        nav.addEventListener('click', ()=>this.set(tab.key))
     }
 
     set(key){
