@@ -10,34 +10,32 @@ function init(){
     
     const container = document.querySelector('#page_builder');
     
-    const manager = new Elements_Manager();
+    const elements_manager = new Elements_Manager();
 
     const builder = new Builder('#page_content');
-    builder.init_manager(manager)
+    builder.init_manager(elements_manager)
 
     const control_panel = new Control_Panel({
         parent_container: container,
     });
-    control_panel.init_manager(manager);
+    control_panel.init_manager(elements_manager);
 
     const structure = new Elements_Structure({
         parent_container: container,
     })
-    
-    // const data = localStorage.getItem('page_builder_data');
-    // if( data ) builder.content_loader.load(data)
     
     window.page_builder = {
         builder,
         control_panel,
     }
 
-    global_events.do('init', { control_panel, builder })
+    global_events.do('init', { control_panel, builder, elements_manager })
     
     import('./modules/top_bar/top_bar')
     import('./modules/templates/init')
     import('./modules/builder/add_zone/init')
     import('./modules/save/save')
+    import('./modules/load/load')
 }
 
 document.addEventListener('DOMContentLoaded', init)

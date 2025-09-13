@@ -4,7 +4,6 @@ import { global_hooks, global_events } from 'src/global_hooks';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Elements_Reorder from './element_controls/reorder/reorder';
-import Builder_Content_Loader from './load/content_loader';
 import Element_Controls from './element_controls/element_controls';
 
 export default class Builder {
@@ -15,8 +14,6 @@ export default class Builder {
         this.selector = new Element_Selector();
         
         new Element_Remover(this);
-
-        this.content_loader = new Builder_Content_Loader(this);
 
         this.init_content();
 
