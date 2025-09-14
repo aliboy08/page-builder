@@ -68,14 +68,23 @@ export default class Element_Base {
         const element_class_name =  this.element_class_name ?? 'el'
         
         const html = create_div(`${element_class_name} el_${this.type}`);
-        
-        if( typeof this.inner_html === 'function' ) {
-            html.innerHTML = this.inner_html();
-        }
 
         this.html = html;
 
         html.element = this;
+        
+        if( typeof this.inner_html === 'function' ) {
+
+            const inner_html = this.inner_html();
+
+            if( typeof inner_html === 'string' ) {
+                html.innerHTML = inner_html;
+            }
+            else if ( inner_html.nodeName ) {
+                html.append(inner_html)
+            }
+            
+        }
         
         return html;
     }

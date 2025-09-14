@@ -1,4 +1,5 @@
 import Element_Base from '../base/element_base';
+import { el_change_type } from 'lib/utils';
 
 export default class Element_Heading extends Element_Base {
 
@@ -12,6 +13,7 @@ export default class Element_Heading extends Element_Base {
         
         this.data = {
             text: 'Heading Element',
+            markup: 'h2',
         }
 
         this.init_fields();
@@ -43,14 +45,25 @@ export default class Element_Heading extends Element_Base {
             choices: [
                 'span', 'p', 'div',
                 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-            ]
+            ],
+            on_change: (value)=>{
+                this.heading = el_change_type(this.heading, value)
+            }
         })
         
     }
-
+    
     inner_html(){
-        const data = this.data;
-        return `${data.text}`;
+
+        const markup = this.data.markup;
+
+        const heading = document.createElement(markup)
+        heading.className = 'heading';
+        heading.textContent = this.data.text;
+
+        this.heading = heading;
+
+        return heading;
     }
 
 }

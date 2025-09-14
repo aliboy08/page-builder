@@ -147,3 +147,11 @@ export function debounce(fn, timeout = 400){
         timer = setTimeout(() => { fn.apply(this, args); }, timeout);
     };
 }
+
+export function el_change_type(el, new_type){
+    const new_el = document.createElement(new_type)
+    new_el.className = el.className;
+    new_el.innerHTML = el.innerHTML
+    el.replaceWith(new_el)
+    return new_el;
+}
