@@ -1,10 +1,15 @@
 import './tabs.scss';
 import { create_div } from 'lib/utils';
+import Hooks from 'components/hooks';
 
 export default class Tabs {
 
     constructor(args){
         
+        this.hooks = new Hooks([
+            'create_tab',
+        ])
+
         if( Array.isArray(args) ) {
             this.init_html(args)
         }
@@ -35,6 +40,8 @@ export default class Tabs {
         nav.content.style.display = 'none';
 
         nav.addEventListener('click', ()=>this.set(tab.key))
+
+        this.hooks.do('create_tab')
     }
 
     set(key){

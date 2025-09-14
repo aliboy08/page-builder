@@ -3,7 +3,6 @@ import { get_el } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { init_element } from '../elements/manager';
 import Element_Selector from './selector/selector';
-import Element_Remover from './remover/remover';
 import Elements_Reorder from './element_controls/reorder/reorder';
 import Element_Controls from './element_controls/element_controls';
 
@@ -14,22 +13,32 @@ export default class Builder {
         this.container = get_el(args.container ?? '#page_content');
         this.selector = new Element_Selector();
         
-        new Element_Remover(this);
-
         this.init_content();
 
         new Elements_Reorder(this);
 
         this.init_element_controls();
-        
-        global_hooks.do_queue('builder/init', {builder: this})
 
+        this.init_remove_element();
+        
         global_hooks.add('render/elements', ({render_to, elements_data})=>{
             this.render_elements(render_to, elements_data);
         })
 
         global_hooks.add('render/element', ({render_to, element_data})=>{
             this.render_element(render_to, element_data);
+        })
+
+        global_hooks.do_queue('builder/init', {builder: this})
+    }
+
+    init_remove_element(){
+
+        global_hooks.add('remove_element', ()=>this.remove_element())
+
+        document.addEventListener('keydown', (e)=>{
+            if( e.key !== 'Delete' ) return;
+            this.remove_element()
         })
     }
 
@@ -108,6 +117,12 @@ export default class Builder {
         elements_to_remove.forEach(element=>{
             element.remove()
         })
+    }
+
+    remove_element(element){
+        if( !element ) element = this.selector.selected;
+        if( !element ) return;
+        element.remove();
     }
 
 }

@@ -1,0 +1,43 @@
+.scroll_controls {
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll_control {
+    position: absolute;
+    top: 50%;
+    height: 24px;
+    width: 24px;
+    background: #201f1f;
+    border: 1px solid #ffffff8a;
+    margin-top: -12px;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background: #312f2f;
+    }
+
+    &::before {
+        font-family: 'icomoon';
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    &.left {
+        left: 0;
+        &::before {
+            content: '\e903';
+        }
+    }
+
+    &.right {
+        right: 0;
+        &::before {
+            content: '\e902';
+        }
+    }
+}

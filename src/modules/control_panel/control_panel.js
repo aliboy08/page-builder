@@ -2,6 +2,7 @@ import './control_panel.scss';
 import { create_div, get_el } from 'lib/utils';
 import Resizer from 'components/resizer';
 import Tabs from 'components/tabs/tabs';
+import Content_Scroll from 'components/content_scroll/content_scroll';
 import Fields_Manager from '../fields/fiields_manager';
 import { global_hooks } from 'src/global_hooks';
 
@@ -60,8 +61,13 @@ export default class Control_Panel {
                 label: 'Element Settings',
             },
         ]);
-
+        
         this.inner.prepend(this.tabs.container)
+        
+        const content_scroll = new Content_Scroll(this.tabs.tabs_nav);
+        this.tabs.hooks.add('create_tab', ()=>{
+            content_scroll.update();
+        })
 
         global_hooks.do_queue('control_panel/tabs/init', this.tabs)
     }
