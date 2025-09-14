@@ -46,7 +46,7 @@ function load_items({builder}){
 
     render_items(builder.content.elements);
     
-    global_hooks.add('element_render', render_item)
+    global_hooks.add('element/render', render_item)
 }
 
 function render_item(element){
@@ -64,7 +64,7 @@ function render_item(element){
     element.structure_el = item;
 
     item.addEventListener('click', ()=>{
-        global_hooks.do('structure_el_click', element)
+        global_hooks.do('structure/click', element)
     })
 }
 

@@ -77,11 +77,11 @@ export default class Elements_Structure {
             element.structure_el = item;
 
             item.addEventListener('click', ()=>{
-                global_hooks.do('structure_el_click', element)
+                global_hooks.do('structure/click', element)
             })
         }
 
-        global_hooks.add('element_render', (element)=>{
+        global_hooks.add('element/render', (element)=>{
             add(element)                                                                                           
         })
 
@@ -139,7 +139,7 @@ export default class Elements_Structure {
             }
         }
 
-        global_hooks.add('select_element', (element)=>{
+        global_hooks.add('element/select', (element)=>{
             if( current ) current.classList.remove('selected');
             current = element.structure_el;
             current.classList.add('selected');
@@ -150,7 +150,7 @@ export default class Elements_Structure {
 
     init_reorder(){
 
-        global_hooks.add('reorder_element', ({element, drop_target, drop_position})=>{
+        global_hooks.add('element/reorder', ({element, drop_target, drop_position})=>{
             
             if( drop_position === 'top' || drop_position === 'right' ) {
                 drop_target.structure_el.before(element.structure_el);

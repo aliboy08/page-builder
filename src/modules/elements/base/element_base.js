@@ -114,7 +114,7 @@ export default class Element_Base {
         
         this.load_styles();
 
-        global_hooks.do('element_render', this)
+        global_hooks.do('element/render', this)
 
         if( typeof this.after_render === 'function' ) {
             this.after_render()

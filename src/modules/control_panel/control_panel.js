@@ -88,7 +88,7 @@ export default class Control_Panel {
             this.set_tab('element_settings')
         }
         
-        global_hooks.add('select_element', (element)=>{
+        global_hooks.add('element/select', (element)=>{
             load_element_settings(element);
         })
 

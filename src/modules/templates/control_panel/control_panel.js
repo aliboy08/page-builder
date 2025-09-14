@@ -54,7 +54,7 @@ function render_items(container){
         dom.div('name', item_con, template.name)
         
         dom.div('load', item_con).onclick = ()=>{
-            global_hooks.do('load_template', {template})
+            global_hooks.do('template/load', {template})
         }
 
         dom.div('remove', item_con).onclick = ()=>{

@@ -60,7 +60,7 @@ export default class Builder {
 
     init_element_controls(){
         
-        global_hooks.add('element_render', (element)=>{
+        global_hooks.add('element/render', (element)=>{
             element.controls = new Element_Controls(element)
             global_hooks.do('element_controls_init', element.controls)
         }, 100)

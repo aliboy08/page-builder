@@ -27,7 +27,7 @@ function init_main_add_zone(){
         builder.selector.unselect_previous();
     })
     
-    global_hooks.add('select_element', ()=>{
+    global_hooks.add('element/select', ()=>{
         add_zone.unselect()
     })
 
