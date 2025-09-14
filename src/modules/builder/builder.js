@@ -1,6 +1,6 @@
 import './builder.scss';
 import { get_el } from 'lib/utils';
-import { global_hooks, global_events } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Elements_Reorder from './element_controls/reorder/reorder';
@@ -21,7 +21,7 @@ export default class Builder {
 
         this.init_element_controls();
         
-        global_events.do('builder/init', {builder: this})
+        global_hooks.do_queue('builder/init', {builder: this})
     }
 
     init_content(){

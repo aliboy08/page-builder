@@ -1,5 +1,5 @@
 import { create_div } from 'lib/utils'
-import { global_events, global_hooks } from 'src/global_hooks'
+import { global_hooks } from 'src/global_hooks'
 
 import Element_Container from './container/container'
 import Element_Heading from './heading/heading'
@@ -27,11 +27,11 @@ const types = {
 
 let builder;
 
-global_events.on('control_panel/init', ({control_panel})=>{
+global_hooks.add_queue('control_panel/init', ({control_panel})=>{
     control_panel.tabs.set_content('add_elements', get_elements_list_html())
 })
 
-global_events.on('builder/init', (e)=>{
+global_hooks.add_queue('builder/init', (e)=>{
     builder = e.builder;
 })
 

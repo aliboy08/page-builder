@@ -1,12 +1,12 @@
 import './control_panel.scss';
 import * as dom from 'lib/dom'
-import { global_hooks, global_events } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 
 let render_item;
 
 init();
 function init(){
-    global_events.on('control_panel/tabs/init', (tabs)=>{
+    global_hooks.add_queue('control_panel/tabs/init', (tabs)=>{
         init_tabs(tabs);
     })
 }
@@ -63,7 +63,7 @@ function render_items(container){
         }
     }
 
-    global_events.on('template/load_data', ({templates})=>{
+    global_hooks.add_queue('template/load_data', ({templates})=>{
         templates.forEach(template=>{
             render_item(template, items_con)
         })

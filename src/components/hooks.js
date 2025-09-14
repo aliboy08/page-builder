@@ -1,13 +1,13 @@
 export default class Hooks {
 
-    constructor(action_keys){
+    constructor(action_names = []){
 
-        this.action_keys = action_keys;
         this.actions = {};
         this.filters = {};
+        this.queue = {};
         
-        action_keys.forEach(action_key=>{
-            this.actions[action_key] = [];
+        action_names.forEach(action_name=>{
+            this.actions[action_name] = [];
         })
     }
     
@@ -31,8 +31,39 @@ export default class Hooks {
         if( !this.actions[action_name] ) return;
 
         this.actions[action_name].forEach(priority=>{
-            priority.forEach(action=>action(args));
+            priority.forEach(action=>{
+                action(args)
+            });
         });
+    }
+
+    add_queue(action_name, fn){
+
+        const queue = this.queue[action_name]
+
+        if( queue ) {
+            return fn(queue.args);
+        }
+
+        if( !this.queue[action_name] ) {
+            this.queue[action_name] = { actions: [] }
+        }
+
+        this.queue[action_name].actions.push(fn)
+    }
+
+    do_queue(action_name, args){
+
+        if( !this.queue[action_name] ) {
+            this.queue[action_name] = {}
+        }
+        
+        this.queue[action_name].args = args;
+
+        if( this.queue[action_name].actions?.length ) {
+            this.queue[action_name].actions.forEach(fn=>fn(args))
+            this.queue[action_name].actions = [];
+        }
     }
 
     add_action(action_name){
@@ -65,14 +96,16 @@ export default class Hooks {
     }
 
     clear(key){
+
         if( key ) {
-            if( !this.actions[action_key] ) return;
-            this.actions[action_key] = [];
-        } else {
-            // clear all
-            this.action_keys.forEach(action_key=>{
-                this.actions[action_key] = [];
-            })
+            if( !this.actions[key] ) return;
+            this.actions[key] = [];
+            return;
+        }
+        
+        // clear all
+        for( const key in this.actions ) {
+            this.actions[key] = [];
         }
     }
 

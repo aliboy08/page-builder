@@ -1,14 +1,14 @@
 import * as dom from 'src/lib/dom'
-import { global_events, global_hooks } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 
 let builder;
 
-global_events.on('init', init)
+global_hooks.add_queue('init', init)
 function init(e){
     
     builder = e.builder;
 
-    global_events.on('top_bar/init', init_button)
+    global_hooks.add_queue('top_bar/init', init_button)
 }
 
 function init_button({container}){

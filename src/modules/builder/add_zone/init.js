@@ -1,9 +1,9 @@
 import Add_Zone from './add_zone'
-import { global_events, global_hooks } from 'src/global_hooks'
+import { global_hooks } from 'src/global_hooks'
 
 let control_panel, builder;
 
-global_events.on('init', init)
+global_hooks.add_queue('init', init)
 
 function init(e){
 

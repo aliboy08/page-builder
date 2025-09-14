@@ -1,10 +1,10 @@
-import { global_hooks, global_events } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 
 export default class Templates_Manager {
     
     constructor(){
 
-        global_events.on('builder/init', ({builder})=>{
+        global_hooks.add_queue('builder/init', ({builder})=>{
             this.builder = builder;
             this.init();
         })
@@ -62,7 +62,7 @@ export default class Templates_Manager {
             this.data = [];
         }
 
-        global_events.do('template/load_data', { templates: this.data })
+        global_hooks.do_queue('template/load_data', { templates: this.data })
     }
 
     save(){

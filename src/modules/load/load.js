@@ -1,9 +1,9 @@
-import { global_events } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 import { init_element } from '../elements/manager';
 
 let builder;
 
-global_events.on('init', init)
+global_hooks.add_queue('init', init)
 function init(e){
 
     builder = e.builder;
@@ -21,7 +21,7 @@ function load(data){
 
     render_elements(builder.content, data);
 
-    global_events.do('elements/loaded', { builder })
+    global_hooks.do_queue('elements/loaded', { builder })
 }
 
 function render_elements(parent_element, elements_data){

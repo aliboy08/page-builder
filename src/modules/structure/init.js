@@ -1,6 +1,6 @@
 import './structure.scss'
 import { create_div, get_el } from 'lib/utils';
-import { global_events, global_hooks } from 'src/global_hooks';
+import { global_hooks } from 'src/global_hooks';
 import Resizer from 'components/resizer';
 
 let body;
@@ -9,7 +9,7 @@ init();
 function init(){
     init_html();
     init_resize();
-    global_events.on('elements/loaded', load_items)
+    global_hooks.add_queue('elements/loaded', load_items)
 }
 
 function init_resize(){
