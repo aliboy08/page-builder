@@ -1,6 +1,7 @@
 import './builder.scss';
 import { get_el } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
+import { init_element } from '../elements/manager';
 import Element_Selector from './selector/selector';
 import Element_Remover from './remover/remover';
 import Elements_Reorder from './element_controls/reorder/reorder';
@@ -8,9 +9,9 @@ import Element_Controls from './element_controls/element_controls';
 
 export default class Builder {
     
-    constructor(selector = '#page_content'){
+    constructor(args = {}){
         
-        this.container = get_el(selector);
+        this.container = get_el(args.container ?? '#page_content');
         this.selector = new Element_Selector();
         
         new Element_Remover(this);
@@ -22,6 +23,14 @@ export default class Builder {
         this.init_element_controls();
         
         global_hooks.do_queue('builder/init', {builder: this})
+
+        global_hooks.add('render/elements', ({render_to, elements_data})=>{
+            this.render_elements(render_to, elements_data);
+        })
+
+        global_hooks.add('render/element', ({render_to, element_data})=>{
+            this.render_element(render_to, element_data);
+        })
     }
 
     init_content(){
@@ -65,5 +74,40 @@ export default class Builder {
             global_hooks.do('element_controls_init', element.controls)
         }, 100)
     }
+
+    get_data(){
+
+        const data = [];
+        
+        this.content.elements.forEach(element=>{
+            data.push(element.get_data())
+        })
+
+        return data;
+    }
+
+    render_elements(render_to, elements_data){
+        elements_data.forEach(element_data=>{
+            this.render_element(render_to, element_data);
+        })
+    }
+
+    render_element(render_to, element_data){
+
+        const element = init_element(element_data);
+
+        element.render_to(render_to)
+
+        if( element_data?.elements?.length ) {
+            this.render_elements(element, element_data.elements)
+        }
+    }
     
+    clear(){
+        const elements_to_remove = [...this.content.elements]
+        elements_to_remove.forEach(element=>{
+            element.remove()
+        })
+    }
+
 }

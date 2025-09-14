@@ -9,7 +9,7 @@ export default class Control_Panel {
 
     constructor(args = {}){
         
-        this.parent_container = args.parent_container;
+        this.parent_container = get_el(args.parent_container ?? '#page_builder');
 
         this.init_html();
         this.init_tabs();

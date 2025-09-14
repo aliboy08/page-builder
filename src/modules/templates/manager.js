@@ -13,21 +13,21 @@ export default class Templates_Manager {
     init(){
 
         global_hooks.add('template/save', ({name})=>{
-            this.save_template(name)
+            this.save(name)
         })
 
         global_hooks.add('template/remove', ({id})=>{
             this.remove(id)
         })
 
-        global_hooks.add('template/render', ({template})=>{
+        global_hooks.add('template/load', ({template})=>{
             this.render(template)
         })
 
         this.init_data();
     }
 
-    save_template(name){
+    save(name){
         
         if( !name ) return;
 
@@ -43,18 +43,18 @@ export default class Templates_Manager {
 
         this.data.push(data);
 
-        this.save();
+        this.save_data();
         
         global_hooks.do('template/save/success', {template: data})
     }
     
     get_selected(){
-        return page_builder.builder.selector.selected
+        return this.builder.selector.selected
     }
 
     init_data(){
         
-        this.data = localStorage.getItem('page_builder_templates');
+        this.data = localStorage.getItem('page_builder/templates');
 
         if( this.data ) {
             this.data = JSON.parse(this.data)
@@ -62,11 +62,11 @@ export default class Templates_Manager {
             this.data = [];
         }
 
-        global_hooks.do_queue('template/load_data', { templates: this.data })
+        global_hooks.do_queue('templates_manager/load_data', { templates: this.data })
     }
 
-    save(){
-        localStorage.setItem('page_builder_templates', JSON.stringify(this.data))
+    save_data(){
+        localStorage.setItem('page_builder/templates', JSON.stringify(this.data))
     }
     
     get_new_index(){
@@ -80,15 +80,16 @@ export default class Templates_Manager {
         if( index === -1 ) return;
         this.data.splice(index, 1);
 
-        this.save();
+        this.save_data();
     }
 
     render(template){
-
-        const render_to = this.get_render_to_element();
-
-        this.builder.content_loader.render_elements(render_to, [template.data])
-
+        
+        global_hooks.do('render/element', {
+            render_to: this.get_render_to_element(),
+            element_data: template.data
+        })
+        
     }
 
     get_render_to_element(){

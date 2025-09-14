@@ -1,2 +1,4 @@
-import('./manager/manager').then(res=>new res.default())
+import Templates_Manager from './manager'
+new Templates_Manager();
+
 import('./control_panel/control_panel')

@@ -20,7 +20,7 @@ function load(data){
     data = JSON.parse(data)
 
     render_elements(builder.content, data);
-
+    
     global_hooks.do_queue('elements/loaded', { builder })
 }
 
@@ -29,11 +29,7 @@ function render_elements(parent_element, elements_data){
     elements_data.forEach(element_data=>{
 
         const element = init_element(element_data);
-
-        if( element_data.elements?.length ) {
-            element.no_add_zone = true;
-        }
-
+        
         element.render_to(parent_element)
 
         if( element_data?.elements?.length ) {

@@ -63,7 +63,7 @@ function render_items(container){
         }
     }
 
-    global_hooks.add_queue('template/load_data', ({templates})=>{
+    global_hooks.add_queue('templates_manager/load_data', ({templates})=>{
         templates.forEach(template=>{
             render_item(template, items_con)
         })
