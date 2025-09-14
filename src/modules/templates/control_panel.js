@@ -1,4 +1,3 @@
-import './control_panel.scss';
 import * as dom from 'lib/dom'
 import { global_hooks } from 'src/global_hooks';
 
@@ -27,11 +26,12 @@ function init_tabs(tabs){
 
 function init_controls(container){
     
-    const btn = dom.button('Save Template', container)
+    const con = dom.div('', container)
+        
+    const btn = dom.button('Save Template', dom.div('mb-5', con))
 
-    const input = dom.input(container)
+    const input = dom.input(dom.div('mb-5', con))
     input.placeholder = 'Template Name';
-    dom.wrap(input) 
 
     btn.onclick = ()=>{
         global_hooks.do('template/save', { name: input.value })
@@ -45,19 +45,21 @@ function init_controls(container){
 
 function render_items(container){
 
-    const items_con = dom.div('template_items', container)
+    const items_con = dom.div('items_listing template_items', container)
 
     render_item = (template)=>{
 
-        const item_con = dom.div('item', items_con)
+        const item_con = dom.div('item_con', items_con)
 
-        dom.div('name', item_con, template.name)
+        const item = dom.div('item', item_con)
+
+        dom.div('name', item, template.name)
         
-        dom.div('load', item_con).onclick = ()=>{
+        dom.div('load_btn', item_con).onclick = ()=>{
             global_hooks.do('template/load', {template})
         }
 
-        dom.div('remove', item_con).onclick = ()=>{
+        dom.div('remove_btn', item_con).onclick = ()=>{
             item_con.remove();
             global_hooks.do('template/remove', {id: template.id})
         }

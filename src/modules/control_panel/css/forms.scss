@@ -1,0 +1,23 @@
+.control_panel {
+
+    button {
+        background: #262629;
+        border: 1px solid #ffffff67;
+        color: #fff;
+        border-radius: 3px;
+        padding: 2px 10px;
+        cursor: pointer;
+    }
+
+    input[type="text"] {
+        
+        background: none;
+        border: 1px solid #ffffff6c;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        width: 100%;
+    
+    }
+
+}

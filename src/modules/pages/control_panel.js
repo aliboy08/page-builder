@@ -1,4 +1,3 @@
-import './control_panel.scss';
 import { global_hooks } from 'src/global_hooks';
 import * as dom from 'lib/dom';
 
@@ -24,15 +23,15 @@ function init_tabs(tabs){
 
 function init_controls(container){
     
-    const btn = dom.button('Save Page', container)
+    const con = dom.div('', container)
+    
+    const btn = dom.button('Save Page', dom.div('mb-5', con))
 
-    const page_name = dom.input(container)
+    const page_name = dom.input(dom.div('mb-5', con))
     page_name.placeholder = 'Page Name';
-    dom.wrap(page_name)
-
-    const page_slug = dom.input(container)
+    
+    const page_slug = dom.input(dom.div('mb-5', con))
     page_slug.placeholder = 'Page Slug';
-    dom.wrap(page_slug)
 
     btn.onclick = ()=>{
         global_hooks.do('page/save', {
@@ -52,20 +51,22 @@ function render_items(container){
 
     let current;
 
-    const items_con = dom.div('page_items', container)
+    const items_con = dom.div('items_listing page_items', container)
 
     render_item = (page)=>{
-
-        const item_con = dom.div('item', items_con)
-
-        dom.div('name', item_con, page.name)
         
-        dom.div('load', item_con).onclick = ()=>{
+        const item_con = dom.div('item_con', items_con)
+
+        const item = dom.div('item', item_con)
+
+        dom.div('name', item, page.name)
+        
+        item.onclick = ()=>{
             set_current(item_con)
             global_hooks.do('page/load', {page})
         }
 
-        dom.div('remove', item_con).onclick = ()=>{
+        dom.div('remove_btn', item_con).onclick = ()=>{
             item_con.remove();
             global_hooks.do('page/remove', {id: page.id})
         }
