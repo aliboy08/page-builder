@@ -1,5 +1,5 @@
 import './builder.scss';
-import { get_el } from 'lib/utils';
+import { get_el, debounce } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { init_element } from '../elements/manager';
 import Element_Selector from './selector/selector';
@@ -22,7 +22,7 @@ export default class Builder {
         this.init_remove_element();
         
         global_hooks.add('render/elements', ({render_to, elements_data})=>{
-            this.render_elements(render_to, elements_data);
+            debounce(this.render_elements(render_to, elements_data), 50)
         })
 
         global_hooks.add('render/element', ({render_to, element_data})=>{

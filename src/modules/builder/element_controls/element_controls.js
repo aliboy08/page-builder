@@ -15,18 +15,18 @@ export default class Element_Controls {
 
         this.buttons_con = create_div('buttons_con', this.html)
     
-        this.init_template_save();
+        // this.init_template_save();
     }
 
-    init_template_save(){
+    // init_template_save(){
 
-        const btn = create_div('btn template_save_btn', this.buttons_con);
-        btn.addEventListener('click', ()=>{
+    //     const btn = create_div('btn template_save_btn', this.buttons_con);
+    //     btn.addEventListener('click', ()=>{
 
-            const data = this.element.get_data();
+    //         const data = this.element.get_data();
 
-            console.log('template_save', data)
-        })
+    //         console.log('template_save', data)
+    //     })
         
-    }
+    // }
 }

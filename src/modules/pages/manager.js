@@ -4,16 +4,22 @@ export default class Pages_Manager {
     
     constructor(){
 
+        this.current_page = null;
+        
         global_hooks.add_queue('builder/init', ({builder})=>{
             this.builder = builder;
             this.init();
+        })
+
+        global_hooks.add('save/complete', ({data})=>{
+            this.save_current(data)
         })
     }
 
     init(){
 
         global_hooks.add('page/save', (args)=>{
-            this.save(args)
+            this.save_new(args)
         })
 
         global_hooks.add('page/remove', ({id})=>{
@@ -27,8 +33,8 @@ export default class Pages_Manager {
         this.init_data();
     }
 
-    save(args){
-        
+    save_new(args){
+
         const page = {
             ...args,
             id: this.get_new_index(),
@@ -36,10 +42,19 @@ export default class Pages_Manager {
         }
 
         this.data.push(page);
-
+        
         this.save_data();
         
         global_hooks.do('page/save/success', {page})
+    }
+
+    save_current(data){
+
+        if( !this.current_page ) return;
+
+        this.current_page.data = data;
+    
+        this.save_data();
     }
     
     get_selected(){
@@ -78,6 +93,10 @@ export default class Pages_Manager {
     }
 
     load(page){
+        
+        this.current_page = page;
+
+        this.update_url(page)
 
         this.builder.clear();
         
@@ -90,7 +109,7 @@ export default class Pages_Manager {
     get_render_to_element(){
 
         const selected = this.get_selected();
-
+        
         if( !selected ) {
             return this.builder.content;
         }
@@ -100,6 +119,11 @@ export default class Pages_Manager {
         }
 
         return selected;
+    }
+
+    update_url(page){
+        const path = '/page-builder/'+page.slug;
+        history.pushState({}, null, path);
     }
 
 }

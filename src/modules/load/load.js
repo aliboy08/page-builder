@@ -1,5 +1,4 @@
 import { global_hooks } from 'src/global_hooks';
-import { init_element } from '../elements/manager';
 
 let builder;
 
@@ -9,7 +8,6 @@ function init(e){
     builder = e.builder;
 
     const data = localStorage.getItem('page_builder_data');
-    
     load(data)
 }
 
@@ -19,22 +17,10 @@ function load(data){
 
     data = JSON.parse(data)
 
-    render_elements(builder.content, data);
+    global_hooks.do('render/elements', {
+        render_to: builder.content,
+        elements_data: data,
+    })
     
     global_hooks.do_queue('elements/loaded', { builder })
-}
-
-function render_elements(parent_element, elements_data){
-
-    elements_data.forEach(element_data=>{
-
-        const element = init_element(element_data);
-        
-        element.render_to(parent_element)
-
-        if( element_data?.elements?.length ) {
-            render_elements(element, element_data.elements)
-        }
-        
-    })
 }

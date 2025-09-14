@@ -33,7 +33,7 @@ function save(){
 
     localStorage.setItem('page_builder_data', JSON.stringify(data))
 
-    global_hooks.do('save/complete')
+    global_hooks.do('save/complete', { data })
 }
 
 function get_data(){

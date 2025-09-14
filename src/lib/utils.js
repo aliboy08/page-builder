@@ -139,3 +139,11 @@ export function ucfirst(str) {
     }
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function debounce(fn, timeout = 400){
+    let timer = null;
+    return (...args)=>{
+        clearTimeout(timer);
+        timer = setTimeout(() => { fn.apply(this, args); }, timeout);
+    };
+}
