@@ -50,6 +50,8 @@ function init_controls(container){
 
 function render_items(container){
 
+    let current;
+
     const items_con = dom.div('page_items', container)
 
     render_item = (page)=>{
@@ -59,6 +61,7 @@ function render_items(container){
         dom.div('name', item_con, page.name)
         
         dom.div('load', item_con).onclick = ()=>{
+            set_current(item_con)
             global_hooks.do('page/load', {page})
         }
 
@@ -66,12 +69,27 @@ function render_items(container){
             item_con.remove();
             global_hooks.do('page/remove', {id: page.id})
         }
+
+        return item_con;
     }
 
-    global_hooks.add_queue('pages_manager/load_data', ({pages})=>{
+    const set_current = (item)=>{
+        if( current ) current.classList.remove('current')
+        current = item;
+        item.classList.add('current');
+    }
+
+    global_hooks.add_queue('pages_manager/load_data', ({pages, current_page})=>{
+
         pages.forEach(page=>{
-            render_item(page, items_con)
+            
+            const item = render_item(page, items_con)
+
+            if( page.slug === current_page.slug ) {
+                set_current(item)
+            }
         })
+
     })
     
 }

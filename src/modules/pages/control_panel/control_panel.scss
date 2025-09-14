@@ -47,5 +47,9 @@
                 font-weight: 400;
             }
         }
+
+        &.current {
+            border-color: rgb(61, 201, 124);
+        }
     }
 }

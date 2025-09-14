@@ -4,7 +4,7 @@ export default class Pages_Manager {
     
     constructor(){
 
-        this.current_page = null;
+        this.base_path = '/page-builder/';
         
         global_hooks.add_queue('builder/init', ({builder})=>{
             this.builder = builder;
@@ -71,7 +71,16 @@ export default class Pages_Manager {
             this.data = [];
         }
 
-        global_hooks.do_queue('pages_manager/load_data', { pages: this.data })
+        this.current_page = this.get_current_page();
+
+        if( this.current_page ) {
+            this.load(this.current_page)
+        }
+        
+        global_hooks.do_queue('pages_manager/load_data', {
+            pages: this.data,
+            current_page: this.current_page,
+        })
     }
 
     save_data(){
@@ -122,8 +131,13 @@ export default class Pages_Manager {
     }
 
     update_url(page){
-        const path = '/page-builder/'+page.slug;
+        const path = this.base_path+page.slug;
         history.pushState({}, null, path);
+    }
+
+    get_current_page(){
+        const page_slug = window.location.pathname.replace(this.base_path, '');
+        return this.data.find(i=>i.slug===page_slug)
     }
 
 }
