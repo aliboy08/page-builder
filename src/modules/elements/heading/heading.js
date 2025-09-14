@@ -34,6 +34,17 @@ export default class Element_Heading extends Element_Base {
             label: 'Text Color',
             css_property: 'color',
         })
+
+        this.add_field({
+            type: 'select',
+            key: 'markup',
+            label: 'Markup',
+            default: true,
+            choices: [
+                'span', 'p', 'div',
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+            ]
+        })
         
     }
 

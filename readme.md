@@ -6,6 +6,21 @@ https://aliboy08.github.io/page-builder/
     - drag resize
     - switch context
 
+* Elements 
+    - Container
+    - Heading
+    - Text Editor
+    - HTML
+
+* Fields
+    - Text
+    - Textarea
+    - Color Picker
+    - 4D number
+    - Select
+    - Checkboxes
+    - Radio
+
 * Elements Manager
 
 * Element Data / Content

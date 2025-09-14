@@ -1,5 +1,3 @@
-import './selector.scss';
-
 import { global_hooks } from 'src/global_hooks';
 
 export default class Element_Selector {

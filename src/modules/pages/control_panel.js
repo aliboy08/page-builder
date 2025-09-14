@@ -86,7 +86,7 @@ function render_items(container){
             
             const item = render_item(page, items_con)
 
-            if( page.slug === current_page.slug ) {
+            if( page.slug === current_page?.slug ) {
                 set_current(item)
             }
         })
