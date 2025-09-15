@@ -155,3 +155,11 @@ export function el_change_type(el, new_type){
     el.replaceWith(new_el)
     return new_el;
 }
+
+export function to_string(num){
+    if( typeof num === 'undefined' ) return '';
+    if( typeof num !== 'string' ) {
+        return num.toString();
+    }
+    return num;
+}

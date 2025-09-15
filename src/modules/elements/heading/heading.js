@@ -41,7 +41,7 @@ export default class Element_Heading extends Element_Base {
             type: 'select',
             key: 'markup',
             label: 'Markup',
-            default: true,
+            default: 'h2',
             choices: [
                 'span', 'p', 'div',
                 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'

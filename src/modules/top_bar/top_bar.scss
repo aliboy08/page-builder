@@ -5,6 +5,7 @@
 }
 
 .top_bar {
+
     height: 32px;
     width: 100%;
     position: fixed;
@@ -16,5 +17,27 @@
 
     display: flex;
     padding: 4px 12px;
+    gap: 10px;
+
+    button {
+        border-radius: 3px;
+        padding: 3px 14px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.1294117647);
+        background: rgba(255, 255, 255, 0.0941176471);
+        color: rgba(250, 250, 250, 0.6431372549);
+        z-index: 20;
+        font-size: 12px;
+        // width: 70px;
+
+        &[data-state="saved"]{
+            border-color: #59c75966;
+            color: #59c759;
+        }
+
+        &:hover {
+            background: #ffffff31;
+        }
+    }
 
 }

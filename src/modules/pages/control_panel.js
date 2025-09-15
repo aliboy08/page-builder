@@ -3,6 +3,10 @@ import * as dom from 'lib/dom';
 
 let render_item;
 
+global_hooks.add_queue('top_bar/init', ({container})=>{
+    const btn = dom.button('Pages', container)
+})
+
 global_hooks.add_queue('control_panel/tabs/init', (tabs)=>{
     init_tabs(tabs);
 })

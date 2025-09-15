@@ -1,13 +1,13 @@
 import * as dom from 'src/lib/dom'
 import { global_hooks } from 'src/global_hooks';
 
+console.log(global_hooks)
+
 let builder;
 
-global_hooks.add_queue('init', init)
+global_hooks.add_queue('init', init, 100)
 function init(e){
-    
     builder = e.builder;
-
     global_hooks.add_queue('top_bar/init', init_button)
 }
 

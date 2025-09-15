@@ -11,6 +11,7 @@ https://aliboy08.github.io/page-builder/
     - Heading
     - Text Editor
     - HTML
+    - Image
 
 * Fields
     - Text
@@ -18,8 +19,7 @@ https://aliboy08.github.io/page-builder/
     - Color Picker
     - 4D number
     - Select
-    - Checkboxes
-    - Radio
+    - Image
 
 * Elements Manager
 
@@ -28,6 +28,7 @@ https://aliboy08.github.io/page-builder/
 * Elements Tree / Nest
 
 * Element Settings
+    - common settings
 
 * Element Remove
     - undo

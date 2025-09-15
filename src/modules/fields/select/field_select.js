@@ -67,7 +67,7 @@ function init_choices(select, field_args){
     }
 
     if( field_args.default ) {
-        create_option('', 'Default')
+        create_option(field_args.default, 'Default')
     }
 
     if( Array.isArray(field_args.choices) ) {
