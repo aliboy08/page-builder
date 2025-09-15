@@ -17,7 +17,7 @@ export default class Control_Panel {
         this.init_html();
         this.init_tabs();
         this.init_resizer();
-        this.init_settings();
+        // this.init_settings();
         this.init_views();
 
         global_hooks.do_queue('control_panel/init', { control_panel: this })
@@ -59,10 +59,10 @@ export default class Control_Panel {
                 key: 'add_elements',
                 label: 'Add Elements',
             },
-            {
-                key: 'element_settings',
-                label: 'Element Settings',
-            },
+            // {
+            //     key: 'element_settings',
+            //     label: 'Element Settings',
+            // },
         ]);
         
         this.inner.prepend(this.tabs.container)
@@ -84,8 +84,46 @@ export default class Control_Panel {
         }, 100);
     }
 
-    init_settings(){
+    // init_settings(){
         
+    //     const fields_manager = new Fields_Manager();
+
+    //     const load_element_settings = (element)=>{
+            
+    //         const container = create_div('element_settings');
+    //         create_div('element_name', container, element.name);
+
+    //         fields_manager.render_element_settings(element, container)
+            
+    //         this.tabs.set_content('element_settings', container)
+    //         this.set_tab('element_settings')
+    //     }
+        
+    //     global_hooks.add('element/select', (element)=>{
+    //         load_element_settings(element);
+    //     })
+
+    // }
+
+    init_views(){
+
+        this.view = new View_Switch({
+            main: this.tabs.container,
+        }, this.inner);
+        
+        global_hooks.add_queue('top_bar/init', ({left})=>{
+            // dom.button('Main', left, ()=>this.view.switch('main'))
+            dom.button('Add Elements', left, ()=>this.view.switch('main'))
+        })
+
+        this.init_element_settings_view();
+    }
+
+    init_element_settings_view(){
+        
+        const element_settings_con = create_div('element_settings_con', this.inner);
+        this.view.register('element_settings', element_settings_con)
+
         const fields_manager = new Fields_Manager();
 
         const load_element_settings = (element)=>{
@@ -95,35 +133,18 @@ export default class Control_Panel {
 
             fields_manager.render_element_settings(element, container)
             
-            this.tabs.set_content('element_settings', container)
-            this.set_tab('element_settings')
+            element_settings_con.innerHTML = '';
+            element_settings_con.append(container)
         }
         
         global_hooks.add('element/select', (element)=>{
             load_element_settings(element);
+            this.view.switch('element_settings')
         })
-
-    }
-
-    init_views(){
-
-        this.view = new View_Switch({
-            main: this.tabs.container,
-            element: this.get_element_settings_html(),
-        }, this.inner);
         
-        global_hooks.add_queue('top_bar/init', ({left})=>{
-            // dom.button('Main', left, ()=>this.view.switch('main'))
-            dom.button('Add Elements', left, ()=>this.view.switch('main'))
-            dom.button('Element', left, ()=>this.view.switch('element'))
-        })
-
-    }
-
-    get_element_settings_html(){
-        const container = create_div('element_settings', this.inner);
-        create_div('', container, 'Element Settings');
-        return container;
+        // global_hooks.add('element/settings/view', ({element})=>{
+        //     this.view.switch('element_settings')
+        // })
     }
 
 }
