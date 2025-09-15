@@ -1,19 +1,17 @@
 import * as dom from 'src/lib/dom'
 import { global_hooks } from 'src/global_hooks';
 
-console.log(global_hooks)
-
 let builder;
 
-global_hooks.add_queue('init', init, 100)
+global_hooks.add_queue('init', init)
 function init(e){
     builder = e.builder;
     global_hooks.add_queue('top_bar/init', init_button)
 }
 
-function init_button({container}){
+function init_button({right}){
     
-    const btn = dom.button('Save', container, save, 'save_button');
+    const btn = dom.button('Save', right, save, 'save_button');
 
     global_hooks.add('save/complete', ()=>{
         btn.textContent = 'Saved';

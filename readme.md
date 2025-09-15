@@ -4,7 +4,7 @@ https://aliboy08.github.io/page-builder/
 
 * Control Panel
     - drag resize
-    - switch context
+    - switch view
 
 * Elements 
     - Container

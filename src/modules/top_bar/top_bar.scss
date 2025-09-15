@@ -41,3 +41,13 @@
     }
 
 }
+
+.top_bar_left,
+.top_bar_right {
+    display: flex;
+    gap: 10px;
+}
+
+.top_bar_right {
+    margin-left: auto;
+}

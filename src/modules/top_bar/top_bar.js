@@ -6,5 +6,8 @@ function init(){
 
     const container = dom.get('#top_bar')
 
-    global_hooks.do_queue('top_bar/init', { container })
+    const left = dom.div('top_bar_left', container)
+    const right = dom.div('top_bar_right', container)
+
+    global_hooks.do_queue('top_bar/init', { container, left, right })
 }

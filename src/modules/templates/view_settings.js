@@ -2,26 +2,32 @@ import * as dom from 'lib/dom'
 import { global_hooks } from 'src/global_hooks';
 
 let render_item;
+let control_panel;
 
-init();
-function init(){
-    global_hooks.add_queue('control_panel/tabs/init', (tabs)=>{
-        init_tabs(tabs);
-    })
+global_hooks.add_queue('top_bar/init', ({left})=>{
+    dom.button('Templates', left, view_settings_page)
+})
+
+global_hooks.add_queue('control_panel/init', (e)=>{
+    control_panel = e.control_panel;
+})
+
+function view_settings_page(){
+
+    if( !control_panel.view.views.templates ) {
+        control_panel.view.register('templates', get_settings_page_html())
+    }
+
+    control_panel.view.switch('templates')
 }
 
-function init_tabs(tabs){
-
-    tabs.create_tab({
-        key: 'templates',
-        label: 'Templates',
-    });
+function get_settings_page_html(){
 
     const container = dom.div('templates');
     init_controls(container);
     render_items(container);
     
-    tabs.set_content('templates', container)
+    return container;
 }
 
 function init_controls(container){

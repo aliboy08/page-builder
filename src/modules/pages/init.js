@@ -1,4 +1,4 @@
 import Pages_Manager from './manager';
-import './control_panel';
+import './view_settings';
 
 new Pages_Manager();

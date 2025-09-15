@@ -1,9 +1,11 @@
 import './control_panel.scss';
+import * as dom from 'lib/dom';
 import { create_div, get_el } from 'lib/utils';
 import Resizer from 'components/resizer';
 import Tabs from 'components/tabs/tabs';
 import Content_Scroll from 'components/content_scroll/content_scroll';
 import Fields_Manager from '../fields/fiields_manager';
+import View_Switch from 'components/view_switch';
 import { global_hooks } from 'src/global_hooks';
 
 export default class Control_Panel {
@@ -16,6 +18,7 @@ export default class Control_Panel {
         this.init_tabs();
         this.init_resizer();
         this.init_settings();
+        this.init_views();
 
         global_hooks.do_queue('control_panel/init', { control_panel: this })
     }
@@ -73,7 +76,9 @@ export default class Control_Panel {
     }
 
     set_tab(key){
+
         clearTimeout(this.set_tab_debounce)
+
         this.set_tab_debounce = setTimeout(()=>{
             this.tabs.set(key)
         }, 100);
@@ -98,6 +103,27 @@ export default class Control_Panel {
             load_element_settings(element);
         })
 
+    }
+
+    init_views(){
+
+        this.view = new View_Switch({
+            main: this.tabs.container,
+            element: this.get_element_settings_html(),
+        }, this.inner);
+        
+        global_hooks.add_queue('top_bar/init', ({left})=>{
+            // dom.button('Main', left, ()=>this.view.switch('main'))
+            dom.button('Add Elements', left, ()=>this.view.switch('main'))
+            dom.button('Element', left, ()=>this.view.switch('element'))
+        })
+
+    }
+
+    get_element_settings_html(){
+        const container = create_div('element_settings', this.inner);
+        create_div('', container, 'Element Settings');
+        return container;
     }
 
 }

@@ -2,27 +2,30 @@ import { global_hooks } from 'src/global_hooks';
 import * as dom from 'lib/dom';
 
 let render_item;
+let control_panel;
 
-global_hooks.add_queue('top_bar/init', ({container})=>{
-    const btn = dom.button('Pages', container)
+global_hooks.add_queue('top_bar/init', ({left})=>{
+    dom.button('Pages', left, view_settings_page)
 })
 
-global_hooks.add_queue('control_panel/tabs/init', (tabs)=>{
-    init_tabs(tabs);
+global_hooks.add_queue('control_panel/init', (e)=>{
+    control_panel = e.control_panel;
 })
 
-function init_tabs(tabs){
+function view_settings_page(){
 
-    tabs.create_tab({
-        key: 'pages',
-        label: 'Pages',
-    });
+    if( !control_panel.view.views.pages ) {
+        control_panel.view.register('pages', get_settings_page_html())
+    }
 
+    control_panel.view.switch('pages')
+}
+
+function get_settings_page_html(){
     const container = dom.div('pages');
     init_controls(container);
     render_items(container);
-    
-    tabs.set_content('pages', container)
+    return container;
 }
 
 function init_controls(container){
