@@ -37,11 +37,24 @@ export default class Field_Text extends Field_Base {
     init_element_interface(field_args, element){
 
         this.key = field_args.key;
-        
-        this.input.addEventListener('change', ()=>{
+
+        let last_value;
+
+        const update = ()=>{
+            if( last_value === this.input.value ) return;
             field_args.on_change_base(this.input.value);
-        })
+            last_value = this.input.value;
+        }
         
+        this.input.addEventListener('change', update)
+
+        let debounce;
+        this.input.addEventListener('keyup', (e)=>{
+            clearTimeout(debounce)
+            if( e.key === 'Enter' ) return update();
+            debounce = setTimeout(update, 300)
+        })
+
         this.load_value(element.data)
     }
     

@@ -1,8 +1,6 @@
 .el_con {
-    // min-height: 140px;
+    
     color: #ffffff67;
-    font-size: 30px;
-    font-weight: 500;
     
     display: var(--display);
     flex-direction: var(--flex-direction);
@@ -11,20 +9,11 @@
     padding-bottom: var(--padding-bottom);
     padding-left: var(--padding-left);
     padding-right: var(--padding-right);
-    
-    &[data-state="grabbed"] {
-        box-shadow: inset 0 0 0 2px #ffffffc5;
-    }
-    
-    padding: 20px;
 
 }
 
 .con_inner {
 
     width: var(--inner-width);
-
     margin: auto;
-    // background: #ffffff0e;
-    // padding: 20px;
 }

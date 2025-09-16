@@ -17,28 +17,54 @@ export default class Element_Base {
 
         this.settings = {
             fields: [],
+            common_fields: [],
         };
 
         this.hooks = new Hooks([
             'on_render'
         ])
 
-        this._init_fields();
+        this.init_common_fields();
 
         this.hooks.add('on_render', ()=>this.on_render())
+        
     }
     
-    _init_fields(){
+    init_common_fields(){
+
+        const group = 'common_fields';
         
         this.add_field({
             type: 'text',
             key: 'class',
             label: 'Class',
-        });
+            before_change: ()=>{
+                if( this.data.class ) {
+                    this.html.classList.remove(this.data.class)
+                }
+            },
+            on_change: (value)=>{
+                this.html.classList.add(value)
+            }
+        }, group);
+
+        this.add_field({
+            type: 'num4d',
+            key: 'padding',
+            label: 'Padding',
+            css_property: 'padding',
+        }, group)
+
+        this.add_field({
+            type: 'num4d',
+            key: 'margin',
+            label: 'Margin',
+            css_property: 'margin',
+        }, group)
 
     }
 
-    add_field(field){
+    add_field(field, group = 'fields'){
         
         field.apply_css = ()=>{
 
@@ -51,6 +77,10 @@ export default class Element_Base {
 
         field.on_change_base = (value)=>{
 
+            if( typeof field.before_change === 'function' ) {
+                field.before_change()
+            }
+
             this.data[field.key] = value;
 
             field.apply_css();
@@ -59,8 +89,8 @@ export default class Element_Base {
                 field.on_change(value)
             }
         }
-        
-        this.settings.fields.push(field);
+
+        this.settings[group].push(field)
     }
     
     get_html(){
@@ -68,6 +98,10 @@ export default class Element_Base {
         const element_class_name =  this.element_class_name ?? 'el'
         
         const html = create_div(`${element_class_name} el_${this.type}`);
+
+        if( this.data.class ) {
+            html.classList.add(this.data.class)
+        }
 
         this.html = html;
 

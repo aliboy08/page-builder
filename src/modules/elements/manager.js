@@ -25,10 +25,11 @@ const types = {
     },
 }
 
-let builder;
+let builder, control_panel;
 
-global_hooks.add_queue('control_panel/init', ({control_panel})=>{
-    control_panel.tabs.set_content('add_elements', get_elements_list_html())
+global_hooks.add_queue('control_panel/init', (e)=>{
+    control_panel = e.control_panel;
+    control_panel.view.views.main.append(get_elements_list_html())
 })
 
 global_hooks.add_queue('builder/init', (e)=>{

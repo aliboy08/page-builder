@@ -3,6 +3,7 @@ import Field_Num4d from './num4d/field_num4d';
 import Field_Color_Picker from './color_picker/color_picker';
 import Field_Textarea from './textarea/field_textarea';
 import Field_Select from './select/field_select';
+import { create_div } from 'lib/utils';
 
 const field_types = {
     text: Field_Text,
@@ -14,17 +15,21 @@ const field_types = {
 
 export default class Fields_Manager {
 
-    render_element_settings(element, container){
+    render_element_settings(element, container_selector, group = 'fields' ){
 
-        if( !element?.settings?.fields ) return;
+        if( !element?.settings?.[group]?.length ) return;
 
-        element.settings.fields.forEach(field_args=>{
+        const container = create_div(container_selector)
+
+        element.settings[group].forEach(field_args=>{
             
             const field = new field_types[field_args.type](field_args, element);
 
             container.append(field.html);
 
         })
+
+        return container;
     }
 
 }

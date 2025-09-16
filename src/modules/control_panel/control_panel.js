@@ -15,9 +15,7 @@ export default class Control_Panel {
         this.parent_container = get_el(args.parent_container ?? '#page_builder');
 
         this.init_html();
-        this.init_tabs();
         this.init_resizer();
-        // this.init_settings();
         this.init_views();
 
         global_hooks.do_queue('control_panel/init', { control_panel: this })
@@ -26,7 +24,6 @@ export default class Control_Panel {
     init_html(){
 
         this.container = get_el('#control_panel')
-
         this.inner = create_div('inner scrollbar_style_1', this.container)
     }
 
@@ -43,72 +40,10 @@ export default class Control_Panel {
         resizer.hooks.add('resize', update)
     }
 
-    init_manager(manager){
-        
-        this.tabs.set_content('add_elements', manager.get_html())
-
-        global_hooks.add('add_zone/select', ()=>{
-            this.set_tab('add_elements')
-        })
-    }
-
-    init_tabs(){
-            
-        this.tabs = new Tabs([
-            {
-                key: 'add_elements',
-                label: 'Add Elements',
-            },
-            // {
-            //     key: 'element_settings',
-            //     label: 'Element Settings',
-            // },
-        ]);
-        
-        this.inner.prepend(this.tabs.container)
-        
-        const content_scroll = new Content_Scroll(this.tabs.tabs_nav);
-        this.tabs.hooks.add('create_tab', ()=>{
-            content_scroll.update();
-        })
-
-        global_hooks.do_queue('control_panel/tabs/init', this.tabs)
-    }
-
-    set_tab(key){
-
-        clearTimeout(this.set_tab_debounce)
-
-        this.set_tab_debounce = setTimeout(()=>{
-            this.tabs.set(key)
-        }, 100);
-    }
-
-    // init_settings(){
-        
-    //     const fields_manager = new Fields_Manager();
-
-    //     const load_element_settings = (element)=>{
-            
-    //         const container = create_div('element_settings');
-    //         create_div('element_name', container, element.name);
-
-    //         fields_manager.render_element_settings(element, container)
-            
-    //         this.tabs.set_content('element_settings', container)
-    //         this.set_tab('element_settings')
-    //     }
-        
-    //     global_hooks.add('element/select', (element)=>{
-    //         load_element_settings(element);
-    //     })
-
-    // }
-
     init_views(){
 
         this.view = new View_Switch({
-            main: this.tabs.container,
+            main: create_div('view_main', this.inner),
         }, this.inner);
         
         global_hooks.add_queue('top_bar/init', ({left})=>{
@@ -118,33 +53,53 @@ export default class Control_Panel {
 
         this.init_element_settings_view();
     }
-
+    
     init_element_settings_view(){
         
-        const element_settings_con = create_div('element_settings_con', this.inner);
-        this.view.register('element_settings', element_settings_con)
-
-        const fields_manager = new Fields_Manager();
+        const container = create_div('view_element_settings', this.inner);
+        this.view.register('element_settings', container)
+        
+        this.fields_manager = new Fields_Manager();
 
         const load_element_settings = (element)=>{
-            
-            const container = create_div('element_settings');
+            container.innerHTML = '';
             create_div('element_name', container, element.name);
-
-            fields_manager.render_element_settings(element, container)
-            
-            element_settings_con.innerHTML = '';
-            element_settings_con.append(container)
+            container.append(this.init_element_tabs(element));
         }
         
         global_hooks.add('element/select', (element)=>{
             load_element_settings(element);
             this.view.switch('element_settings')
         })
+    }
+
+    init_element_tabs(element){
+
+        const tabs = new Tabs([
+            {
+                key: 'settings',
+                label: 'Settings',
+            },
+            {
+                key: 'misc_settings',
+                label: 'Misc',
+            },
+        ]);
+
+        tabs.set_content( 'settings', 
+            this.fields_manager.render_element_settings(element, 'fields_con', 'fields')
+        )
+
+        tabs.set_content( 'misc_settings', 
+            this.fields_manager.render_element_settings(element, 'fields_con', 'common_fields')
+        )
         
-        // global_hooks.add('element/settings/view', ({element})=>{
-        //     this.view.switch('element_settings')
-        // })
+        const content_scroll = new Content_Scroll(tabs.tabs_nav);
+        tabs.hooks.add('create_tab', ()=>content_scroll.update())
+
+        global_hooks.do('control_panel/element/tabs', tabs)
+        
+        return tabs.container;
     }
 
 }

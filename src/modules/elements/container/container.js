@@ -21,21 +21,7 @@ export default class Element_Container extends Element_Base {
     }
     
     init_fields(){
-
-        this.add_field({
-            type: 'num4d',
-            key: 'padding',
-            label: 'Padding',
-            css_property: 'padding',
-        })
-
-        this.add_field({
-            type: 'num4d',
-            key: 'margin',
-            label: 'Margin',
-            css_property: 'margin',
-        })
-
+        
         this.add_field({
             type: 'text',
             key: 'min_height',
