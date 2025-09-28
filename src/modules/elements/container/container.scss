@@ -1,5 +1,5 @@
 .el_con {
-    
+
     color: #ffffff67;
     
     display: var(--display);
@@ -9,11 +9,19 @@
     padding-bottom: var(--padding-bottom);
     padding-left: var(--padding-left);
     padding-right: var(--padding-right);
-
 }
 
-.con_inner {
+.el_con > .con_inner {
 
     width: var(--inner-width);
     margin: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.con_inner {
+    > .el, .el_con {
+        width: 100%;
+    }
 }

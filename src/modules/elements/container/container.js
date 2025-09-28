@@ -35,6 +35,13 @@ export default class Element_Container extends Element_Base {
             label: 'Background Color',
             css_property: 'backgroundColor',
         })
+
+        this.add_field({
+            type: 'text',
+            key: 'width',
+            label: 'Width',
+            css_property: 'width',
+        })
         
     }
     

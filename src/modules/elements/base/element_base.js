@@ -2,6 +2,7 @@ import { create_div, generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { apply_css } from 'src/modules/styles/styles_utils';
 import Hooks from 'components/hooks';
+// import { init_common_fields } from './common_fields';
 
 export default class Element_Base {
 
@@ -24,10 +25,10 @@ export default class Element_Base {
             'on_render'
         ])
 
+        // init_common_fields(this)
         this.init_common_fields();
 
         this.hooks.add('on_render', ()=>this.on_render())
-        
     }
     
     init_common_fields(){
@@ -62,6 +63,20 @@ export default class Element_Base {
             css_property: 'margin',
         }, group)
 
+        // this.add_field({
+        //     type: 'text',
+        //     key: 'width',
+        //     label: 'Width',
+        //     css_property: 'width',
+        // }, group)
+
+        // this.add_field({
+        //     type: 'color_picker',
+        //     key: 'background_color',
+        //     label: 'Background Color',
+        //     css_property: 'backgroundColor',
+        // }, group)
+
     }
 
     add_field(field, group = 'fields'){
@@ -75,6 +90,13 @@ export default class Element_Base {
             apply_css(css_target, field, this.data);
         }
 
+        // field.apply_css_var = ()=>{
+
+        //     if( !field.var_key ) return;
+        //     // console.log('apply_css_var')
+
+        // }
+
         field.on_change_base = (value)=>{
 
             if( typeof field.before_change === 'function' ) {
@@ -84,6 +106,7 @@ export default class Element_Base {
             this.data[field.key] = value;
 
             field.apply_css();
+            // field.apply_css_var();
 
             if( typeof field.on_change === 'function' ) {
                 field.on_change(value)
@@ -206,6 +229,11 @@ export default class Element_Base {
     }
 
     load_styles(){
+
+        this.settings.common_fields.forEach(field=>{
+            field.apply_css();
+        })
+
         this.settings.fields.forEach(field=>{
             field.apply_css();
         })
