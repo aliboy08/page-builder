@@ -28,20 +28,6 @@ export default class Element_Container extends Element_Base {
             label: 'Min Height',
             css_property: 'minHeight',
         })
-
-        this.add_field({
-            type: 'color_picker',
-            key: 'background_color',
-            label: 'Background Color',
-            css_property: 'backgroundColor',
-        })
-
-        this.add_field({
-            type: 'text',
-            key: 'width',
-            label: 'Width',
-            css_property: 'width',
-        })
         
     }
     

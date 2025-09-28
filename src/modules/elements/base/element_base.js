@@ -2,7 +2,7 @@ import { create_div, generate_id } from 'lib/utils';
 import { global_hooks } from 'src/global_hooks';
 import { apply_css } from 'src/modules/styles/styles_utils';
 import Hooks from 'components/hooks';
-// import { init_common_fields } from './common_fields';
+import { init_common_fields } from './common_fields';
 
 export default class Element_Base {
 
@@ -25,60 +25,11 @@ export default class Element_Base {
             'on_render'
         ])
 
-        // init_common_fields(this)
-        this.init_common_fields();
+        init_common_fields(this)
 
         this.hooks.add('on_render', ()=>this.on_render())
     }
     
-    init_common_fields(){
-
-        const group = 'common_fields';
-        
-        this.add_field({
-            type: 'text',
-            key: 'class',
-            label: 'Class',
-            before_change: ()=>{
-                if( this.data.class ) {
-                    this.html.classList.remove(this.data.class)
-                }
-            },
-            on_change: (value)=>{
-                this.html.classList.add(value)
-            }
-        }, group);
-
-        this.add_field({
-            type: 'num4d',
-            key: 'padding',
-            label: 'Padding',
-            css_property: 'padding',
-        }, group)
-
-        this.add_field({
-            type: 'num4d',
-            key: 'margin',
-            label: 'Margin',
-            css_property: 'margin',
-        }, group)
-
-        // this.add_field({
-        //     type: 'text',
-        //     key: 'width',
-        //     label: 'Width',
-        //     css_property: 'width',
-        // }, group)
-
-        // this.add_field({
-        //     type: 'color_picker',
-        //     key: 'background_color',
-        //     label: 'Background Color',
-        //     css_property: 'backgroundColor',
-        // }, group)
-
-    }
-
     add_field(field, group = 'fields'){
         
         field.apply_css = ()=>{

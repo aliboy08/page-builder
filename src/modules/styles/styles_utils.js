@@ -13,8 +13,6 @@ export function apply_css(target, field, data){
     const value = data[field.key] ?? null;
     if( value === null ) return;
 
-    console.log('apply_css', { field: field.css_property, value })
-
     if( field.type === 'num4d' ) {
         apply_4d_css(target, field.css_property, value);
     }
