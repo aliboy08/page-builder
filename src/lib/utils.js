@@ -163,3 +163,22 @@ export function to_string(num){
     }
     return num;
 }
+
+export function sync_load_modules(modules, on_complete){
+
+    let pending = 0;
+    
+    const update = ()=>{
+
+        pending--;
+
+        if( pending === 0 ) {
+            if( on_complete ) on_complete();
+        }
+    }
+
+    modules.forEach(import_module=>{
+        pending++;
+        import_module().then(update)
+    })
+}

@@ -1,6 +1,7 @@
 import './structure.scss'
+
 import { create_div } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import init_structure_resize from './resize';
 import init_structure_items_toggle from './toggle';
 import init_structure_items_remove from './remove';
@@ -20,11 +21,11 @@ function init(){
     init_structure_items_select();
     init_structure_items_reorder();
 
-    global_hooks.add_queue('elements/loaded', ({builder})=>{
+    hooks.add_queue('elements/loaded', ({builder})=>{
         render_items(builder.content.elements);
     })
 
-    global_hooks.add('element/render', render_item)
+    hooks.add('element/render', render_item)
 }
 
 function render_items(elements){
@@ -49,8 +50,8 @@ function render_item(element){
     }
     
     item.addEventListener('click', ()=>{
-        global_hooks.do('structure/click', element)
+        hooks.do('structure/click', element)
     })
 
-    global_hooks.do('structure/item/render', { item })
+    hooks.do('structure/item/render', { item })
 }

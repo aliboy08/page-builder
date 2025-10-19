@@ -1,4 +1,4 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import { get_el } from 'lib/utils';
 
 let body;
@@ -6,7 +6,7 @@ let current = null;
 
 export default function init_structure_items_select(){
     body = get_el('#elements_structure .structure_body')
-    global_hooks.add('element/select', select)
+    hooks.add('element/select', select)
 }
 
 function select(element){

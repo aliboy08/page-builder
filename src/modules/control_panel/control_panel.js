@@ -6,7 +6,7 @@ import Tabs from 'components/tabs/tabs';
 import Content_Scroll from 'components/content_scroll/content_scroll';
 import Fields_Manager from '../fields/fiields_manager';
 import View_Switch from 'components/view_switch';
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default class Control_Panel {
 
@@ -18,7 +18,7 @@ export default class Control_Panel {
         this.init_resizer();
         this.init_views();
 
-        global_hooks.do_queue('control_panel/init', { control_panel: this })
+        hooks.do_queue('control_panel/init', { control_panel: this })
     }
     
     init_html(){
@@ -46,7 +46,7 @@ export default class Control_Panel {
             main: create_div('view_main', this.inner),
         }, this.inner);
         
-        global_hooks.add_queue('top_bar/init', ({left})=>{
+        hooks.add_queue('top_bar/init', ({left})=>{
             // dom.button('Main', left, ()=>this.view.switch('main'))
             dom.button('Add Elements', left, ()=>this.view.switch('main'))
         })
@@ -67,7 +67,7 @@ export default class Control_Panel {
             container.append(this.init_element_tabs(element));
         }
         
-        global_hooks.add('element/select', (element)=>{
+        hooks.add('element/select', (element)=>{
             load_element_settings(element);
             this.view.switch('element_settings')
         })
@@ -97,7 +97,7 @@ export default class Control_Panel {
         const content_scroll = new Content_Scroll(tabs.tabs_nav);
         tabs.hooks.add('create_tab', ()=>content_scroll.update())
 
-        global_hooks.do('control_panel/element/tabs', tabs)
+        hooks.do('control_panel/element/tabs', tabs)
         
         return tabs.container;
     }

@@ -1,7 +1,7 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default function init_structure_items_reorder(){
-    global_hooks.add('element/reorder', reorder_item)
+    hooks.add('element/reorder', reorder_item)
 }
 
 function reorder_item({element, drop_target, drop_position}){

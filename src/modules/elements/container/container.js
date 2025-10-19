@@ -1,7 +1,7 @@
 import './container.scss';
 import Element_Base from '../base/element_base';
 import { create_div } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default class Element_Container extends Element_Base {
 
@@ -37,7 +37,7 @@ export default class Element_Container extends Element_Base {
 
         this.elements_append_to = inner;
 
-        global_hooks.do('element/container/render', { element: this })
+        hooks.do('element/container/render', { element: this })
         
     }
 

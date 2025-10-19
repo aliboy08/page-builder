@@ -1,25 +1,38 @@
 import '@fontsource-variable/inter';
-import './main.scss';
-import Builder from './modules/builder/builder';
-import Control_Panel from './modules/control_panel/control_panel';
-import { global_hooks } from './global_hooks';
+import './modules/loading_screen/loading_screen';
+import { hooks } from './globals';
+import { sync_load_modules } from 'lib/utils';
 
-import './modules/elements/manager';
-
-function init(){
-    
-    const builder = new Builder();
-    const control_panel = new Control_Panel();
-
-    global_hooks.do_queue('init', { control_panel, builder })
-    
-    import('./modules/builder/add_zone/init')
-    import('./modules/structure/init')
-    import('./modules/top_bar/top_bar')
-    import('./modules/templates/init')
-    import('./modules/pages/init')
-    import('./modules/save/save')
-    import('./modules/load/load')
+if( import.meta.hot ) {
+    import.meta.hot.accept();
 }
 
-document.addEventListener('DOMContentLoaded', init)
+let builder, control_panel
+hooks.add('builder/init', init)
+hooks.add('control_panel/init', init)
+
+function init(e){
+    if( e.builder ) builder = e.builder;
+    if( e.control_panel ) control_panel = e.control_panel;
+    if( builder && control_panel ) {
+        hooks.do_queue('init', { builder, control_panel })
+    }
+}
+
+const main_modules = [
+    ()=>import('./main.scss'),
+    ()=>import('./modules/builder/init'),
+    ()=>import('./modules/control_panel/init'),
+    ()=>import('./modules/elements/manager'),
+    ()=>import('./modules/structure/init'),
+    ()=>import('./modules/top_bar/init'),
+]
+
+sync_load_modules(main_modules, ()=>{
+    setTimeout(()=>hooks.do('ready'), 300)
+})
+
+import('./modules/templates/init')
+import('./modules/pages/init')
+import('./modules/save/save')
+import('./modules/load_data/load_data')

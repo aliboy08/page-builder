@@ -1,8 +1,8 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import { create_div } from 'lib/utils';
 
 export default function init_structure_items_toggle(){
-    global_hooks.add('structure/item/render', ({item})=>{
+    hooks.add('structure/item/render', ({item})=>{
         if( item.element.type !== 'container' ) return;
         init_toggle(item)
     })

@@ -1,19 +1,19 @@
 import * as dom from 'src/lib/dom'
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 let builder;
 
-global_hooks.add_queue('init', init)
+hooks.add_queue('init', init)
 function init(e){
     builder = e.builder;
-    global_hooks.add_queue('top_bar/init', init_button)
+    hooks.add_queue('top_bar/init', init_button)
 }
 
 function init_button({right}){
     
     const btn = dom.button('Save', right, save, 'save_button');
 
-    global_hooks.add('save/complete', ()=>{
+    hooks.add('save/complete', ()=>{
         btn.textContent = 'Saved';
         btn.dataset.state = 'saved';
         setTimeout(()=>{
@@ -31,7 +31,7 @@ function save(){
 
     localStorage.setItem('page_builder_data', JSON.stringify(data))
 
-    global_hooks.do('save/complete', { data })
+    hooks.do('save/complete', { data })
 }
 
 function get_data(){

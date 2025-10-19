@@ -1,14 +1,14 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import * as dom from 'lib/dom';
 
 let render_item;
 let control_panel;
 
-global_hooks.add_queue('top_bar/init', ({left})=>{
+hooks.add_queue('top_bar/init', ({left})=>{
     dom.button('Pages', left, view_settings_page)
 })
 
-global_hooks.add_queue('control_panel/init', (e)=>{
+hooks.add_queue('control_panel/init', (e)=>{
     control_panel = e.control_panel;
 })
 
@@ -41,13 +41,13 @@ function init_controls(container){
     page_slug.placeholder = 'Page Slug';
 
     btn.onclick = ()=>{
-        global_hooks.do('page/save', {
+        hooks.do('page/save', {
             name: page_name.value,
             slug: page_slug.value,
         })
     }
 
-    global_hooks.add('page/save/success', ({ page })=>{
+    hooks.add('page/save/success', ({ page })=>{
         page_name.value = '';
         page_slug.value = '';
         render_item(page);
@@ -70,12 +70,12 @@ function render_items(container){
         
         item.onclick = ()=>{
             set_current(item_con)
-            global_hooks.do('page/load', {page})
+            hooks.do('page/load', {page})
         }
 
         dom.div('remove_btn', item_con).onclick = ()=>{
             item_con.remove();
-            global_hooks.do('page/remove', {id: page.id})
+            hooks.do('page/remove', {id: page.id})
         }
 
         return item_con;
@@ -87,7 +87,7 @@ function render_items(container){
         item.classList.add('current');
     }
 
-    global_hooks.add_queue('pages_manager/load_data', ({pages, current_page})=>{
+    hooks.add_queue('pages_manager/load_data', ({pages, current_page})=>{
 
         pages.forEach(page=>{
             

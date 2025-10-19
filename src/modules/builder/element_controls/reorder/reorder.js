@@ -1,5 +1,5 @@
 import './reorder.scss'
-import { global_hooks } from 'src/global_hooks'
+import { hooks } from 'src/globals'
 import { create_div } from 'lib/utils'
 import Draggable from 'components/draggable';
 
@@ -10,7 +10,7 @@ export default class Elements_Reorder {
         this.state = '';
         this.main = main;
 
-        global_hooks.add('element/render', (element)=>{
+        hooks.add('element/render', (element)=>{
             this.init_reorder(element)
         }, 200)
 
@@ -140,7 +140,7 @@ export default class Elements_Reorder {
             this.reposition_after(element, drop_target)
         }
 
-        global_hooks.do('element/reorder', { element, prev_parent, drop_target, drop_position })
+        hooks.do('element/reorder', { element, prev_parent, drop_target, drop_position })
         
         prev_parent?.add_zone?.update();
         element.parent?.add_zone?.update();

@@ -1,4 +1,4 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default class Element_Selector {
     
@@ -8,11 +8,11 @@ export default class Element_Selector {
 
         this.throttling = false;
 
-        global_hooks.add('element/render', (element)=>{
+        hooks.add('element/render', (element)=>{
             this.init(element)
         })
 
-        global_hooks.add('structure/click', (element)=>{
+        hooks.add('structure/click', (element)=>{
             this.select(element)
         })
     }
@@ -37,7 +37,7 @@ export default class Element_Selector {
         this.selected = element;
         
         this.selected.html.dataset.state = 'selected';
-        global_hooks.do('element/select', element)
+        hooks.do('element/select', element)
     }
 
     unselect_previous(){

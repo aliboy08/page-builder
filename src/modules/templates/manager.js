@@ -1,10 +1,10 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default class Templates_Manager {
     
     constructor(){
 
-        global_hooks.add_queue('builder/init', ({builder})=>{
+        hooks.add_queue('builder/init', ({builder})=>{
             this.builder = builder;
             this.init();
         })
@@ -12,15 +12,15 @@ export default class Templates_Manager {
 
     init(){
 
-        global_hooks.add('template/save', ({name})=>{
+        hooks.add('template/save', ({name})=>{
             this.save(name)
         })
 
-        global_hooks.add('template/remove', ({id})=>{
+        hooks.add('template/remove', ({id})=>{
             this.remove(id)
         })
 
-        global_hooks.add('template/load', ({template})=>{
+        hooks.add('template/load', ({template})=>{
             this.render(template)
         })
 
@@ -45,7 +45,7 @@ export default class Templates_Manager {
 
         this.save_data();
         
-        global_hooks.do('template/save/success', {template: data})
+        hooks.do('template/save/success', {template: data})
     }
     
     get_selected(){
@@ -62,7 +62,7 @@ export default class Templates_Manager {
             this.data = [];
         }
 
-        global_hooks.do_queue('templates_manager/load_data', { templates: this.data })
+        hooks.do_queue('templates_manager/load_data', { templates: this.data })
     }
 
     save_data(){
@@ -85,7 +85,7 @@ export default class Templates_Manager {
 
     render(template){
         
-        global_hooks.do('render/element', {
+        hooks.do('render/element', {
             render_to: this.get_render_to_element(),
             element_data: template.data
         })

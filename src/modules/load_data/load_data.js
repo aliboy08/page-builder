@@ -1,8 +1,8 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 let builder;
 
-global_hooks.add_queue('init', init)
+hooks.add_queue('init', init)
 function init(e){
 
     builder = e.builder;
@@ -17,10 +17,10 @@ function load(data){
 
     data = JSON.parse(data)
 
-    global_hooks.do('render/elements', {
+    hooks.do('render/elements', {
         render_to: builder.content,
         elements_data: data,
     })
     
-    global_hooks.do_queue('elements/loaded', { builder })
+    hooks.do_queue('elements/loaded', { builder })
 }

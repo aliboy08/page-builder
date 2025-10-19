@@ -1,6 +1,5 @@
-import './builder.scss';
 import { get_el, debounce } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import { init_element } from '../elements/manager';
 import Element_Selector from './selector/selector';
 import Elements_Reorder from './element_controls/reorder/reorder';
@@ -11,6 +10,7 @@ export default class Builder {
     constructor(args = {}){
         
         this.container = get_el(args.container ?? '#page_content');
+        
         this.selector = new Element_Selector();
         
         this.init_content();
@@ -21,20 +21,20 @@ export default class Builder {
 
         this.init_remove_element();
         
-        global_hooks.add('render/elements', ({render_to, elements_data})=>{
+        hooks.add('render/elements', ({render_to, elements_data})=>{
             debounce(this.render_elements(render_to, elements_data), 50)
         })
 
-        global_hooks.add('render/element', ({render_to, element_data})=>{
+        hooks.add('render/element', ({render_to, element_data})=>{
             this.render_element(render_to, element_data);
         })
 
-        global_hooks.do_queue('builder/init', {builder: this})
+        hooks.do_queue('builder/init', {builder: this})
     }
 
     init_remove_element(){
 
-        global_hooks.add('remove_element', ()=>this.remove_element())
+        hooks.add('remove_element', ()=>this.remove_element())
 
         document.addEventListener('keydown', (e)=>{
             if( e.key !== 'Delete' ) return;
@@ -78,9 +78,9 @@ export default class Builder {
 
     init_element_controls(){
         
-        global_hooks.add('element/render', (element)=>{
+        hooks.add('element/render', (element)=>{
             element.controls = new Element_Controls(element)
-            global_hooks.do('element_controls_init', element.controls)
+            hooks.do('element_controls_init', element.controls)
         }, 100)
     }
 

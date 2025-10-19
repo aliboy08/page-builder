@@ -1,5 +1,5 @@
 import { create_div } from 'lib/utils'
-import { global_hooks } from 'src/global_hooks'
+import { hooks } from 'src/globals'
 
 import Element_Container from './container/container'
 import Element_Heading from './heading/heading'
@@ -27,12 +27,12 @@ const types = {
 
 let builder, control_panel;
 
-global_hooks.add_queue('control_panel/init', (e)=>{
+hooks.add_queue('control_panel/init', (e)=>{
     control_panel = e.control_panel;
     control_panel.view.views.main.append(get_elements_list_html())
 })
 
-global_hooks.add_queue('builder/init', (e)=>{
+hooks.add_queue('builder/init', (e)=>{
     builder = e.builder;
 })
 
@@ -48,7 +48,7 @@ function get_elements_list_html(){
         el.addEventListener('click', ()=>{
             const element = new types[type].init();
             render_element(element)
-            global_hooks.do('elements_manager/select', { element })
+            hooks.do('elements_manager/select', { element })
         })
         
     }

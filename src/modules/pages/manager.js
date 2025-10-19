@@ -1,4 +1,4 @@
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 
 export default class Pages_Manager {
     
@@ -6,27 +6,27 @@ export default class Pages_Manager {
 
         this.base_path = '/page-builder/';
         
-        global_hooks.add_queue('builder/init', ({builder})=>{
+        hooks.add_queue('builder/init', ({builder})=>{
             this.builder = builder;
             this.init();
         })
 
-        global_hooks.add('save/complete', ({data})=>{
+        hooks.add('save/complete', ({data})=>{
             this.save_current(data)
         })
     }
 
     init(){
 
-        global_hooks.add('page/save', (args)=>{
+        hooks.add('page/save', (args)=>{
             this.save_new(args)
         })
 
-        global_hooks.add('page/remove', ({id})=>{
+        hooks.add('page/remove', ({id})=>{
             this.remove(id)
         })
 
-        global_hooks.add('page/load', ({page})=>{
+        hooks.add('page/load', ({page})=>{
             this.load(page)
         })
 
@@ -45,7 +45,7 @@ export default class Pages_Manager {
         
         this.save_data();
         
-        global_hooks.do('page/save/success', {page})
+        hooks.do('page/save/success', {page})
     }
 
     save_current(data){
@@ -77,7 +77,7 @@ export default class Pages_Manager {
             this.load(this.current_page)
         }
         
-        global_hooks.do_queue('pages_manager/load_data', {
+        hooks.do_queue('pages_manager/load_data', {
             pages: this.data,
             current_page: this.current_page,
         })
@@ -109,7 +109,7 @@ export default class Pages_Manager {
 
         this.builder.clear();
         
-        global_hooks.do('render/elements', {
+        hooks.do('render/elements', {
             render_to: this.builder.content,
             elements_data: page.data,
         })

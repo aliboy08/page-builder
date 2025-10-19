@@ -1,9 +1,9 @@
 import Add_Zone from './add_zone'
-import { global_hooks } from 'src/global_hooks'
+import { hooks } from 'src/globals'
 
 let control_panel, builder;
 
-global_hooks.add_queue('init', init)
+hooks.add_queue('init', init)
 
 function init(e){
 
@@ -27,11 +27,11 @@ function init_main_add_zone(){
         builder.selector.unselect_previous();
     })
     
-    global_hooks.add('element/select', ()=>{
+    hooks.add('element/select', ()=>{
         add_zone.unselect()
     })
 
-    global_hooks.add('elements_manager/select', ({element})=>{
+    hooks.add('elements_manager/select', ({element})=>{
         if( add_zone.active ) {
             builder.selector.select(element)
         }
@@ -61,15 +61,15 @@ function init_container_add_zone(){
 
     builder.content.elements.forEach(init_container)
     
-    global_hooks.add('element/container/render', ({element})=>{
+    hooks.add('element/container/render', ({element})=>{
         init_container(element)
     })
 
-    global_hooks.add('element/remove', (element)=>{
+    hooks.add('element/remove', (element)=>{
         element?.parent?.add_zone?.update();
     })
 
-    global_hooks.add('add_zone/select', ({add_zone})=>{
+    hooks.add('add_zone/select', ({add_zone})=>{
         setTimeout(()=>{
             control_panel.set_tab('add_elements');
         }, 10)

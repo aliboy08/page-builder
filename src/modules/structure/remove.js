@@ -1,5 +1,5 @@
 import { get_el } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks'
+import { hooks } from 'src/globals'
 
 let body;
 
@@ -7,7 +7,7 @@ export default function init_structure_items_remove(){
 
     body = get_el('#elements_structure .structure_body')
 
-    global_hooks.add('element/before_remove', (element)=>{
+    hooks.add('element/before_remove', (element)=>{
         remove(element)
     })
 }

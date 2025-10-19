@@ -1,5 +1,5 @@
 import { create_div, generate_id } from 'lib/utils';
-import { global_hooks } from 'src/global_hooks';
+import { hooks } from 'src/globals';
 import { apply_css } from 'src/modules/styles/styles_utils';
 import Hooks from 'components/hooks';
 import { init_common_fields } from './common_fields';
@@ -131,7 +131,7 @@ export default class Element_Base {
         
         this.load_styles();
 
-        global_hooks.do('element/render', this)
+        hooks.do('element/render', this)
 
         if( typeof this.after_render === 'function' ) {
             this.after_render()
@@ -140,7 +140,7 @@ export default class Element_Base {
 
     remove(){
         
-        global_hooks.do('element/before_remove', this)
+        hooks.do('element/before_remove', this)
 
         const index = this.parent.elements.indexOf(this)
 
@@ -148,7 +148,7 @@ export default class Element_Base {
 
         this.html.remove();
 
-        global_hooks.do('element/remove', this)
+        hooks.do('element/remove', this)
     }
 
     get_data(){
